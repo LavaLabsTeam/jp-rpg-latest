@@ -1,0 +1,27 @@
+$primary-text-color: #fff;
+page-home {
+  ion-content {
+    .title{
+      color: $primary-text-color;
+      text-align:center;
+
+      .title-medium{
+        font: 25px;
+      }
+
+    }
+
+
+    .item {
+      background-color: transparent !important;
+
+      .label{
+        color:$primary-text-color;
+        font-size: 20px
+
+      }
+    }
+
+
+  }
+}
