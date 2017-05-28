@@ -1,12 +1,29 @@
 <ion-header>
-  <ion-grid><article class="">
-
-  </article>
+  <ion-grid>
       <ion-row>
-        <ion-col col-6>Logo</ion-col>
-        <ion-col col-2>lang</ion-col>
-        <ion-col col-2>time</ion-col>
-        <ion-col col-2>temp</ion-col>
+        <ion-col col-5>
+          <span class="text-3x text-primary">RAPID PENANG</span>
+        </ion-col>
+        <ion-col col-2>
+          <span class="text-2x text-primary">
+            <ion-icon color="light" name="globe"></ion-icon>&nbsp;
+            EN
+          </span>
+        </ion-col>
+        <ion-col col-3>
+          <div id="time" class="text-medium text-primary">
+            <span>12:20am</span>
+          </div>
+          <div id="date" class="text-small text-primary">
+            <span>20 August, 2017</span>
+          </div>
+        </ion-col>
+        <ion-col col-2>
+          <span class="text-normal text-primary">
+            <ion-icon color="light" name="cloudy-night"></ion-icon>&nbsp;
+            28&deg;
+          </span>
+        </ion-col>
       </ion-row>
   </ion-grid>
 </ion-header>
@@ -15,7 +32,7 @@
   <div class="row">
     <div class="col">
         <div class="text-center">
-            <h2 class="title">JOURNEY PLANNER</h2>
+            <h1 class="title title-big" color="primary">JOURNEY PLANNER</h1>
         </div>
     </div>
   </div>
@@ -24,16 +41,49 @@
     <div class="col">
       <div class="text-center">
         <ion-item no-lines>
-          <ion-label color="primary" stacked>You are now at </ion-label>
+          <ion-label color="primary" stacked>&nbsp;You are now at </ion-label>
         </ion-item>
-        <ion-item>
+        <ion-item class="transparent">
           <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
-          <ion-icon name="pin" item-right></ion-icon>
-          <ion-input type="text" placeholder="Location"></ion-input>
+          <ion-icon color="light" name="pin" item-right></ion-icon>
+          <ion-input type="text" placeholder="Location" class="big"></ion-input>
 
         </ion-item>
       </div>
     </div>
   </div>
+
+  <div class="row" margin-top>
+    <div class="col padding">
+      <div>
+        <ion-item no-lines text-center ion-2x>
+          <ion-icon color="light" name="arrow-down" class="text-4x"></ion-icon>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+      <div class="text-center">
+        <ion-item no-lines class="bg-secondary">
+          <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
+          <ion-icon color="light" name="pin" item-right></ion-icon>
+          <ion-input type="text"  class="medium" placeholder="Your Destination"></ion-input>
+
+        </ion-item>
+      </div>
+    </div>
+  </div>
+
+  <ion-grid>
+      <ion-row>
+        <ion-col col-4>Logo</ion-col>
+        <ion-col col-4>lang</ion-col>
+        <ion-col col-4>time</ion-col>
+      </ion-row>
+  </ion-grid>
+
 
 </ion-content>

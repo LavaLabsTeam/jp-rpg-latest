@@ -14,10 +14,116 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+$primary-font:'Fjalla One', sans-serif;
 ion-content{
-    background: url("../../assets/images/bg.jpg") no-repeat center center fixed;
+    background: url("../assets/images/bg.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
+    font-family: $primary-font;
 
+
+    .margin-large-bottom{
+      margin-bottom: 32px;
+    }
+
+
+
+    .item {
+      background-color: transparent !important;
+      input{
+        color: $primary-text-color;
+        font-size: 1em;
+      }
+
+      .input.big input{
+        color: $primary-text-color;
+        font-size: 2.5em;
+      }
+
+      .input.medium input{
+        color: $primary-text-color;
+        font-size: 1.5em;
+      }
+
+
+
+
+      ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+          color:    $primary-text-color;
+      }
+      :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+         color:    $primary-text-color;
+         opacity:  1;
+      }
+      ::-moz-placeholder { /* Mozilla Firefox 19+ */
+         color:    $primary-text-color;
+         opacity:  1;
+      }
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+         color:    $primary-text-color;
+      }
+      ::-ms-input-placeholder { /* Microsoft Edge */
+         color:    $primary-text-color;
+      }
+
+      .label{
+        color:$primary-text-color;
+        font-size: 1.5em;
+
+      }
+
+
+
+    }
+
+    .item.bg-secondary{
+      background-color: color($colors, secondary, base)!important;
+    }
+
+}
+
+.text-1x{
+  font-size:0.5em;
+}
+
+.text-2x{
+  font-size:1em;
+  text-height:1em;
+}
+
+.text-3x{
+  font-size:1.5em;
+}
+
+.text-4x{
+  font-size:2em;
+}
+
+.text-5x{
+  font-size:2.5em;
+}
+
+
+.text-primary{
+  color:$primary-text-color;
+}
+
+.text-secondary{
+  color:color($colors, secondary, base);
+}
+
+.ios{
+  ion-content{
+      .item {
+        .input.medium input{
+          font-size:1em;
+        }
+      }
+  }
+}
+
+*{
+  font-family: $primary-font;
 }
