@@ -23,13 +23,6 @@ ion-content{
     background-size: cover;
     font-family: $primary-font;
 
-
-    .margin-large-bottom{
-      margin-bottom: 32px;
-    }
-
-
-
     .item {
       background-color: transparent !important;
       input{
@@ -74,16 +67,22 @@ ion-content{
 
       }
 
+      .label.small{
+        color:$primary-text-color;
+        font-size: 0.2em;
+
+      }
+
 
 
     }
 
-    .item.bg-secondary{
-      background-color: color($colors, secondary, base)!important;
-    }
+
 
 }
 
+
+//text-sizes
 .text-1x{
   font-size:0.5em;
 }
@@ -106,6 +105,8 @@ ion-content{
 }
 
 
+
+//texts
 .text-primary{
   color:$primary-text-color;
 }
@@ -113,6 +114,77 @@ ion-content{
 .text-secondary{
   color:color($colors, secondary, base);
 }
+
+.text-orange{
+  color:color($colors, orange, base);
+}
+
+.text-white{
+  color:color($colors, white, base);
+}
+
+.text-blue{
+  color:color($colors, blue, base);
+}
+
+
+//background
+.bg-primary{
+  background-color:$primary-text-color;
+}
+
+.bg-secondary{
+  background-color:color($colors, secondary, base);
+}
+
+.bg-orange{
+  background-color:color($colors, orange, base);
+}
+
+.bg-white{
+  background-color:color($colors, white, base);
+}
+
+.bg-blue{
+  background-color:color($colors, blue, base);
+}
+
+.bg-semi-transparent{
+  background-color:rgba(255,255,255,0.3);
+}
+
+//opacity
+.opacity-50{
+  opacity: 0.5;
+}
+
+
+//padings
+.padding-0{
+  padding: 0;
+}
+
+.padding-10{
+  padding: 10px;
+}
+
+.padding-16{
+  padding: 16px;
+}
+
+//margins
+.margin-top{
+  margin-top: 16px;
+}
+
+.margin-bottom{
+  margin-bottom: 16px;
+}
+
+.margin-large-bottom{
+  margin-bottom: 32px;
+}
+
 
 .ios{
   ion-content{
