@@ -70,7 +70,7 @@
         <ion-item no-lines>
           <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
           <ion-icon color="light" name="pin" item-right></ion-icon>
-          <ion-input type="text"  class="medium" placeholder="Your Destination"></ion-input>
+          <ion-input [(ngModel)]="name" type="text"  class="medium" placeholder="Your Destination"></ion-input>
 
         </ion-item>
       </div>
@@ -80,22 +80,22 @@
 
 <div class="row bg-semi-transparent">
 
-  <ion-grid class="padding-0 margin-bottom">
+  <ion-grid class="padding-0">
       <ion-row>
         <ion-col col-4>
           <button ion-button icon-right small>
             Leave Now&nbsp;
-            <ion-checkbox [(ngModel)]="pepperoni"></ion-checkbox>
+            <ion-checkbox [checked]="registered"></ion-checkbox>
           </button>
         </ion-col>
         <ion-col col-4>
-          <button ion-button icon-right small>
+          <button ion-button icon-right small (click)="changeTime()">
             Change Time
             <ion-icon name="options"></ion-icon>
           </button>
         </ion-col>
         <ion-col col-4>
-          <button ion-button icon-right small>
+          <button ion-button icon-right small (click)="sayMyName()" >
             Preferrence
             <ion-icon name="options"></ion-icon>
           </button>
