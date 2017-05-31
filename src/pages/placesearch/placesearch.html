@@ -1,26 +1,18 @@
 <ion-header>
-  <ion-grid>
-      <ion-row>
-        <ion-col col-12>
-          <ion-item no-lines>
-            <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
-            <ion-icon color="light" name="pin" item-right></ion-icon>
-            <ion-input type="text"  [(ngModel)]="search" class="medium" placeholder="Your Destination"></ion-input>
-
-          </ion-item>
-        </ion-col>
-
-      </ion-row>
-  </ion-grid>
-</ion-header>
-
-<ion-content padding>
   <ion-row>
     <ion-col col-12>
-      <button ion-button full padding icon-right (click)="onCloseClicked()" class="bg-white text-orange padding-10">
-        Close
-        <ion-icon name="close"></ion-icon>
-      </button>
+      <ion-item no-lines class="bg-secondary">
+        <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
+        <ion-icon color="light" name="pin" item-right></ion-icon>
+        <input ion-input type="text"  [(ngModel)]="search" class="text-2x full-width no-border padding-10" placeholder="Type Location" #LocationCtrl="ngModel"
+    Googleplace (setAddress)="getAddressOnChange($event,LocationCtrl)">
+
+      </ion-item>
     </ion-col>
+
   </ion-row>
+</ion-header>
+
+<ion-content padding class="">
+
 </ion-content>

@@ -10,6 +10,10 @@ import { PlacesearchPage } from '../placesearch/placesearch';
 export class HomePage {
   registered: boolean;
   name: string;
+  startAddress: any;
+  startLocation:any;
+  endAddress: any;
+  endLocation:any;
   constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
 
   }
@@ -18,11 +22,36 @@ export class HomePage {
     console.log('My name is sagar')
     this.registered=!this.registered;
     this.name="sagar";
+  }
 
+  setStartLocation(){
     let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
 
     modal.onDidDismiss(data => {
      console.log(data);
+     if(data!=undefined){
+       this.startAddress=data.place.formatted_address;
+       this.startLocation=data.place.geometry.location;
+
+       console.log(this.startLocation);
+      }
+    });
+
+    modal.present();
+  }
+
+
+  setEndLocation(){
+    let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+
+    modal.onDidDismiss(data => {
+     console.log(data);
+     if(data!=undefined){
+       this.endAddress=data.place.formatted_address;
+       this.endLocation=data.place.geometry.location;
+
+       console.log(this.startLocation);
+      }
     });
 
     modal.present();

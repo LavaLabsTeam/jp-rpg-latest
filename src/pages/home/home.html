@@ -46,7 +46,7 @@
         <ion-item class="transparent">
           <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
           <ion-icon color="light" name="pin" item-right></ion-icon>
-          <ion-input type="text" placeholder="Location" class="big"></ion-input>
+          <ion-input [disabled]=true type="text" (click)="setStartLocation()" [(ngModel)]="startAddress" placeholder="Location" class="big"></ion-input>
 
         </ion-item>
       </div>
@@ -70,7 +70,7 @@
         <ion-item no-lines>
           <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
           <ion-icon color="light" name="pin" item-right></ion-icon>
-          <ion-input [(ngModel)]="name" type="text"  class="medium" placeholder="Your Destination"></ion-input>
+          <ion-input [disabled]=true type="text"  (click)="setEndLocation()" [(ngModel)]="endAddress" class="medium" placeholder="Your Destination"></ion-input>
 
         </ion-item>
       </div>
@@ -105,14 +105,14 @@
 </div>
 
 <ion-row>
-  <ion-col col-12>
+  <ion-col col-12 class="padding-0">
     <button ion-button icon-right full large class="bg-orange text-white">
       PLAN MY JOURNEY
     </button>
   </ion-col>
 </ion-row>
 <ion-row>
-  <ion-col col-12>
+  <ion-col col-12 class="padding-0">
     <button ion-button icon-right full large class="bg-white text-orange">
       GENERAL INFO
       <ion-icon name="options"></ion-icon>

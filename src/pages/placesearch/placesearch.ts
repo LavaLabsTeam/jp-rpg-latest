@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams } from 'ionic-angular';
+import { ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the PlacesearchPage page.
@@ -26,7 +26,12 @@ export class PlacesearchPage {
 
   onCloseClicked(){
       alert("hello");
-      this.viewCtrl.dismiss({data:this.search});
+      this.viewCtrl.dismiss();
+  }
+
+  getAddressOnChange(place){
+    //console.log(place);
+    this.viewCtrl.dismiss({place:place});
   }
 
 }

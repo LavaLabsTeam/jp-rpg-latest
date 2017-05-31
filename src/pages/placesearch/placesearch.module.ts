@@ -4,7 +4,7 @@ import { PlacesearchPage } from './placesearch';
 
 @NgModule({
   declarations: [
-    PlacesearchPage,
+    PlacesearchPage
   ],
   imports: [
     IonicPageModule.forChild(PlacesearchPage),

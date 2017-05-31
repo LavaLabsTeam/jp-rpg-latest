@@ -7,12 +7,16 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PlacesearchPage } from '../pages/placesearch/placesearch';
+import { HighlightDirective } from '../directives/highlight.directive';
+import { GoogleplaceDirective } from '../directives/googleplace.directive';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    PlacesearchPage
+    PlacesearchPage,
+    HighlightDirective,
+    GoogleplaceDirective
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,7 @@ import { PlacesearchPage } from '../pages/placesearch/placesearch';
     HomePage,
     PlacesearchPage
   ],
-  
+
   providers: [
     StatusBar,
     SplashScreen,

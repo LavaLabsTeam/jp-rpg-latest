@@ -129,6 +129,9 @@ ion-content{
 
 
 //background
+ion-content.no-bgimage{
+  background:none;
+}
 .bg-primary{
   background-color:$primary-text-color;
 }
@@ -184,6 +187,16 @@ ion-content{
 .margin-large-bottom{
   margin-bottom: 32px;
 }
+
+
+.no-border{
+  border: none;
+}
+
+.full-width{
+  width: 100%;
+}
+
 
 
 .ios{
