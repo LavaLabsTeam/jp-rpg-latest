@@ -102,26 +102,59 @@
         </ion-col>
       </ion-row>
   </ion-grid>
+
+  <ion-row class="padding-0">
+    <ion-col col-6 class="padding-right-1">
+      <button ion-button icon-right full large (click)="planJourneyClicked()" class="bg-orange text-white">
+        PLAN MY JOURNEY
+      </button>
+    </ion-col>
+
+    <ion-col col-6 class="padding-left-1">
+      <button ion-button icon-right full large class="bg-white text-orange">
+        GENERAL INFO
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+</div>
+
+
+<div class="row bg-semi-transparent margin-top">
+
+  <ion-grid class="padding-0">
+      <ion-row>
+        <ion-col col-5>
+          <ion-item>
+            <ion-input type="text" placeholder="STOP ID"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col col-2 class="table">
+          <span class="text-2x text-white table-cell">OR</span>
+        </ion-col>
+
+        <ion-col col-5>
+          <ion-item>
+            <ion-input type="text" placeholder="Route Name"></ion-input>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+  </ion-grid>
 </div>
 
 <ion-row>
   <ion-col col-12 class="padding-0">
-    <button ion-button icon-right full large class="bg-orange text-white">
-      PLAN MY JOURNEY
+    <button (click)="viewETAClicked()" ion-button icon-right full large class="bg-white text-orange">
+      VEHICLE ETA
+      <ion-icon name="search"></ion-icon>
     </button>
   </ion-col>
 </ion-row>
-<ion-row>
-  <ion-col col-12 class="padding-0">
-    <button ion-button icon-right full large class="bg-white text-orange">
-      GENERAL INFO
-      <ion-icon name="options"></ion-icon>
-    </button>
-  </ion-col>
-</ion-row>
-
 
 </ion-content>
+
 
 <ion-footer>
   <ion-grid>

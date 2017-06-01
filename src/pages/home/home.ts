@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { PlacesearchPage } from '../placesearch/placesearch';
+import { RoutesPage } from '../routes/routes';
+import { EtaresultPage } from '../etaresult/etaresult';
 
 @Component({
   selector: 'page-home',
@@ -57,8 +59,17 @@ export class HomePage {
     modal.present();
   }
 
+
+  planJourneyClicked(){
+    this.navCtrl.push(RoutesPage,{data:"sagar"})
+  }
+
   changeTime(){
     alert(this.name);
+  }
+
+  viewETAClicked(){
+    this.navCtrl.push(EtaresultPage,{data:"sagar"})
   }
 
 }

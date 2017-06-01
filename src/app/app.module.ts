@@ -7,6 +7,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PlacesearchPage } from '../pages/placesearch/placesearch';
+import { RoutesPage } from '../pages/routes/routes';
+import { EtaresultPage } from '../pages/etaresult/etaresult';
+
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
 
@@ -14,6 +17,8 @@ import { GoogleplaceDirective } from '../directives/googleplace.directive';
   declarations: [
     MyApp,
     HomePage,
+    RoutesPage,
+    EtaresultPage,
     PlacesearchPage,
     HighlightDirective,
     GoogleplaceDirective
@@ -26,7 +31,9 @@ import { GoogleplaceDirective } from '../directives/googleplace.directive';
   entryComponents: [
     MyApp,
     HomePage,
-    PlacesearchPage
+    EtaresultPage,
+    PlacesearchPage,
+    RoutesPage
   ],
 
   providers: [

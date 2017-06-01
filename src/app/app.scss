@@ -184,6 +184,16 @@ ion-content.no-bgimage{
   margin-bottom: 16px;
 }
 
+.padding-left-1{
+  padding-left: 1px;
+}
+
+
+.padding-right-1{
+  padding-right: 1px;
+}
+
+
 .margin-large-bottom{
   margin-bottom: 32px;
 }
@@ -195,6 +205,16 @@ ion-content.no-bgimage{
 
 .full-width{
   width: 100%;
+}
+
+.table{
+  display: table;
+  height: 52px;
+
+  .table-cell{
+    display: table-cell;
+    vertical-align: middle;
+  }
 }
 
 
