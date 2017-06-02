@@ -4,6 +4,7 @@ import { ModalController } from 'ionic-angular';
 import { PlacesearchPage } from '../placesearch/placesearch';
 import { RoutesPage } from '../routes/routes';
 import { EtaresultPage } from '../etaresult/etaresult';
+import { StopsnearmePage } from '../stopsnearme/stopsnearme';
 
 @Component({
   selector: 'page-home',
@@ -70,6 +71,10 @@ export class HomePage {
 
   viewETAClicked(){
     this.navCtrl.push(EtaresultPage,{data:"sagar"})
+  }
+
+  viewStopsNearMeClicked(){
+    this.navCtrl.push(StopsnearmePage,{data:"sagar"})
   }
 
 }

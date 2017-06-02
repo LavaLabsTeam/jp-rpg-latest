@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { PlacesearchPage } from '../pages/placesearch/placesearch';
 import { RoutesPage } from '../pages/routes/routes';
 import { EtaresultPage } from '../pages/etaresult/etaresult';
+import { StopsnearmePage } from '../pages/stopsnearme/stopsnearme';
 
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
@@ -20,6 +21,7 @@ import { GoogleplaceDirective } from '../directives/googleplace.directive';
     RoutesPage,
     EtaresultPage,
     PlacesearchPage,
+    StopsnearmePage,
     HighlightDirective,
     GoogleplaceDirective
   ],
@@ -33,7 +35,8 @@ import { GoogleplaceDirective } from '../directives/googleplace.directive';
     HomePage,
     EtaresultPage,
     PlacesearchPage,
-    RoutesPage
+    RoutesPage,
+    StopsnearmePage
   ],
 
   providers: [
