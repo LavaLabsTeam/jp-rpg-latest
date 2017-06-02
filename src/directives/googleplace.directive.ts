@@ -16,7 +16,7 @@ export class GoogleplaceDirective {
   @Output() setAddress: EventEmitter<any> = new EventEmitter();
   modelValue:any;
   autocomplete:any;
-  private _el:HTMLElement;
+  private _el:any;
 
 
   constructor(el: ElementRef,private model:NgModel) {
