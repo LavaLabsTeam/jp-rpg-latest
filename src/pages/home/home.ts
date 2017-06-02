@@ -5,6 +5,7 @@ import { PlacesearchPage } from '../placesearch/placesearch';
 import { RoutesPage } from '../routes/routes';
 import { EtaresultPage } from '../etaresult/etaresult';
 import { StopsnearmePage } from '../stopsnearme/stopsnearme';
+import { GeneralinfoPage } from '../generalinfo/generalinfo';
 
 @Component({
   selector: 'page-home',
@@ -75,6 +76,10 @@ export class HomePage {
 
   viewStopsNearMeClicked(){
     this.navCtrl.push(StopsnearmePage,{data:"sagar"})
+  }
+
+  onGeneralInfoClicked(){
+    this.navCtrl.push(GeneralinfoPage,{data:"sagar"})
   }
 
 }

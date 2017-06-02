@@ -30,11 +30,17 @@
 
     <ion-grid class="bg-semi-transparent">
       <ion-row>
+        <ion-col text-center>
+          <h1 class="text-white text-4x" color="primary">JOURNEY PLANNER</h1>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
         <ion-col col-12>
           <ion-grid>
             <ion-row>
               <ion-col col-1 class="table">
-                <ion-icon color="light" name="locate" class="table-cell text-4x"></ion-icon>
+                <ion-icon color="light" name="pin" class="table-cell text-4x"></ion-icon>
               </ion-col>
 
               <ion-col col-11>
@@ -46,8 +52,8 @@
             </ion-row>
 
             <ion-row>
-              <ion-col  col-1>
-                <ion-icon color="light" name="pin" class="text-4x"></ion-icon>
+              <ion-col  col-1 class="table">
+                <ion-icon color="light" name="pin" class="table-cell text-4x"></ion-icon>
               </ion-col>
 
               <ion-col col-11>
@@ -76,6 +82,125 @@
           </button>
         </ion-col>
       </ion-row>
+
+    </ion-grid>
+
+    <ion-grid class="bg-semi-transparent margin-top" padding>
+      <ion-row>
+        <ion-col col-12 class= "waypoint">
+          <div class="inner-block">
+            <div class="point"></div>
+            <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 text-center class="block">
+          <div class="inner-block">
+              <div class="logo align-center">
+                <div class="icon bg-orange">
+                  <ion-icon name="bus" color="light" class="text-3x"></ion-icon>
+                </div>
+                <div class="bus-no">
+                  <span class="text-white text-3x bg-blue">123B</span>
+                </div>
+              </div>
+              <div class="address">
+                <h3 class="text-white">Ekanta Kuna Road</h3>
+              </div>
+
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 class= "waypoint">
+          <div class="inner-block">
+            <div class="point"></div>
+            <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 text-center class="block walk">
+            <div class="inner-block">
+                <div class="logo align-center">
+                  <div class="icon">
+                    <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
+                  </div>
+                </div>
+                <div class="address">
+                  <h3 class="text-white">Ekanta Kuna Road</h3>
+                </div>
+
+            </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 class= "waypoint">
+          <div class="inner-block">
+            <div class="point"></div>
+            <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 text-center class="block">
+          <div class="inner-block">
+              <div class="logo align-center">
+                <div class="icon bg-orange">
+                  <ion-icon name="bus" color="light" class="text-3x"></ion-icon>
+                </div>
+                <div class="bus-no">
+                  <span class="text-white text-3x bg-blue">123B</span>
+                </div>
+              </div>
+              <div class="address">
+                <h3 class="text-white">Ekanta Kuna Road</h3>
+              </div>
+
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 text-center class="time">
+          <div class="inner-block">
+            <div class="duration">
+              <h3 class="text-white">1hr 20min</h3>
+            </div>
+              <div class="time">
+                <span class="text-white size-1x">12:20pm - 2:30pm</span>
+              </div>
+
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 text-center class="price margin-top">
+          <div class="inner-block">
+            <div class="duration">
+              <h2 class="text-white">RM 25</h2>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 text-center>
+          <div class="inner-block">
+            <button ion-button full>
+              View Details
+            </button>
+          </div>
+        </ion-col>
+      </ion-row>
+
 
     </ion-grid>
 </ion-content>

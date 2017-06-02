@@ -226,6 +226,79 @@ ion-content.no-bgimage{
 }
 
 
+.waypoint {
+    display: inline-block;
+    left: -2px;
+    vertical-align: top;
+}
+
+.waypoint .point {
+  background: #FFF;
+  width: 15px;
+  height: 15px;
+  float: left;
+  position: relative;
+  z-index: 2;
+  border-radius: 50%;
+  display: block;
+  top: 2px;
+  left: -7px;
+}
+
+.waypoint .inner-block {
+  display: table;
+  text-align: center;
+  width: 100%;
+}
+
+.block{
+  border-left: solid #005dab 8px;
+}
+
+.block.walk{
+  border-left: dotted #fff 8px;
+}
+
+.inner-block{
+
+  .logo{
+    display: inline-block;
+    .icon{
+      float: left;
+      padding: 3px;
+    }
+
+    .bus-no{
+      display: table;
+      span{
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3px;
+      }
+    }
+  }
+}
+
+.time .duration{
+    border-top: solid rgba(255,255,255,0.3) 1px;
+    padding-top: 10px;
+    margin-top: 20px;
+}
+
+.price{
+    border-top: solid rgba(255,255,255,0.3) 1px;
+    padding-top: 20px;
+}
+
+
+
+.align-center{
+  margin: 0 auto;
+}
+
+
+
+
 
 .ios{
   ion-content{

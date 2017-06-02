@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <div class="row bg-semi-transparent padding-bottom-16">
+  <div class="row bg-semi-transparent">
     <ion-grid>
       <ion-row>
         <ion-col text-center>
@@ -23,49 +23,49 @@
       </ion-row>
       <ion-row>
         <ion-col text-center>
-          <h1 class="text-white text-2x" color="primary">ETA Results</h1>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ion-grid>
-      <ion-row>
-        <ion-col col-3 class="bg-orange" text-center>
-          <span class="text-white size-2x" color="primary">Stop ID</span>
-        </ion-col>
-
-        <ion-col col-3 class="bg-orange" text-center>
-          <span class="text-white size-2x" color="primary">Stop Name</span>
-        </ion-col>
-
-        <ion-col col-3 class="bg-orange" text-center>
-          <span class="text-white size-2x" color="primary">First ETA</span>
-        </ion-col>
-
-        <ion-col col-3 class="bg-orange" text-center>
-          <span class="text-white size-2x" color="primary">Second ETA</span>
-        </ion-col>
-
-      </ion-row>
-      <ion-row *ngFor="let row of records">
-        <ion-col col-3 class="bg-white" text-center>
-          <span class="text-orange size-2x" color="primary">{{row.id}}</span>
-        </ion-col>
-
-        <ion-col col-3 class="bg-white" text-center>
-          <span class="text-orange size-2x" color="primary">{{row.name}}</span>
-        </ion-col>
-
-        <ion-col col-3 class="bg-white" text-center>
-          <span class="text-orange size-2x" color="primary">{{row.eta1}}</span>
-        </ion-col>
-
-        <ion-col col-3 class="bg-white" text-center>
-          <span class="text-orange size-2x" color="primary">{{row.eta2}}</span>
+          <h1 class="text-white text-2x" color="primary">STOPS Near Me</h1>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
+
+  <ion-grid class="padding-0 margin-top">
+    <ion-row>
+      <ion-col col-3 class="bg-orange" text-center>
+        <span class="text-white size-2x" color="primary">Stop# ID</span>
+      </ion-col>
+
+      <ion-col col-3 class="bg-orange" text-center>
+        <span class="text-white size-2x" color="primary">Stop# Name</span>
+      </ion-col>
+
+      <ion-col col-3 class="bg-orange" text-center>
+        <span class="text-white size-2x" color="primary">First ETA</span>
+      </ion-col>
+
+      <ion-col col-3 class="bg-orange" text-center>
+        <span class="text-white size-2x" color="primary">Second ETA</span>
+      </ion-col>
+
+    </ion-row>
+    <ion-row *ngFor="let row of records">
+      <ion-col col-3 class="bg-white" text-center>
+        <span class="text-orange size-2x" color="primary">{{row.id}}</span>
+      </ion-col>
+
+      <ion-col col-3 class="bg-white" text-center>
+        <span class="text-orange size-2x" color="primary">{{row.name}}</span>
+      </ion-col>
+
+      <ion-col col-3 class="bg-white" text-center>
+        <span class="text-orange size-2x" color="primary">{{row.eta1}}</span>
+      </ion-col>
+
+      <ion-col col-3 class="bg-white" text-center>
+        <span class="text-orange size-2x" color="primary">{{row.eta2}}</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-footer>

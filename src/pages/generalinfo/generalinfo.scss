@@ -1,0 +1,14 @@
+page-generalinfo {
+  .icon{
+    display: table;
+    margin-top: 5px;
+    ion-icon{
+      display: table-cell;
+      text-align: center;
+    }
+  }
+
+  .description{
+    font-size: 10px;
+  }
+}

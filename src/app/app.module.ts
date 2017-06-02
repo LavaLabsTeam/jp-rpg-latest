@@ -13,6 +13,7 @@ import { StopsnearmePage } from '../pages/stopsnearme/stopsnearme';
 
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
+import { GeneralinfoPage } from '../pages/generalinfo/generalinfo';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { GoogleplaceDirective } from '../directives/googleplace.directive';
     PlacesearchPage,
     StopsnearmePage,
     HighlightDirective,
-    GoogleplaceDirective
+    GoogleplaceDirective,
+    GeneralinfoPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { GoogleplaceDirective } from '../directives/googleplace.directive';
     EtaresultPage,
     PlacesearchPage,
     RoutesPage,
-    StopsnearmePage
+    StopsnearmePage,
+    GeneralinfoPage
   ],
 
   providers: [
