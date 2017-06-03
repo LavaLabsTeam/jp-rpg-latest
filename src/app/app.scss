@@ -23,63 +23,63 @@ ion-content{
     background-size: cover;
     font-family: $primary-font;
 
-    .item {
-      background-color: transparent !important;
-      input{
-        color: $primary-text-color;
-        font-size: 1em;
-      }
-
-      .input.big input{
-        color: $primary-text-color;
-        font-size: 2.5em;
-      }
-
-      .input.medium input{
-        color: $primary-text-color;
-        font-size: 1.5em;
-      }
+}
 
 
+.item.custom {
+  background-color: transparent !important;
+  input{
+    color: $primary-text-color;
+    font-size: 1em;
+  }
 
+  .input.big input{
+    color: $primary-text-color;
+    font-size: 2.5em;
+  }
 
-      ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-          color:    $primary-text-color;
-      }
-      :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-         color:    $primary-text-color;
-         opacity:  1;
-      }
-      ::-moz-placeholder { /* Mozilla Firefox 19+ */
-         color:    $primary-text-color;
-         opacity:  1;
-      }
-      :-ms-input-placeholder { /* Internet Explorer 10-11 */
-         color:    $primary-text-color;
-      }
-      ::-ms-input-placeholder { /* Microsoft Edge */
-         color:    $primary-text-color;
-      }
-
-      .label{
-        color:$primary-text-color;
-        font-size: 1.5em;
-
-      }
-
-      .label.small{
-        color:$primary-text-color;
-        font-size: 0.2em;
-
-      }
+  .input.medium input{
+    color: $primary-text-color;
+    font-size: 1.5em;
+  }
 
 
 
-    }
+
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    $primary-text-color;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color:    $primary-text-color;
+     opacity:  1;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color:    $primary-text-color;
+     opacity:  1;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+     color:    $primary-text-color;
+  }
+  ::-ms-input-placeholder { /* Microsoft Edge */
+     color:    $primary-text-color;
+  }
+
+  .label{
+    color:$primary-text-color;
+    font-size: 1.5em;
+
+  }
+
+  .label.small{
+    color:$primary-text-color;
+    font-size: 0.2em;
+
+  }
 
 
 
 }
+
 
 
 //text-sizes
@@ -137,7 +137,7 @@ ion-content.no-bgimage{
   background:none;
 }
 .bg-primary{
-  background-color:$primary-text-color;
+  background-color:color($colors, primary, base);
 }
 
 .bg-secondary{

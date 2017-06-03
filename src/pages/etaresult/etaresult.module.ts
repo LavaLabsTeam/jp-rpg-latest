@@ -4,13 +4,16 @@ import { EtaresultPage } from './etaresult';
 
 @NgModule({
   declarations: [
-    EtaresultPage,
+    EtaresultPage
   ],
   imports: [
     IonicPageModule.forChild(EtaresultPage),
   ],
   exports: [
     EtaresultPage
+  ],
+  entryComponents: [
+
   ]
 })
 export class EtaresultPageModule {}

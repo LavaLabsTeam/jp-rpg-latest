@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MapPage } from '../map/map';
 
 /**
  * Generated class for the EtaresultPage page.
@@ -38,6 +39,10 @@ export class EtaresultPage {
 
   goBackClicked(){
     this.navCtrl.pop();
+  }
+
+  viewMapClicked(){
+    this.navCtrl.push(MapPage,{data:"sagar"})
   }
 
 }

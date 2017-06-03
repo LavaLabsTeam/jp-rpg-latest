@@ -14,6 +14,11 @@ import { StopsnearmePage } from '../pages/stopsnearme/stopsnearme';
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
 import { GeneralinfoPage } from '../pages/generalinfo/generalinfo';
+import { PreferencemodalPage } from '../pages/preferencemodal/preferencemodal';
+import { MapPage } from '../pages/map/map';
+import { Geolocation } from '@ionic-native/geolocation';
+
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -25,10 +30,13 @@ import { GeneralinfoPage } from '../pages/generalinfo/generalinfo';
     StopsnearmePage,
     HighlightDirective,
     GoogleplaceDirective,
-    GeneralinfoPage
+    GeneralinfoPage,
+    MapPage,
+    PreferencemodalPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -39,13 +47,17 @@ import { GeneralinfoPage } from '../pages/generalinfo/generalinfo';
     PlacesearchPage,
     RoutesPage,
     StopsnearmePage,
-    GeneralinfoPage
+    GeneralinfoPage,
+    MapPage,
+    PreferencemodalPage
   ],
 
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
+
   ]
 })
 export class AppModule {}
