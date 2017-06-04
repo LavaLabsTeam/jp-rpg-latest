@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { PlacesearchPage } from '../placesearch/placesearch';
+import { RoutedetailPage } from '../routedetail/routedetail';
 
 /**
  * Generated class for the RoutesPage page.
@@ -69,6 +70,11 @@ export class RoutesPage {
 
   goBackClicked(){
     this.navCtrl.pop();
+  }
+
+
+  viewRouteDetailsClicked(){
+    this.navCtrl.push(RoutedetailPage,{data:"sagar"})
   }
 
 }

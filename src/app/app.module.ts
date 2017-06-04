@@ -15,6 +15,7 @@ import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
 import { GeneralinfoPage } from '../pages/generalinfo/generalinfo';
 import { PreferencemodalPage } from '../pages/preferencemodal/preferencemodal';
+import { RoutedetailPage } from '../pages/routedetail/routedetail';
 import { MapPage } from '../pages/map/map';
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -32,7 +33,8 @@ import { HttpModule } from '@angular/http';
     GoogleplaceDirective,
     GeneralinfoPage,
     MapPage,
-    PreferencemodalPage
+    PreferencemodalPage,
+    RoutedetailPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { HttpModule } from '@angular/http';
     StopsnearmePage,
     GeneralinfoPage,
     MapPage,
-    PreferencemodalPage
+    PreferencemodalPage,
+    RoutedetailPage
   ],
 
   providers: [

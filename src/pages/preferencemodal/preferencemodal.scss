@@ -1,13 +1,19 @@
 page-preferencemodal {
-  ion-content{
+  .content{
     background: #fff;
-    margin: 8%;
+    margin-left: 8%;
+    margin-right: 8%;
     width: 84%;
-    height: 80%;
+    height: auto;
+    display: block;
+
   }
 
-  ion-header{
-    margin: 8%;
+  .header{
+    margin-top: 8%;
+    margin-left: 8%;
+    margin-right: 8%;
     width: 84%;
   }
+
 }

@@ -132,6 +132,13 @@ ion-content{
 }
 
 
+//align
+.text-align-left{
+  text-align: left;
+}
+
+
+
 //background
 ion-content.no-bgimage{
   background:none;
@@ -194,6 +201,10 @@ ion-content.no-bgimage{
 
 .padding-left-1{
   padding-left: 1px;
+}
+
+.padding-left-16{
+  padding-left: 16px;
 }
 
 
@@ -301,13 +312,7 @@ ion-content.no-bgimage{
 
 
 .ios{
-  ion-content{
-      .item {
-        .input.medium input{
-          font-size:1em;
-        }
-      }
-  }
+
 }
 
 *{

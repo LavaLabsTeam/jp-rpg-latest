@@ -14,8 +14,9 @@ import { ViewController } from 'ionic-angular';
   templateUrl: 'preferencemodal.html',
 })
 export class PreferencemodalPage {
-
+  showOptions:any;
   constructor(public viewCtrl: ViewController, public navParams: NavParams) {
+    this.showOptions="duesenberg";
   }
 
   ionViewDidLoad() {

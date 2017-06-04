@@ -12,10 +12,10 @@
         </ion-col>
         <ion-col col-3>
           <div id="time" class="text-medium text-primary">
-            <span>12:20am</span>
+            <span>{{ whatTime | async | date:'jm' }}</span>
           </div>
           <div id="date" class="text-small text-primary">
-            <span>20 August, 2017</span>
+            <span>{{ whatTime | async | date:'yMMMd' }}</span>
           </div>
         </ion-col>
         <ion-col col-2>

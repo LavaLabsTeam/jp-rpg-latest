@@ -1,0 +1,42 @@
+page-routedetail {
+  .waypoint {
+    display: inline-block;
+    left: 4px;
+    vertical-align: top;
+    padding: 0px;
+  }
+
+  .waypoint .point {
+    background: #FFF;
+    width: 9px;
+    height: 9px;
+    float: left;
+    position: relative;
+    z-index: 2;
+    border-radius: 50%;
+    display: block;
+    top: 0px;
+    left: -4px;
+  }
+
+  .left-logo{
+    display: flex;
+    align-items: center;
+  }
+
+
+  .block{
+    border-left: solid #005dab 8px;
+
+    .alert{
+      padding: 5px;
+      background: rgba(255,0,0,0.5);
+      padding-top: 1px;
+    }
+  }
+
+  .block.walk{
+    border-left: dotted #fff 8px;
+  }
+
+}

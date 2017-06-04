@@ -7,9 +7,9 @@ import { EtaresultPage } from '../etaresult/etaresult';
 import { StopsnearmePage } from '../stopsnearme/stopsnearme';
 import { GeneralinfoPage } from '../generalinfo/generalinfo';
 import { PreferencemodalPage } from '../preferencemodal/preferencemodal';
-import { DatePipe } from '@angular/common';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
 @Component({
   selector: 'page-home',
@@ -22,9 +22,9 @@ export class HomePage {
   startLocation:any;
   endAddress: any;
   endLocation:any;
+  whatTime:any;
 
   private selected: boolean = false;
-	private date: any;
   selectedDate: any;
 
   private watch:any;
@@ -33,7 +33,7 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http) {
-
+    this.whatTime = Observable.interval(1000).map(x => new Date()).share();
   }
 
   sayMyName() {
@@ -124,6 +124,7 @@ export class HomePage {
      // data.coords.latitude
      // data.coords.longitude
      console.log(data);
+     this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
     });
   }
 
