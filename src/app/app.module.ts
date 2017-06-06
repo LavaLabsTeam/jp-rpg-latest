@@ -10,6 +10,7 @@ import { PlacesearchPage } from '../pages/placesearch/placesearch';
 import { RoutesPage } from '../pages/routes/routes';
 import { EtaresultPage } from '../pages/etaresult/etaresult';
 import { StopsnearmePage } from '../pages/stopsnearme/stopsnearme';
+import { DatepickerPage } from '../pages/datepicker/datepicker';
 
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
@@ -34,7 +35,8 @@ import { HttpModule } from '@angular/http';
     GeneralinfoPage,
     MapPage,
     PreferencemodalPage,
-    RoutedetailPage
+    RoutedetailPage,
+    DatepickerPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { HttpModule } from '@angular/http';
     GeneralinfoPage,
     MapPage,
     PreferencemodalPage,
-    RoutedetailPage
+    RoutedetailPage,
+    DatepickerPage
   ],
 
   providers: [

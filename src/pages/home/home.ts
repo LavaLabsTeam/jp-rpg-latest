@@ -7,9 +7,11 @@ import { EtaresultPage } from '../etaresult/etaresult';
 import { StopsnearmePage } from '../stopsnearme/stopsnearme';
 import { GeneralinfoPage } from '../generalinfo/generalinfo';
 import { PreferencemodalPage } from '../preferencemodal/preferencemodal';
+import { DatepickerPage } from '../datepicker/datepicker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -150,6 +152,19 @@ export class HomePage {
      if(data!=undefined){
 
       }
+    });
+
+    modal.present();
+  }
+
+  showDatePicker(){
+    let modal = this.modalCtrl.create(DatepickerPage,{name:this.name});
+
+    modal.onDidDismiss(data => {
+     console.log(data);
+     if(data!=undefined){
+
+     }
     });
 
     modal.present();
