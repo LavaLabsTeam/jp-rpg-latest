@@ -9,6 +9,7 @@ import { GeneralinfoPage } from '../generalinfo/generalinfo';
 import { PreferencemodalPage } from '../preferencemodal/preferencemodal';
 import { DatepickerPage } from '../datepicker/datepicker';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Constants } from '../../services/constants';
 import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
@@ -34,8 +35,9 @@ export class HomePage {
   @ViewChild('datePicker') datePicker; //inject element
 
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
+    console.log(constants);
   }
 
   sayMyName() {
@@ -80,6 +82,11 @@ export class HomePage {
 
   planJourneyClicked(){
     this.navCtrl.push(RoutesPage,{data:"sagar"})
+    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH).subscribe(data => {
+        let body = data.json();
+        console.log(body);
+
+    });
   }
 
   changeTime(){
@@ -162,8 +169,10 @@ export class HomePage {
 
     modal.onDidDismiss(data => {
      console.log(data);
+     this.selected=false;
      if(data!=undefined){
-
+        this.selected=true;
+        this.selectedDate=data;
      }
     });
 

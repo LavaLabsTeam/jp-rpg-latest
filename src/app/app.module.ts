@@ -21,6 +21,8 @@ import { MapPage } from '../pages/map/map';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import { HttpModule } from '@angular/http';
+import { DatePipe } from '@angular/common';
+import { Constants } from '../services/constants';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     Geolocation,
+    DatePipe,
+    Constants,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
 
   ]
