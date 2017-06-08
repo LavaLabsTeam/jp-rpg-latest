@@ -81,10 +81,11 @@ export class HomePage {
 
 
   planJourneyClicked(){
-    this.navCtrl.push(RoutesPage,{data:"sagar"})
+
     this.http.get(this.constants.BASE_URL_ROUTE_SEARCH).subscribe(data => {
         let body = data.json();
         console.log(body);
+        this.navCtrl.push(RoutesPage,{data:"sagar"});
 
     });
   }
