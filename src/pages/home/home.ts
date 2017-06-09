@@ -84,8 +84,8 @@ export class HomePage {
 
     this.http.get(this.constants.BASE_URL_ROUTE_SEARCH).subscribe(data => {
         let body = data.json();
-        console.log(body);
-        this.navCtrl.push(RoutesPage,{data:"sagar"});
+        //console.log(body);
+        this.navCtrl.push(RoutesPage,{data:body,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation});
 
     });
   }

@@ -21,16 +21,27 @@ export class RoutesPage {
   startLocation:any;
   endAddress: any;
   endLocation:any;
+  result: any;
+  routes: any;
+
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RoutesPage');
+    this.result=this.navParams.get('data').body;
+    this.routes=this.result.routes;
+    //console.log(this.result);
+
+    this.startAddress = this.navParams.get("startAddress");
+    this.endAddress = this.navParams.get("endAddress");
+    this.startLocation = this.navParams.get("startLocation");
+    this.endLocation = this.navParams.get("endLocation");
   }
 
   getAddressOnChange(place){
-    console.log(place);
+    //console.log(place);
     //this.viewCtrl.dismiss({place:place});
   }
 
@@ -61,7 +72,7 @@ export class RoutesPage {
        this.endAddress=data.place.formatted_address;
        this.endLocation=data.place.geometry.location;
 
-       console.log(this.startLocation);
+       //console.log(this.startLocation);
       }
     });
 
