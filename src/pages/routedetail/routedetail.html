@@ -39,59 +39,7 @@
 
     <ion-grid class="margin-top">
 
-
-      <ion-row>
-        <ion-col col-12 text-center class="bg-semi-transparent padding-0">
-          <ion-row>
-            <ion-col col-1 class="left-logo">
-              <div class="icon">
-                <ion-icon name="bus" color="light" class="text-5x"></ion-icon>
-              </div>
-            </ion-col>
-            <ion-col col-11 class="block text-align-left padding-left-16">
-              <div class="logo ">
-                <div class="bus-no">
-                  <span class="text-white text-3x bg-blue">123B</span>
-                </div>
-              </div>
-
-              <div class="address">
-                <span class="text-white text-3x">Ekanta Kuna Road</span><br>
-                <span class="text-white text-2x">Bhaisepati, Nepal</span>
-              </div>
-
-
-              <div class="logo margin-top">
-                <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                <span class="eta text-2x text-white">About 40 minutes</span>
-              </div>
-
-              <div class="alert">
-                <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
-              </div>
-
-              <div class="action">
-                <button  ion-button small icon-right class="bg-white text-orange">
-                  VIEW MAP
-                  <ion-icon name="map"></ion-icon>
-                </button>
-              </div>
-
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col col-1>
-        </ion-col>
-        <ion-col col-11 class= "waypoint">
-          <div class="inner-block">
-            <div class="point"></div>
-          </div>
-        </ion-col>
-      </ion-row>
-
+      <!-- start location -->
       <ion-row>
         <ion-col col-12 text-center class="bg-semi-transparent padding-0">
           <ion-row>
@@ -102,8 +50,8 @@
             </ion-col>
             <ion-col col-11 class="block walk text-align-left padding-left-16">
               <div class="address">
-                <span class="text-white text-3x">Ekanta Kuna Road</span><br>
-                <span class="text-white text-2x">Bhaisepati, Nepal</span>
+                <span class="text-white text-3x">Walk</span><br>
+                <span class="text-white text-2x">From {{startAddress}}</span>
               </div>
 
               <div class="logo margin-top">
@@ -126,7 +74,120 @@
           </ion-row>
         </ion-col>
       </ion-row>
+      <!-- end of start location -->
 
+      <!-- interchange starts -->
+      <div *ngFor="let trip of route.trips; let i=index;">
+        <ion-row>
+          <ion-col col-1>
+          </ion-col>
+          <ion-col col-11 class= "waypoint">
+            <div class="inner-block">
+              <div class="point"></div>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <!-- bus block starts inside interchange -->
+        <ion-row>
+          <ion-col col-12 text-center class="bg-semi-transparent padding-0">
+            <ion-row>
+              <ion-col col-1 class="left-logo">
+                <div class="icon">
+                  <!-- <ion-icon name="bus" color="light" class="text-5x"></ion-icon> -->
+                  <img src="assets/images/bus_icon_orange.png">
+                </div>
+              </ion-col>
+              <ion-col col-11 class="block text-align-left padding-left-16">
+                <div class="logo ">
+                  <div class="bus-no">
+                    <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span>
+                  </div>
+                </div>
+
+                <div class="address">
+                  <span class="text-white text-3x">Drive</span><br>
+                  <div *ngIf="route.trips.length>1">
+                    <span class="text-white text-2x" *ngIf="i==route.trips.length-1">{{trip.stops[trip.stops.length-1].stopName}}</span>
+                    <span class="text-white text-2x" *ngIf="i==0">{{trip.stops[0].stopName}}</span>
+                  </div>
+
+                  <span class="text-white text-2x" *ngIf="route.trips.length==1">{{trip.stops[0].stopName}}</span>
+                </div>
+
+
+                <div class="logo margin-top">
+                  <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+                  <span class="eta text-2x text-white">About {{trip.totalDuration.h}}hr {{trip.totalDuration.m}}min</span>
+                </div>
+
+                <div class="alert" *ngIf="false">
+                  <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
+                </div>
+
+                <div class="action">
+                  <button  ion-button small icon-right class="bg-white text-orange">
+                    VIEW MAP
+                    <ion-icon name="map"></ion-icon>
+                  </button>
+                </div>
+
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <!-- bus block ends inside interchange -->
+        <div *ngIf="i<(route.trips.length-1)">
+          <ion-row>
+            <ion-col col-1>
+            </ion-col>
+            <ion-col col-11 class= "waypoint">
+              <div class="inner-block">
+                <div class="point"></div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <!-- walk block starts inside interchange -->
+          <ion-row>
+            <ion-col col-12 text-center class="bg-semi-transparent padding-0">
+              <ion-row>
+                <ion-col col-1 class="left-logo">
+                  <div class="icon">
+                    <ion-icon name="walk" color="light" class="text-5x"></ion-icon>
+                  </div>
+                </ion-col>
+                <ion-col col-11 class="block walk text-align-left padding-left-16">
+                  <div class="address">
+                    <span class="text-white text-3x">Walk</span><br>
+                    <span class="text-white text-2x">Towards {{route.trips[i+1].stops[0].stopName}}</span>
+                  </div>
+
+                  <div class="logo margin-top">
+                    <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+                    <span class="eta text-2x text-white">About 40 minutes</span>
+                  </div>
+
+                  <div class="alert">
+                    <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
+                  </div>
+
+                  <div class="action">
+                    <button  ion-button small icon-right class="bg-white text-orange">
+                      VIEW MAP
+                      <ion-icon name="map"></ion-icon>
+                    </button>
+                  </div>
+
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <!-- walk block ends inside interchange -->
+        </div>
+      </div>
+
+      <!-- end of interchange -->
 
       <ion-row>
         <ion-col col-1>
@@ -138,26 +199,20 @@
         </ion-col>
       </ion-row>
 
+      <!-- end location starts -->
       <ion-row>
         <ion-col col-12 text-center class="bg-semi-transparent padding-0">
           <ion-row>
             <ion-col col-1 class="left-logo">
               <div class="icon">
-                <ion-icon name="bus" color="light" class="text-5x"></ion-icon>
+                <ion-icon name="walk" color="light" class="text-5x"></ion-icon>
               </div>
             </ion-col>
-            <ion-col col-11 class="block text-align-left padding-left-16">
-              <div class="logo ">
-                <div class="bus-no">
-                  <span class="text-white text-3x bg-blue">123B</span>
-                </div>
-              </div>
-
+            <ion-col col-11 class="block walk text-align-left padding-left-16">
               <div class="address">
-                <span class="text-white text-3x">Ekanta Kuna Road</span><br>
-                <span class="text-white text-2x">Bhaisepati, Nepal</span>
+                <span class="text-white text-3x">Walk</span><br>
+                <span class="text-white text-2x">Towards {{endAddress}}</span>
               </div>
-
 
               <div class="logo margin-top">
                 <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
@@ -179,6 +234,7 @@
           </ion-row>
         </ion-col>
       </ion-row>
+      <!-- end location ends -->
 
       <!-- <ion-row>
         <ion-col col-12 text-center class="price margin-top bg-semi-transparent">

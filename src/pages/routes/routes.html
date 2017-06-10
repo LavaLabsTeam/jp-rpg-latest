@@ -200,7 +200,7 @@
         <ion-col col-12 text-center class="time">
           <div class="inner-block">
             <div class="duration">
-              <h3 class="text-white">1hr 20min</h3>
+              <h3 class="text-white">{{route.totalDuration.h}}hr {{route.totalDuration.m}}min </h3>
             </div>
               <!-- <div class="time">
                 <span class="text-white size-1x">12:20pm - 2:30pm</span>
@@ -223,7 +223,7 @@
       <ion-row>
         <ion-col col-12 text-center>
           <div class="inner-block">
-            <button ion-button full (click)="viewRouteDetailsClicked()">
+            <button ion-button full (click)="viewRouteDetailsClicked(route)">
               View Details
             </button>
           </div>

@@ -53,9 +53,9 @@ export class HomePage {
      console.log(data);
      if(data!=undefined){
        this.startAddress=data.place.formatted_address;
-       this.startLocation=data.place.geometry.location;
+       this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
 
-       console.log(this.startLocation);
+       //console.log(this.startLocation);
       }
     });
 
@@ -70,7 +70,7 @@ export class HomePage {
      console.log(data);
      if(data!=undefined){
        this.endAddress=data.place.formatted_address;
-       this.endLocation=data.place.geometry.location;
+       this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()}
 
        console.log(this.startLocation);
       }
@@ -121,7 +121,7 @@ export class HomePage {
     this.geolocation.getCurrentPosition().then((resp) => {
      // resp.coords.latitude
      // resp.coords.longitude
-     this.startLocation=resp.coords;
+     this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
      this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
      //console.log(resp);
     }).catch((error) => {
@@ -133,6 +133,7 @@ export class HomePage {
      // data can be a set of coordinates, or an error (if an error occurred).
      // data.coords.latitude
      // data.coords.longitude
+
      console.log(data);
      this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
     });
@@ -142,8 +143,8 @@ export class HomePage {
     this.watch.unsubscribe();
   }
 
-  getGeoCodeReverse(lat:any, lon: any){
-    this.http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lon+'&sensor=true').subscribe(data => {
+  getGeoCodeReverse(lat:any, lng: any){
+    this.http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng+'&sensor=true').subscribe(data => {
         let body = data.json();
         if(body.results[0])
           this.startAddress = body.results[0].formatted_address;
