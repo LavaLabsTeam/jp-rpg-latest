@@ -51,17 +51,17 @@
             <ion-col col-11 class="block walk text-align-left padding-left-16">
               <div class="address">
                 <span class="text-white text-3x">Walk</span><br>
-                <span class="text-white text-2x">From {{startAddress}}</span>
+                <span class="text-white text-2x">{{startAddress}}</span>
               </div>
 
               <div class="logo margin-top">
                 <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                <span class="eta text-2x text-white">About 40 minutes</span>
+                <span class="eta text-2x text-white" *ngIf="placesETARows?.length>0">About {{placesETARows[0].elements[0].duration.text}}</span>
               </div>
 
-              <div class="alert">
+              <!-- <div class="alert">
                 <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
-              </div>
+              </div> -->
 
               <div class="action">
                 <button  ion-button small icon-right class="bg-white text-orange">
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="address">
-                  <span class="text-white text-3x">Drive</span><br>
+                  <!-- <span class="text-white text-3x">Drive</span><br> -->
                   <div *ngIf="route.trips.length>1">
                     <span class="text-white text-2x" *ngIf="i==route.trips.length-1">{{trip.stops[trip.stops.length-1].stopName}}</span>
                     <span class="text-white text-2x" *ngIf="i==0">{{trip.stops[0].stopName}}</span>
@@ -121,9 +121,9 @@
                   <span class="eta text-2x text-white">About {{trip.totalDuration.h}}hr {{trip.totalDuration.m}}min</span>
                 </div>
 
-                <div class="alert" *ngIf="false">
+                <!-- <div class="alert" *ngIf="false">
                   <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
-                </div>
+                </div> -->
 
                 <div class="action">
                   <button  ion-button small icon-right class="bg-white text-orange">
@@ -160,17 +160,17 @@
                 <ion-col col-11 class="block walk text-align-left padding-left-16">
                   <div class="address">
                     <span class="text-white text-3x">Walk</span><br>
-                    <span class="text-white text-2x">Towards {{route.trips[i+1].stops[0].stopName}}</span>
+                    <span class="text-white text-2x">{{route.trips[i+1].stops[0].stopName}}</span>
                   </div>
 
                   <div class="logo margin-top">
                     <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                    <span class="eta text-2x text-white">About 40 minutes</span>
+                    <span class="eta text-2x text-white" *ngIf="placesETARows?.length>0">About {{placesETARows[i+1].elements[i+1].duration.text}}</span>
                   </div>
 
-                  <div class="alert">
+                  <!-- <div class="alert">
                     <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
-                  </div>
+                  </div> -->
 
                   <div class="action">
                     <button  ion-button small icon-right class="bg-white text-orange">
@@ -211,17 +211,17 @@
             <ion-col col-11 class="block walk text-align-left padding-left-16">
               <div class="address">
                 <span class="text-white text-3x">Walk</span><br>
-                <span class="text-white text-2x">Towards {{endAddress}}</span>
+                <span class="text-white text-2x">{{endAddress}}</span>
               </div>
 
               <div class="logo margin-top">
                 <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                <span class="eta text-2x text-white">About 40 minutes</span>
+                <span class="eta text-2x text-white" *ngIf="placesETARows?.length>0">About {{placesETARows[route.trips.length-1].elements[route.trips.length-1].duration.text}}</span>
               </div>
 
-              <div class="alert">
+              <!-- <div class="alert">
                 <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
-              </div>
+              </div> -->
 
               <div class="action">
                 <button  ion-button small icon-right class="bg-white text-orange">
