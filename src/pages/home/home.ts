@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { PlacesearchPage } from '../placesearch/placesearch';
 import { RoutesPage } from '../routes/routes';
@@ -35,7 +36,7 @@ export class HomePage {
   @ViewChild('datePicker') datePicker; //inject element
 
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants, private toastCtrl: ToastController) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     console.log(constants);
   }
@@ -82,10 +83,42 @@ export class HomePage {
 
   planJourneyClicked(){
 
-    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH).subscribe(data => {
-        let body = data.json();
+    var config={
+      params:{
+        startLan:this.startLocation.lat,
+        startLon:this.startLocation.lng,
+        endLan:this.endLocation.lat,
+        endLon:this.endLocation.lng,
+        time:"12:28:32"
+      }
+    }
+
+    var error=false;
+    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH,config).subscribe(data => {
+        let json = data.json();
         //console.log(body);
-        this.navCtrl.push(RoutesPage,{data:body,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation});
+        if(json.body!=null){
+          if(json.body.routes!=null){
+            this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation});
+            error=false;
+          }
+          else {
+            error=true;
+          }
+        }
+        else {
+          error=true
+        }
+
+        if(error){
+          let toast = this.toastCtrl.create({
+            message: 'No Routes Found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
+        }
 
     });
   }
@@ -135,7 +168,7 @@ export class HomePage {
      // data.coords.longitude
 
      console.log(data);
-     this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
+     //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
     });
   }
 

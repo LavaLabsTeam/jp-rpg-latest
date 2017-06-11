@@ -35,17 +35,17 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RoutedetailPage');
-    //this.origins.push(this.startLocation.lat+","+this.startLocation.lng);
+    this.origins.push(this.startLocation.lat+","+this.startLocation.lng);
 
-    this.origins.push("3.218561,101.564353");
+    //this.origins.push("3.218561,101.564353");
     let i=0;
     for(let trip of this.route.trips){
       this.destinations.push(trip.stops[0].stopLat+","+trip.stops[0].stopLon);
       this.origins.push(trip.stops[trip.stops.length-1].stopLat+","+trip.stops[trip.stops.length-1].stopLon);
       i++;
     }
-    //this.destinations.push(this.endLocation.lat+","+this.endLocation.lng);
-    this.destinations.push("3.219405,101.593238");
+    this.destinations.push(this.endLocation.lat+","+this.endLocation.lng);
+    //this.destinations.push("3.219405,101.593238");
 
     let url=this.constants.getMatrixURL(this.origins.join("|"),this.destinations.join("|"));
 
