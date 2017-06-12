@@ -9,7 +9,8 @@ export class Constants {
   //public BASE_URL_ROUTE_SEARCH:string = "http://172.27.26.20/open/api/search";
   BASE_URL_API:any = "http://58.27.125.82";
   public BASE_URL_ROUTE_SEARCH:string = this.BASE_URL_API+"/open/api/search";
-  public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
+  //public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
+  public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/dkigj";
   public GOOGLE_API_KEY:string="AIzaSyCUo-4x6rSmsd1dts4lvB6jJU5uVP1zvqQ";
 
   public getMatrixURL(origins:any, destinations:any){

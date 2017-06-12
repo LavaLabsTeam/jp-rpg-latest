@@ -17,20 +17,22 @@ export class StopsnearmePage {
 
   records: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.records=[
-      {
-        id:1,
-        name:"Stop 1",
-        eta1:"12:10",
-        eta2:"13:39"
-      },
-      {
-        id:2,
-        name:"Stop 2",
-        eta1:"12:10",
-        eta2:"13:39"
-      }
-    ];
+    // this.records=[
+    //   {
+    //     id:1,
+    //     name:"Stop 1",
+    //     eta1:"12:10",
+    //     eta2:"13:39"
+    //   },
+    //   {
+    //     id:2,
+    //     name:"Stop 2",
+    //     eta1:"12:10",
+    //     eta2:"13:39"
+    //   }
+    // ];
+
+    this.records = navParams.get("data");
   }
 
   ionViewDidLoad() {
@@ -42,7 +44,7 @@ export class StopsnearmePage {
   }
 
   viewMapClicked(){
-    this.navCtrl.push(MapPage,{data:"sagar"})
+    this.navCtrl.push(MapPage,{mapdata:{from:"stops",data:this.records}})
   }
 
 

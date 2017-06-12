@@ -15,29 +15,62 @@ declare var google:any;
 export class MapPage {
   @ViewChild('mymap') mapElement:ElementRef;
   map: any;
+  mapData:any;
+
   //google:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.mapData = navParams.get("mapdata");
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
     //console.log(this.mapElement);
-    this.loadMap();
+    if(this.mapData.from=="stops"){
+      this.loadStops();
+    }
+
   }
 
 
-  loadMap(){
+  loadStops(){
 
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+
+
+    let latLng = new google.maps.LatLng(this.mapData.data[0].stopLat, this.mapData.data[0].stopLon);
 
     let mapOptions = {
       center: latLng,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    console.log(this.mapElement.nativeElement);
+
+    //console.log(this.mapElement.nativeElement);
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+
+    for(let stop of this.mapData.data){
+      console.log(stop);
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: this.map,
+        draggable: true,
+        title: stop.stopName
+      });
+
+
+
+      var infowindow = new google.maps.InfoWindow();
+
+      google.maps.event.addListener(marker, 'click', (function(marker) {
+  			return function() {
+  				infowindow.setContent(stop.stopName);
+  				//infowindow.setOptions({maxWidth: 200});
+  				infowindow.open(this.map, marker);
+  			}
+  		}) (marker));
+
+    }
 
   }
 

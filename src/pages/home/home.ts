@@ -147,6 +147,17 @@ export class HomePage {
 
   viewStopsNearMeClicked(){
 
+    if(this.currentLocation==null){
+      let toast = this.toastCtrl.create({
+        message: 'Current location not resolved !',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+      return false;
+    }
+
     var config={
       params:{
         lat:this.currentLocation.lat,

@@ -40,29 +40,31 @@
       </ion-col>
 
       <ion-col col-3 class="bg-orange" text-center>
-        <span class="text-white size-2x" color="primary">First ETA</span>
+        <span class="text-white size-2x" color="primary">ETA 1st Bus</span>
       </ion-col>
 
       <ion-col col-3 class="bg-orange" text-center>
-        <span class="text-white size-2x" color="primary">Second ETA</span>
+        <span class="text-white size-2x" color="primary">ETA 1st Bus</span>
       </ion-col>
 
     </ion-row>
     <ion-row *ngFor="let row of records">
       <ion-col col-3 class="bg-white" text-center>
-        <span class="text-orange size-2x" color="primary">{{row.id}}</span>
+        <span class="text-orange size-2x" color="primary">{{row.stopId}}</span>
       </ion-col>
 
       <ion-col col-3 class="bg-white" text-center>
-        <span class="text-orange size-2x" color="primary">{{row.name}}</span>
+        <span class="text-orange size-2x" color="primary">{{row.stopName}}</span>
       </ion-col>
 
       <ion-col col-3 class="bg-white" text-center>
-        <span class="text-orange size-2x" color="primary">{{row.eta1}}</span>
+        <span class="text-orange size-2x" color="primary" *ngIf="row.eta1!=null">{{row.eta1}}</span>
+        <span class="text-orange size-2x" color="primary" *ngIf="row.eta1==null">Not Available</span>
       </ion-col>
 
       <ion-col col-3 class="bg-white" text-center>
-        <span class="text-orange size-2x" color="primary">{{row.eta2}}</span>
+        <span class="text-orange size-2x" color="primary" *ngIf="row.eta2!=null">{{row.eta2}}</span>
+        <span class="text-orange size-2x" color="primary" *ngIf="row.eta2==null">Not Available</span>
       </ion-col>
     </ion-row>
   </ion-grid>
