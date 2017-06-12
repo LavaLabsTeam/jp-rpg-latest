@@ -17,8 +17,44 @@ import { DatePipe } from '@angular/common';
 export class DatepickerPage {
   public dateOptions:Array<Object>=[];
   public selectedDate:any;
+  public hours:Array<string>=[];
+  public selectedHour:any;
+  public mins:Array<string>=[];
+  public selectedMinute:any;
+
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public datePipe:DatePipe) {
+    for(var i=1; i<=24; i++){
+      var hr;
+      var d=new Date();
+      if(i<=9)
+        hr="0"+i;
+      else
+        hr=i.toString();
+
+      this.hours.push(hr);
+
+      if(d.getHours()==i){
+        this.selectedHour=hr;
+      }
+
+
+
+    }
+
+    for(i=0; i<=60; i+=15){
+      var mn;
+      var d=new Date();
+      if(i<=9)
+        mn="0"+i;
+      else
+        mn=i.toString();
+
+      this.mins.push(mn);
+      this.selectedMinute="00";
+
+    }
+
 
 
 
@@ -56,7 +92,7 @@ export class DatepickerPage {
 
   onDateSet(){
       //console.log(this.selectedDate);
-      this.viewCtrl.dismiss(this.selectedDate);
+      this.viewCtrl.dismiss({date:this.selectedDate,hour:this.selectedHour,min:this.selectedMinute,sec:0});
   }
 
   onDateCancelled(){

@@ -21,6 +21,28 @@
 <div class="footer padding-0">
   <ion-row class="padding-0">
     <ion-col col-6 class="padding-right-1">
+      <ion-item large full>
+        <ion-label>Hour</ion-label>
+        <ion-select [(ngModel)]="selectedHour" class="full-width">
+          <ion-option *ngFor="let h of hours" value="{{h}}">{{h}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+
+    <ion-col col-6 class="padding-left-1">
+      <ion-item large full>
+        <ion-label>Minute</ion-label>
+        <ion-select [(ngModel)]="selectedMinute" class="full-width">
+          <ion-option *ngFor="let m of mins" value="{{m}}">{{m}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</div>
+
+<div class="footer padding-0">
+  <ion-row class="padding-0">
+    <ion-col col-6 class="padding-right-1">
       <button (click)="onDateSet()" ion-button icon-right full large class="bg-primary text-white">
         OK
         <ion-icon name="check"></ion-icon>

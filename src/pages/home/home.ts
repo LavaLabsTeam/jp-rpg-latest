@@ -28,13 +28,17 @@ export class HomePage {
   endLocation:any;
   whatTime:any;
 
+  currentLocation:any;
+
   private selected: boolean = false;
   selectedDate: any;
+  selectedTime: any;
 
   private watch:any;
 
   @ViewChild('datePicker') datePicker; //inject element
-
+ //sample places to see route
+ //MRT & KTM Sungai Buloh Drop Off and Kuarters Integrasi Hospital Sungai Buloh and time 12:24 to 12:55
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants, private toastCtrl: ToastController) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
@@ -55,7 +59,6 @@ export class HomePage {
      if(data!=undefined){
        this.startAddress=data.place.formatted_address;
        this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-
        //console.log(this.startLocation);
       }
     });
@@ -83,13 +86,24 @@ export class HomePage {
 
   planJourneyClicked(){
 
+    if(this.startLocation==null || this.endLocation==null){
+      let toast = this.toastCtrl.create({
+        message: 'Please select start and destination locations !',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+      return false;
+    }
+
     var config={
       params:{
         startLan:this.startLocation.lat,
         startLon:this.startLocation.lng,
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
-        time:"12:28:32"
+        time:this.selectedTime+":30"
       }
     }
 
@@ -132,7 +146,47 @@ export class HomePage {
   }
 
   viewStopsNearMeClicked(){
-    this.navCtrl.push(StopsnearmePage,{data:"sagar"})
+
+    var config={
+      params:{
+        lat:this.currentLocation.lat,
+        lon:this.currentLocation.lng
+      }
+    }
+
+    var error=false;
+    this.http.get(this.constants.BASE_URL_NEAREST_STOPS,config).subscribe(data => {
+        let json = data.json();
+        //console.log(body);
+        if(json.body!=null){
+          if(json.body.length>0){
+            error=false;
+            this.navCtrl.push(StopsnearmePage,{data:json.body});
+          }
+          else {
+            {
+              error=true;
+            }
+          }
+
+        }
+        else {
+          error=true
+        }
+
+        if(error){
+          let toast = this.toastCtrl.create({
+            message: 'No Stops Found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
+        }
+
+    });
+
+
   }
 
   onGeneralInfoClicked(){
@@ -155,6 +209,7 @@ export class HomePage {
      // resp.coords.latitude
      // resp.coords.longitude
      this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+     this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
      this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
      //console.log(resp);
     }).catch((error) => {
@@ -166,7 +221,7 @@ export class HomePage {
      // data can be a set of coordinates, or an error (if an error occurred).
      // data.coords.latitude
      // data.coords.longitude
-
+     this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
      console.log(data);
      //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
     });
@@ -207,7 +262,9 @@ export class HomePage {
      this.selected=false;
      if(data!=undefined){
         this.selected=true;
-        this.selectedDate=data;
+        this.selectedDate=data.date;
+        this.selectedTime=data.hour+":"+data.min;
+
      }
     });
 

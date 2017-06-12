@@ -91,7 +91,7 @@
       <ion-col col-4>
         <button ion-button icon-right full  small (click)="showDatePicker()">
           <span *ngIf="!selected">Change Time</span>
-          <span *ngIf="selected">{{selectedDate | date: 'dd/MM/yyyy'}}</span>
+          <span *ngIf="selected">{{selectedDate | date: 'dd/MM/yyyy'}} {{selectedTime}}</span>
           <ion-icon name="calendar"></ion-icon>
         </button>
 
