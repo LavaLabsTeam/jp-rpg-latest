@@ -51,7 +51,7 @@
             <ion-col col-11 class="block walk text-align-left padding-left-16">
               <div class="address">
                 <span class="text-white text-3x">Walk</span><br>
-                <span class="text-white text-2x">{{startAddress}}</span>
+                <span class="text-white text-2x">From {{startAddress}}</span>
               </div>
 
               <div class="logo margin-top">
@@ -102,12 +102,10 @@
 
                 <div class="address">
                   <!-- <span class="text-white text-3x">Drive</span><br> -->
-                  <div *ngIf="route.trips.length>1">
-                    <span class="text-white text-2x" *ngIf="i==route.trips.length-1">{{trip.stops[trip.stops.length-1].stopName}}</span>
-                    <span class="text-white text-2x" *ngIf="i==0">{{trip.stops[0].stopName}}</span>
-                  </div>
+                  <span class="text-white text-2x" *ngIf="trip.stops.length==1">{{trip.stops[0].stopName}}</span>
+                  <span class="text-white text-2x" *ngIf="trip.stops.length>1">From {{trip.stops[0].stopName}} to {{trip.stops[trip.stops.length-1].stopName}}</span>
 
-                  <span class="text-white text-2x" *ngIf="route.trips.length==1">{{trip.stops[0].stopName}}</span>
+                  <!-- <span class="text-white text-2x" *ngIf="route.trips.length==1">{{trip.stops[0].stopName}}</span> -->
                 </div>
 
 
@@ -128,44 +126,46 @@
         </ion-row>
         <!-- bus block ends inside interchange -->
         <div *ngIf="i<(route.trips.length-1)">
-          <ion-row>
-            <ion-col col-1>
-            </ion-col>
-            <ion-col col-11 class= "waypoint">
-              <div class="inner-block">
-                <div class="point"></div>
-              </div>
-            </ion-col>
-          </ion-row>
+          <div *ngIf="trip.stops[trip.stops.length-1].stopName!=route.trips[i+1].stops[0].stopName">
+            <ion-row>
+              <ion-col col-1>
+              </ion-col>
+              <ion-col col-11 class= "waypoint">
+                <div class="inner-block">
+                  <div class="point"></div>
+                </div>
+              </ion-col>
+            </ion-row>
 
-          <!-- walk block starts inside interchange -->
-          <ion-row>
-            <ion-col col-12 text-center class="bg-semi-transparent padding-0">
-              <ion-row>
-                <ion-col col-1 class="left-logo">
-                  <div class="icon">
-                    <ion-icon name="walk" color="light" class="text-5x"></ion-icon>
-                  </div>
-                </ion-col>
-                <ion-col col-11 class="block walk text-align-left padding-left-16">
-                  <div class="address">
-                    <span class="text-white text-3x">Walk</span><br>
-                    <span class="text-white text-2x">{{route.trips[i+1].stops[0].stopName}}</span>
-                  </div>
+            <!-- walk block starts inside interchange -->
+            <ion-row>
+              <ion-col col-12 text-center class="bg-semi-transparent padding-0">
+                <ion-row>
+                  <ion-col col-1 class="left-logo">
+                    <div class="icon">
+                      <ion-icon name="walk" color="light" class="text-5x"></ion-icon>
+                    </div>
+                  </ion-col>
+                  <ion-col col-11 class="block walk text-align-left padding-left-16">
+                    <div class="address">
+                      <span class="text-white text-3x">Walk</span><br>
+                      <span class="text-white text-2x">From {{route.trips[i].stops[route.trips[i].stops.length-1].stopName}} to {{route.trips[i+1].stops[0].stopName}}</span>
+                    </div>
 
-                  <div class="logo margin-top">
-                    <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                    <span class="eta text-2x text-white" *ngIf="placesETARows?.length>0">About {{placesETARows[i+1].elements[i+1].duration.text}}</span>
-                  </div>
+                    <div class="logo margin-top">
+                      <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+                      <span class="eta text-2x text-white" *ngIf="placesETARows?.length>0">About {{placesETARows[i+1].elements[i+1].duration.text}}</span>
+                    </div>
 
-                  <!-- <div class="alert">
-                    <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
-                  </div> -->
-                </ion-col>
-              </ion-row>
-            </ion-col>
-          </ion-row>
-          <!-- walk block ends inside interchange -->
+                    <!-- <div class="alert">
+                      <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
+                    </div> -->
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <!-- walk block ends inside interchange -->
+          </div>
         </div>
       </div>
 
@@ -192,7 +192,7 @@
             </ion-col>
             <ion-col col-11 class="block walk text-align-left padding-left-16">
               <div class="address">
-                <span class="text-white text-3x">Walk</span><br>
+                <span class="text-white text-3x">Walk to</span><br>
                 <span class="text-white text-2x">{{endAddress}}</span>
               </div>
 

@@ -126,31 +126,33 @@
 
       <div *ngFor="let trip of route.trips; let i=index">
 
-
-        <ion-row *ngIf="i>0">
-          <ion-col col-12 text-center class="block walk">
-              <div class="inner-block">
-                  <div class="logo align-center">
-                    <div class="icon">
-                      <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
+        <div *ngIf="i>0">
+          <ion-row *ngIf="route.trips[i-1].stops[route.trips[i-1].stops.length-1].stopName!=trip.stops[0].stopName">
+            <ion-col col-12 text-center class="block walk">
+                <div class="inner-block">
+                    <div class="logo align-center">
+                      <div class="icon">
+                        <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
+                      </div>
                     </div>
-                  </div>
-                  <div class="address">
-                    <h3 class="text-white">Walk</h3>
-                  </div>
+                    <div class="address">
+                      <h3 class="text-white">Walk</h3>
+                      <h5 class="text-white">from {{trip.stops[i-1].stopName}} to {{trip.stops[trip.stops.length-1].stopName}}</h5>
+                    </div>
 
+                </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="i>0">
+            <ion-col col-12 class= "waypoint">
+              <div class="inner-block">
+                <div class="point"></div>
+                <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
               </div>
-          </ion-col>
-        </ion-row>
-
-        <ion-row *ngIf="i>0">
-          <ion-col col-12 class= "waypoint">
-            <div class="inner-block">
-              <div class="point"></div>
-              <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-            </div>
-          </ion-col>
-        </ion-row>
+            </ion-col>
+          </ion-row>
+        </div>
 
         <ion-row>
           <ion-col col-12 text-center class="block">
@@ -164,12 +166,15 @@
                   </div>
                 </div>
                 <div class="address">
-                  <div *ngIf="route.trips.length>1">
-                    <h3 class="text-white" *ngIf="i==route.trips.length-1">{{trip.stops[trip.stops.length-1].stopName}}</h3>
-                    <h3 class="text-white" *ngIf="i==0">{{trip.stops[0].stopName}}</h3>
+                  <div *ngIf="route.trips.length>=1">
+                    <!-- <h3 class="text-white" *ngIf="i==route.trips.length-1">{{trip.stops[trip.stops.length-1].stopName}}</h3> -->
+                    <h3 class="text-white" *ngIf="trip.stops.length==1">{{trip.stops[0].stopName}}</h3>
+                    <h3 class="text-white" *ngIf="trip.stops.length>1">
+                      From {{trip.stops[0].stopName}} to {{trip.stops[trip.stops.length-1].stopName}}
+                    </h3>
                   </div>
 
-                  <h3 class="text-white" *ngIf="route.trips.length==1">{{trip.stops[0].stopName}}</h3>
+                  <!-- <h3 class="text-white" *ngIf="route.trips.length==1">From {{trip.stops[0].stopName}}</h3> -->
                 </div>
 
             </div>
