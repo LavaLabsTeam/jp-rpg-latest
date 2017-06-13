@@ -1,0 +1,117 @@
+<!--
+  Generated template for the RoutesinfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Routes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="row bg-semi-transparent">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <h1 class="text-white text-4x" color="primary">JOURNEY PLANNER</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <h1 class="text-white text-2x" color="primary">Routes</h1>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-grid class="padding-0 margin-top">
+    <ion-row>
+      <ion-col col-3 class="bg-orange">
+        <span class="text-white size-2x" color="primary">Route</span>
+      </ion-col>
+
+      <ion-col col-6 class="bg-orange">
+        <span class="text-white size-2x" color="primary">Route ID</span>
+      </ion-col>
+
+      <ion-col col-3 class="bg-orange" text-center>
+        <span class="text-white size-2x" color="primary">Stops</span>
+      </ion-col>
+
+
+
+    </ion-row>
+    <ion-row *ngFor="let row of routes; let i=index">
+
+      <ion-col col-12 class="padding-0">
+        <ion-row class="bg-light-orange">
+          <ion-col col-3>
+            <span class="text-orange size-2x align-right" color="primary">{{row.routeLongName}}</span>
+          </ion-col>
+
+          <ion-col col-8>
+            <span class="text-orange size-2x align-right" color="primary">{{row.routeId}}</span>
+          </ion-col>
+          <ion-col col-1 text-center (click)="expand.hidden=!expand.hidden">
+              <ion-icon color="light" name="md-arrow-down"></ion-icon>
+          </ion-col>
+        </ion-row>
+
+        <div #expand [hidden]="i>0">
+          <div *ngIf="row.stops!=null" class="stop-container">
+            <ion-row>
+              <ion-col col-4 class="bg-white text-blue">
+                <span class="text-blue size-2x" color="primary">Stop ID</span>
+              </ion-col>
+
+              <ion-col col-8 class="bg-white">
+                <span class="text-blue size-2x" color="primary">Stop Name</span>
+
+              </ion-col>
+
+
+           </ion-row>
+            <ion-row *ngFor="let stop of row.stops">
+              <ion-col col-4 class="bg-white">
+                <span class="text-orange size-2x" color="primary">{{stop.stopId}}</span>
+              </ion-col>
+
+              <ion-col col-8 class="bg-white">
+                <span class="text-orange size-2x" color="primary" *ngIf="stop.stopName!=null">{{stop.stopName}}</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="stop.stopName==null">N/A</span>
+              </ion-col>
+
+
+           </ion-row>
+         </div>
+
+         <ion-row *ngIf="row.stops==null">
+           <ion-col col-12 class="bg-white">
+             <span class="text-orange size-2x" color="primary">Stop Not Available</span>
+           </ion-col>
+        </ion-row>
+       </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row class="padding-0 margin-top">
+
+      <ion-col col-12 class="padding-right-1">
+        <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
+          BACK
+        </button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -167,6 +167,10 @@ ion-content.no-bgimage{
   background-color:color($colors, blue, base);
 }
 
+.bg-light-orange{
+  background-color:color($colors, lightorange, base);
+}
+
 .bg-semi-transparent{
   background-color:rgba(255,255,255,0.3);
 }

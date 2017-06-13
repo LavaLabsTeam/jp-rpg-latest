@@ -63,12 +63,7 @@
                 <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
               </div> -->
 
-              <div class="action">
-                <button  ion-button small icon-right class="bg-white text-orange">
-                  VIEW MAP
-                  <ion-icon name="map"></ion-icon>
-                </button>
-              </div>
+
 
             </ion-col>
           </ion-row>
@@ -125,12 +120,7 @@
                   <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
                 </div> -->
 
-                <div class="action">
-                  <button  ion-button small icon-right class="bg-white text-orange">
-                    VIEW MAP
-                    <ion-icon name="map"></ion-icon>
-                  </button>
-                </div>
+
 
               </ion-col>
             </ion-row>
@@ -171,14 +161,6 @@
                   <!-- <div class="alert">
                     <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
                   </div> -->
-
-                  <div class="action">
-                    <button  ion-button small icon-right class="bg-white text-orange">
-                      VIEW MAP
-                      <ion-icon name="map"></ion-icon>
-                    </button>
-                  </div>
-
                 </ion-col>
               </ion-row>
             </ion-col>
@@ -216,20 +198,12 @@
 
               <div class="logo margin-top">
                 <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                <span class="eta text-2x text-white" *ngIf="placesETARows?.length>0">About {{placesETARows[route.trips.length-1].elements[route.trips.length-1].duration.text}}</span>
+                <span class="eta text-2x text-white" *ngIf="placesETARows?.length>0">About {{placesETARows[route.trips.length].elements[route.trips.length].duration.text}}</span>
               </div>
 
               <!-- <div class="alert">
                 <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
               </div> -->
-
-              <div class="action">
-                <button  ion-button small icon-right class="bg-white text-orange">
-                  VIEW MAP
-                  <ion-icon name="map"></ion-icon>
-                </button>
-              </div>
-
             </ion-col>
           </ion-row>
         </ion-col>
@@ -259,3 +233,25 @@
 
     </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row class="padding-0 margin-top">
+
+
+      <ion-col col-6 class="padding-left-1">
+        <button  (click)="viewMapClicked()" ion-button full large icon-right class="bg-white text-orange">
+          VIEW MAP
+          <ion-icon name="map"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-6 class="padding-right-1">
+        <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
+          BACK
+        </button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-footer>

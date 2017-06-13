@@ -11,6 +11,8 @@ import { RoutesPage } from '../pages/routes/routes';
 import { EtaresultPage } from '../pages/etaresult/etaresult';
 import { StopsnearmePage } from '../pages/stopsnearme/stopsnearme';
 import { DatepickerPage } from '../pages/datepicker/datepicker';
+import { ProgressPage } from '../pages/progress/progress';
+import { RoutesinfoPage } from '../pages/routesinfo/routesinfo';
 
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
@@ -38,7 +40,9 @@ import { Constants } from '../services/constants';
     MapPage,
     PreferencemodalPage,
     RoutedetailPage,
-    DatepickerPage
+    DatepickerPage,
+    ProgressPage,
+    RoutesinfoPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +61,9 @@ import { Constants } from '../services/constants';
     MapPage,
     PreferencemodalPage,
     RoutedetailPage,
-    DatepickerPage
+    DatepickerPage,
+    ProgressPage,
+    RoutesinfoPage
   ],
 
   providers: [

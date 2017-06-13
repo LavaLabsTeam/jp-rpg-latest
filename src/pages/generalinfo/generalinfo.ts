@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage,  NavController, ModalController, NavParams } from 'ionic-angular';
+import { RoutesinfoPage } from '../routesinfo/routesinfo';
+import { Http } from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import { Constants } from '../../services/constants';
+import { ProgressPage } from '../progress/progress';
 
 /**
  * Generated class for the GeneralinfoPage page.
@@ -13,16 +18,33 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'generalinfo.html',
 })
 export class GeneralinfoPage {
+  progress:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,public modalCtrl:ModalController, public constants:Constants, public http:Http) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GeneralinfoPage');
+    this.progress = this.modalCtrl.create(ProgressPage);
   }
 
   goBackClicked(){
     this.navCtrl.pop();
+  }
+
+  busRoutesClicked(){
+    this.progress.present();
+    this.http.get(this.constants.BASE_URL_ROUTES).subscribe(data => {
+        let json = data.json();
+        this.navCtrl.push(RoutesinfoPage,{routes:json});
+        this.progress.dismiss();
+    },
+    error => {
+      this.progress.dismiss();
+    }
+  );
+
+
   }
 
 }

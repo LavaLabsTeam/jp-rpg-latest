@@ -17,8 +17,9 @@ export class PreferencemodalPage {
   showOptions:any;
   accessOptions:any;
   constructor(public viewCtrl: ViewController, public navParams: NavParams) {
-    this.showOptions="1";
-    this.accessOptions="1";
+    this.accessOptions=navParams.get("accessOptions")==undefined?"nar":navParams.get("accessOptions");
+    this.showOptions=navParams.get("showOptions")==undefined?"tfr":navParams.get("showOptions");
+    //console.log(this.accessOptions);
   }
 
   ionViewDidLoad() {
@@ -27,7 +28,7 @@ export class PreferencemodalPage {
 
 
   onPreferenceOK(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss({accessOptions:this.accessOptions,showOptions:this.showOptions});
   }
 
   onPreferenceCancelled(){

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Constants } from '../../services/constants';
 import { Http } from '@angular/http';
+import { MapPage } from '../map/map';
+//import 'rxjs/add/operator/map';
+
 
 /**
  * Generated class for the RoutedetailPage page.
@@ -24,6 +27,9 @@ export class RoutedetailPage {
   endAddress: any;
   endLocation:any;
   placesETARows:any;
+  walkPolyLines:Array<string>=[];
+  busPolyLines:Array<string>=[];
+
 
 constructor(public navCtrl: NavController, public navParams: NavParams, public constants:Constants, public http:Http) {
     this.route=navParams.get("data");
@@ -57,12 +63,47 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
     });
 
-    //console.log(url);
+    console.log(this.origins);
+    this.fetchPolylineWalk(0);
+
 
   }
 
+  fetchPolylineWalk(index:number){
+    let url=this.constants.getDirectionURL(this.origins[index],this.destinations[index]);
+
+    this.http.get(url).subscribe(data => {
+        let body = data.json();
+        //console.log(body);
+        this.walkPolyLines.push(body.routes[0].overview_polyline.points);
+        //this.walkPolyLines.push(index);
+
+        if(index<this.origins.length-1){
+          this.fetchPolylineWalk(index+1);
+        }
+        else {
+          this.walkPolylinesFetched();
+        }
+
+    });
+  }
+
+
+
+
+
+
   goBackClicked(){
     this.navCtrl.pop();
+  }
+
+  viewMapClicked(){
+    this.navCtrl.push(MapPage,{mapdata:{from:"routes",data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation}}});
+  }
+
+  walkPolylinesFetched(){
+    console.log(this.walkPolyLines);
+    console.log("sagar");
   }
 
 }

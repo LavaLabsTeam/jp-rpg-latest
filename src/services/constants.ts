@@ -9,12 +9,19 @@ export class Constants {
   //public BASE_URL_ROUTE_SEARCH:string = "http://172.27.26.20/open/api/search";
   BASE_URL_API:any = "http://58.27.125.82";
   public BASE_URL_ROUTE_SEARCH:string = this.BASE_URL_API+"/open/api/search";
-  //public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
-  public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/dkigj";
+  public BASE_URL_ROUTES:string = this.BASE_URL_API+"/open/api/routes";
+  public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
+  //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/on72z";
+  //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/k2lxf";
   public GOOGLE_API_KEY:string="AIzaSyCUo-4x6rSmsd1dts4lvB6jJU5uVP1zvqQ";
 
   public getMatrixURL(origins:any, destinations:any){
     let url:string="https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+origins+"&destinations="+destinations+"&mode=walking&key="+this.GOOGLE_API_KEY;
+    return url;
+  }
+
+  public getDirectionURL(origin:any, destination:any){
+    let url:string="https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destination+"&mode=walking&key="+this.GOOGLE_API_KEY;
     return url;
   }
 
