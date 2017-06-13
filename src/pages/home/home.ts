@@ -89,7 +89,7 @@ export class HomePage {
 
   planJourneyClicked(){
 
-    if(this.startLocation==null || this.endLocation==null && false){
+    if(this.startLocation==null || this.endLocation==null){
       let toast = this.toastCtrl.create({
         message: 'Please select start and destination locations !',
         duration: 3000,
@@ -101,20 +101,20 @@ export class HomePage {
     }
 
     var config={
-      // params:{
-      //   startLan:this.startLocation.lat,
-      //   startLon:this.startLocation.lng,
-      //   endLan:this.endLocation.lat,
-      //   endLon:this.endLocation.lng,
-      //   time:this.selectedTime+":30"
-      // }
       params:{
-        startLan:"3.2066336",
-        startLon:"101.58067779999999",
-        endLan:"3.2197116",
-        endLon:"101.59704629999999",
-        time:"12:30:30"
+        startLan:this.startLocation.lat,
+        startLon:this.startLocation.lng,
+        endLan:this.endLocation.lat,
+        endLon:this.endLocation.lng,
+        time:this.selectedTime+":30"
       }
+      // params:{
+      //   startLan:"3.2066336",
+      //   startLon:"101.58067779999999",
+      //   endLan:"3.2197116",
+      //   endLon:"101.59704629999999",
+      //   time:"12:30:30"
+      // }
     }
 
     if(this.accessOptions=="hasescal"){
@@ -132,8 +132,8 @@ export class HomePage {
     }
 
 
-    this.startAddress="MRT & KTM Sungai Buloh Drop Off";
-    this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
+    // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
+    // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
 
     this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
     this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
