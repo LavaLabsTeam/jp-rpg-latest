@@ -46,22 +46,16 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
     //this.origins.push("3.218561,101.564353");
     let i=0;
     for(let trip of this.route.trips){
-      this.destinations.push(trip.stops[0].stopLat+","+trip.stops[0].stopLon);
-      this.origins.push(trip.stops[trip.stops.length-1].stopLat+","+trip.stops[trip.stops.length-1].stopLon);
+      if(trip.type=='DRIVING'){
+        this.destinations.push(trip.stops[0].stopLat+","+trip.stops[0].stopLon);
+        this.origins.push(trip.stops[trip.stops.length-1].stopLat+","+trip.stops[trip.stops.length-1].stopLon);
+      }
+
       i++;
     }
     this.destinations.push(this.endLocation.lat+","+this.endLocation.lng);
     //this.destinations.push("3.219405,101.593238");
 
-    let url=this.constants.getMatrixURL(this.origins.join("|"),this.destinations.join("|"));
-
-    this.http.get(url).subscribe(data => {
-        let body = data.json();
-        //console.log(body);
-        this.placesETARows=body.rows;
-        console.log(this.placesETARows);
-
-    });
 
     console.log(this.origins);
     this.fetchPolylineWalk(0);
@@ -102,8 +96,32 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
   }
 
   walkPolylinesFetched(){
-    console.log(this.walkPolyLines);
-    console.log("sagar");
+    //console.log(this.walkPolyLines);
+    //console.log("sagar");
+
+    let url=this.constants.getMatrixURL(this.origins.join("|"),this.destinations.join("|"));
+
+    this.http.get(url).subscribe(data => {
+        let body = data.json();
+        //console.log(body);
+        this.placesETARows=body.rows;
+        console.log(this.placesETARows);
+
+        var i=0,j=0;
+
+        for(let trip of this.route.trips){
+          if(trip.type=='WALKING'){
+            this.route.trips[i]['totalDurationText']=this.placesETARows[j].elements[j].duration.text;
+            this.route.trips[i]['polyline']=this.walkPolyLines[j];
+            j++;
+          }
+          i++;
+
+        }
+
+
+    });
+
   }
 
 }

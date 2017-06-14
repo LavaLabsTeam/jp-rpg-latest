@@ -16,6 +16,8 @@ import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
 
+declare var google:any;
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -40,6 +42,7 @@ export class HomePage {
   showOptions:any;
   accessOptions:any;
   @ViewChild('datePicker') datePicker; //inject element
+
  //sample places to see route
  //MRT & KTM Sungai Buloh Drop Off and Kuarters Integrasi Hospital Sungai Buloh and time 12:24 to 12:55
 
@@ -89,7 +92,7 @@ export class HomePage {
 
   planJourneyClicked(){
 
-    if(this.startLocation==null || this.endLocation==null){
+    if(this.startLocation==null || this.endLocation==null && false){
       let toast = this.toastCtrl.create({
         message: 'Please select start and destination locations !',
         duration: 3000,
@@ -101,20 +104,20 @@ export class HomePage {
     }
 
     var config={
-      params:{
-        startLan:this.startLocation.lat,
-        startLon:this.startLocation.lng,
-        endLan:this.endLocation.lat,
-        endLon:this.endLocation.lng,
-        time:this.selectedTime+":30"
-      }
       // params:{
-      //   startLan:"3.2066336",
-      //   startLon:"101.58067779999999",
-      //   endLan:"3.2197116",
-      //   endLon:"101.59704629999999",
-      //   time:"12:30:30"
+      //   startLan:this.startLocation.lat,
+      //   startLon:this.startLocation.lng,
+      //   endLan:this.endLocation.lat,
+      //   endLon:this.endLocation.lng,
+      //   time:this.selectedTime+":30"
       // }
+      params:{
+        startLan:"3.2066336",
+        startLon:"101.58067779999999",
+        endLan:"3.2197116",
+        endLon:"101.59704629999999",
+        time:"12:30:30"
+      }
     }
 
     if(this.accessOptions=="hasescal"){
@@ -132,8 +135,8 @@ export class HomePage {
     }
 
 
-    // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
-    // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
+    this.startAddress="MRT & KTM Sungai Buloh Drop Off";
+    this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
 
     this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
     this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
@@ -163,13 +166,7 @@ export class HomePage {
         }
 
         if(error){
-          let toast = this.toastCtrl.create({
-            message: 'No Routes Found!',
-            duration: 3000,
-            position: 'bottom'
-          });
-
-          toast.present();
+          this.callGoogle();
         }
         this.progress.dismiss();
 
@@ -184,6 +181,64 @@ export class HomePage {
 
       toast.present();
     });
+  }
+
+  callGoogle(){
+    //var url=this.constants.getDirectionURLPublic(this.startLocation.lat+","+this.startLocation.lng,this.endLocation.lat+","+this.endLocation.lng);
+    var error=false;
+
+    var request = {
+      origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
+      destination: new google.maps.LatLng(this.endLocation.lat, this.endLocation.lng),
+      travelMode: 'TRANSIT'
+    };
+
+
+
+
+    var p=this.progress;
+    var tctrl=this.toastCtrl;
+    //p.present();
+    var directionsService = new google.maps.DirectionsService();
+    console.log(directionsService);
+    var obj=this;
+
+    directionsService.route(request, function(rs, status) {
+      //console.log("=======");
+      //console.log(rs);
+      if (status == 'OK') {
+        obj.mapResult(rs);
+      }
+      else {
+        //this.progress.dismiss();
+        let toast = tctrl.create({
+          message: 'Error Occured!',
+          duration: 3000,
+          position: 'bottom'
+        });
+
+        toast.present();
+      }
+
+    });
+  }
+
+
+  mapResult(result:any){
+    console.log(result.routes);
+    var data={};
+    var routes=[];
+    var trips=[];
+    var stops=[];
+
+    for(let route of result.routes){
+      for(let trip of route.legs){
+        for(let stop of trip.steps){
+
+        }
+      }
+    }
+
   }
 
   changeTime(){
@@ -291,6 +346,11 @@ export class HomePage {
 
 
     this.progress = this.modalCtrl.create(ProgressPage);
+
+
+
+
+
 
 
 

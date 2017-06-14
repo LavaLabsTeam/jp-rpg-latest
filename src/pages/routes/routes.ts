@@ -57,6 +57,7 @@ export class RoutesPage {
     //console.log(this.startLocation);
 
     this.calculateRoutesDuration();
+    this.optimizeRoutes();
 
     this.progress = this.modalCtrl.create(ProgressPage);
 
@@ -200,6 +201,7 @@ export class RoutesPage {
               this.result=json.body;
               this.routes=this.result.routes;
               this.calculateRoutesDuration();
+              this.optimizeRoutes();
 
               error=false;
             }
@@ -293,6 +295,60 @@ export class RoutesPage {
   }
 
 
+
+
+  optimizeRoutes(){
+    var tempRoutes=[];
+
+    var r=0;
+    for (let route of this.routes) {
+      var t=0;
+      var tempTrips=[];
+      tempTrips.push({
+        type:'WALKING',
+        instruction:this.startAddress
+
+      });
+      var lastTrip=null;
+      for(let trip of route.trips){
+
+        if(lastTrip!=null && t<route.trips.length-1){
+          if(lastTrip.stops[lastTrip.stops.length-1].stopName!=trip.stops[0].stopName){
+            tempTrips.push({
+              instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
+              type:'WALKING'
+            })
+          }
+        }
+
+        if(trip.stops.length==1){
+          trip['instruction']=trip.stop[0].stopName;
+        }
+        else {
+          trip['instruction']="From "+trip.stops[0].stopName+" to "+trip.stops[trip.stops.length-1].stopName;
+        }
+        trip['type']='TRANSIT';
+        tempTrips.push(trip);
+        lastTrip=trip;
+        t++;
+      }
+      tempTrips.push({
+        type:'WALKING',
+        instruction:this.endAddress
+
+      });
+
+      route['trips']=tempTrips;
+
+      tempRoutes.push(route);
+
+      r++;
+    }
+
+    this.routes=tempRoutes;
+  }
+
+
   calculateRoutesDuration(){
     var i=0;
     for (let route of this.routes) {
@@ -307,6 +363,8 @@ export class RoutesPage {
 
         this.routes[i].trips[j].totalDuration=this.secondsToTime(duration);
         this.routes[i].trips[j].totalDurationValue=duration;
+        this.routes[i].trips[j].totalDurationText=this.routes[i].trips[j].totalDuration.h+"hr"+" "+this.routes[i].trips[j].totalDuration.m+"mins";
+
         j++;
       }
 
@@ -314,6 +372,7 @@ export class RoutesPage {
 
       this.routes[i].totalDurationValue=sum;
       this.routes[i].totalDuration=this.secondsToTime(sum);
+      this.routes[i].totalDurationText=this.routes[i].totalDuration.h+"hr"+" "+this.routes[i].totalDuration.m+"mins";;
       i++;
 
     }

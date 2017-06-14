@@ -25,6 +25,11 @@ export class Constants {
     return url;
   }
 
+  public getDirectionURLPublic(origin:any, destination:any){
+    let url:string="https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destination+"&mode=public&key="+this.GOOGLE_API_KEY;
+    return url;
+  }
+
 
 
 }
