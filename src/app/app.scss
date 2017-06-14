@@ -30,17 +30,17 @@ ion-content{
   background-color: transparent !important;
   input{
     color: $primary-text-color;
-    font-size: 1em;
+    font-size: 2rem;
   }
 
   .input.big input{
     color: $primary-text-color;
-    font-size: 2.5em;
+    font-size: 3.5rem;
   }
 
   .input.medium input{
     color: $primary-text-color;
-    font-size: 1.5em;
+    font-size: 2.5rem;
   }
 
 
@@ -66,13 +66,13 @@ ion-content{
 
   .label{
     color:$primary-text-color;
-    font-size: 1.5em;
+    font-size: 1.5rem;
 
   }
 
   .label.small{
     color:$primary-text-color;
-    font-size: 0.2em;
+    font-size: 0.2rem;
 
   }
 
@@ -84,28 +84,33 @@ ion-content{
 
 //text-sizes
 .text-1x{
-  font-size:0.5em;
+  font-size:1rem;
 }
 
 .text-2x{
-  font-size:1em;
-  text-height:1em;
+  font-size:2rem;
+  text-height:2rem;
+}
+
+.text-2x-smaller{
+  font-size:1.5rem;
+  text-height:1.5rem;
 }
 
 .text-3x{
-  font-size:1.5em;
+  font-size:3rem;
 }
 
 .text-4x{
-  font-size:2em;
+  font-size:4rem;
 }
 
 .text-5x{
-  font-size:2.5em;
+  font-size:5em;
 }
 
 .text-6x{
-  font-size:3em;
+  font-size:6rem;
 }
 
 
@@ -320,7 +325,10 @@ ion-content.no-bgimage{
 
 
 .ios{
-
+  //margin-top: 10px;
+  page-home ion-header{
+    margin-top:10px;
+  }
 }
 
 *{
