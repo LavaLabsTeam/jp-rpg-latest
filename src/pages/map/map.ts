@@ -29,8 +29,11 @@ export class MapPage {
     if(this.mapData.from=="stops"){
       this.loadStops();
     }
-    else if(this.mapData.from=="routes"){
+    else if(this.mapData.from=="routes" && this.mapData.api=="jpapp"){
       this.generateRoutes();
+    }
+    else if(this.mapData.from=="routes" && this.mapData.api=="google"){
+      this.generateRoutesGoogle();
     }
 
   }
@@ -77,6 +80,10 @@ export class MapPage {
 
   }
 
+  generateRoutesGoogle(){
+    alert("google");
+  }
+
   generateRoutes(){
     //console.log(this.mapData);
     var walkPolyLines=this.mapData.data.walkPolyLines;
@@ -98,7 +105,7 @@ export class MapPage {
 
     var myLatLngOrig=new google.maps.LatLng(startLocation.lat,startLocation.lng);
     var myLatLngDest=new google.maps.LatLng(endLocation.lat,endLocation.lng);
-    
+
     var originMarker = new google.maps.Marker({
         position: myLatLngOrig,
         map: this.map,
@@ -113,12 +120,14 @@ export class MapPage {
 
     for(let trip of route.trips){
       var locations:Array<string>=[];
-      for(let stop of trip.stops){
-        locations.push(new google.maps.LatLng(parseFloat(stop.stopLat),parseFloat(stop.stopLon)));
+      if(trip.type=="TRANSIT") {
+        for(let stop of trip.stops){
+          locations.push(new google.maps.LatLng(parseFloat(stop.stopLat),parseFloat(stop.stopLon)));
+        }
       }
       this.renderRouteBus(locations);
     }
-
+    console.log(walkPolyLines);
     this.renderRouteWalk(walkPolyLines);
   }
 

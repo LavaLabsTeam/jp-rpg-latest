@@ -149,7 +149,7 @@ export class HomePage {
         if(json.body!=null){
           if(json.body.routes!=null){
             if(json.body.routes.length>0){
-              this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation});
+              this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"jpapp"});
               error=false;
             }
             else {

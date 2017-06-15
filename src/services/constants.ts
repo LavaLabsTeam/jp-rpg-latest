@@ -15,21 +15,6 @@ export class Constants {
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/k2lxf";
   public GOOGLE_API_KEY:string="AIzaSyCUo-4x6rSmsd1dts4lvB6jJU5uVP1zvqQ";
 
-  public getMatrixURL(origins:any, destinations:any){
-    let url:string="https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+origins+"&destinations="+destinations+"&mode=walking&key="+this.GOOGLE_API_KEY;
-    return url;
-  }
-
-  public getDirectionURL(origin:any, destination:any){
-    let url:string="https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destination+"&mode=walking&key="+this.GOOGLE_API_KEY;
-    return url;
-  }
-
-  public getDirectionURLPublic(origin:any, destination:any){
-    let url:string="https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destination+"&mode=public&key="+this.GOOGLE_API_KEY;
-    return url;
-  }
-
 
 
 }

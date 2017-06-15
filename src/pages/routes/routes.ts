@@ -37,10 +37,12 @@ export class RoutesPage {
   private selected: boolean = false;
   selectedDate: any;
   selectedTime: any;
+  api:string;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController) {
-    this.accessOptions = navParams.get("accessOptions");
-    this.showOptions = navParams.get("showOptions");
+    this.accessOptions = this.navParams.get("accessOptions");
+    this.showOptions = this.navParams.get("showOptions");
+    this.api=this.navParams.get("api");
   }
 
   ionViewDidLoad() {
@@ -55,9 +57,14 @@ export class RoutesPage {
     this.endLocation = this.navParams.get("endLocation");
 
     //console.log(this.startLocation);
+    if(this.api=="jpapp"){
+      this.calculateRoutesDuration();
+      this.optimizeRoutes();
+    }
+    else {
+      //if google
+    }
 
-    this.calculateRoutesDuration();
-    this.optimizeRoutes();
 
     this.progress = this.modalCtrl.create(ProgressPage);
 
@@ -145,7 +152,7 @@ export class RoutesPage {
 
 
   viewRouteDetailsClicked(route){
-    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress});
+    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api});
   }
 
 
@@ -316,7 +323,8 @@ export class RoutesPage {
           if(lastTrip.stops[lastTrip.stops.length-1].stopName!=trip.stops[0].stopName){
             tempTrips.push({
               instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
-              type:'WALKING'
+              type:'WALKING',
+              stops:[]
             })
           }
         }
