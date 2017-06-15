@@ -104,20 +104,20 @@ export class HomePage {
     }
 
     var config={
-      // params:{
-      //   startLan:this.startLocation.lat,
-      //   startLon:this.startLocation.lng,
-      //   endLan:this.endLocation.lat,
-      //   endLon:this.endLocation.lng,
-      //   time:this.selectedTime+":30"
-      // }
       params:{
-        startLan:"3.2066336",
-        startLon:"101.58067779999999",
-        endLan:"3.2197116",
-        endLon:"101.59704629999999",
-        time:"12:30:30"
+        startLan:this.startLocation.lat,
+        startLon:this.startLocation.lng,
+        endLan:this.endLocation.lat,
+        endLon:this.endLocation.lng,
+        time:this.selectedTime+":30"
       }
+      // params:{
+      //   startLan:"3.2066336",
+      //   startLon:"101.58067779999999",
+      //   endLan:"3.2197116",
+      //   endLon:"101.59704629999999",
+      //   time:"12:30:30"
+      // }
     }
 
     if(this.accessOptions=="hasescal"){
@@ -135,8 +135,8 @@ export class HomePage {
     }
 
 
-    this.startAddress="MRT & KTM Sungai Buloh Drop Off";
-    this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
+    // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
+    // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
 
     this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
     this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
@@ -225,19 +225,34 @@ export class HomePage {
 
 
   mapResult(result:any){
-    console.log(result.routes);
+    //console.log(result);
     var data={};
     var routes=[];
     var trips=[];
     var stops=[];
 
     for(let route of result.routes){
-      for(let trip of route.legs){
-        for(let stop of trip.steps){
+      var r={};
 
-        }
+      for(let trip of route.legs[0].steps){
+        var t={};
+        t['routeLongName']="";
+        t['totalDurationValue']=trip.duration.value;
+        t['totalDurationText']=trip.duration.text;
+        t['distanceValue']=trip.distance.value;
+        t['distanceText']=trip.distance.text;
+        t['instruction']=trip.instructions;
+        t['type']=trip.travel_mode;
+        t['polyline']=trip.encoded_lat_lngs;
+        t['stops']=[];
+        trips.push(t);
       }
+      r['trips']=trips;
+      routes.push(r);
     }
+    data['body']={routes:routes};
+    this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result});
+
 
   }
 

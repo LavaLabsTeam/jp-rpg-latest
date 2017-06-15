@@ -40,7 +40,7 @@
     <ion-grid class="margin-top">
       <!-- interchange starts -->
       <div *ngFor="let trip of route.trips; let i=index;">
-        <ion-row>
+        <ion-row *ngIf="i>0">
           <ion-col col-1>
           </ion-col>
           <ion-col col-11 class= "waypoint">
@@ -102,7 +102,7 @@
                 </ion-col>
                 <ion-col col-11 class="block walk text-align-left padding-left-16">
                   <div class="address">
-                    <span class="text-white text-2x">Walk</span><br>
+                    <span class="text-white text-2x" *ngIf="api=='jpapp'">Walk</span><br>
                     <span class="text-white text-2x">{{trip.instruction}}</span>
                   </div>
 

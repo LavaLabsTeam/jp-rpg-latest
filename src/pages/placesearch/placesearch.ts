@@ -15,7 +15,7 @@ import { ViewController } from 'ionic-angular';
 })
 export class PlacesearchPage {
   search: string;
-  constructor(public viewCtrl: ViewController, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController,public navParams: NavParams) {
     //alert(this.navParams.data.name);
   }
 
@@ -32,6 +32,10 @@ export class PlacesearchPage {
   getAddressOnChange(place){
     //console.log(place);
     this.viewCtrl.dismiss({place:place});
+  }
+
+  goBackClicked(){
+    this.viewCtrl.dismiss();
   }
 
 }

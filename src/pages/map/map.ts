@@ -16,6 +16,7 @@ export class MapPage {
   @ViewChild('mymap') mapElement:ElementRef;
   map: any;
   mapData:any;
+  googleDirectionResult:any;
 
   //google:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -33,6 +34,7 @@ export class MapPage {
       this.generateRoutes();
     }
     else if(this.mapData.from=="routes" && this.mapData.api=="google"){
+      this.googleDirectionResult=this.navParams.get('googleDirectionResult');
       this.generateRoutesGoogle();
     }
 
@@ -81,11 +83,26 @@ export class MapPage {
   }
 
   generateRoutesGoogle(){
-    alert("google");
+    let latLng = new google.maps.LatLng(this.mapData.data.startLocation.lat, this.mapData.data.startLocation.lng);
+
+    let mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    //console.log(this.mapElement.nativeElement);
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setMap(this.map);
+    console.log(this.mapData.data.googleDirectionResult);
+    directionsDisplay.setDirections(this.mapData.data.googleDirectionResult);
+
   }
 
   generateRoutes(){
-    //console.log(this.mapData);
+    console.log(this.mapData);
     var walkPolyLines=this.mapData.data.walkPolyLines;
     var route=this.mapData.data.route;
     var startLocation=this.mapData.data.startLocation;

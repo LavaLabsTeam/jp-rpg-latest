@@ -31,6 +31,7 @@ export class RoutedetailPage {
   walkPolyLines:Array<string>=[];
   busPolyLines:Array<string>=[];
   api:any;
+  googleDirectionResult:any;
 
 
 constructor(public navCtrl: NavController, public navParams: NavParams, public constants:Constants, public http:Http) {
@@ -60,6 +61,9 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       this.destinations.push(new google.maps.LatLng(this.endLocation.lat,this.endLocation.lng));
       //this.destinations.push("3.219405,101.593238");
       this.fetchPolylineWalk(0);
+    }
+    else {
+      this.googleDirectionResult = this.navParams.get("googleDirectionResult");
     }
 
 
@@ -107,7 +111,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
     // console.log(status);
     // console.log(this.origins);
     if (status == 'OK') {
-      this.walkPolyLines.push(rs.routes[0].overview_polyline.points);
+      this.walkPolyLines.push(rs.routes[0].overview_polyline);
       this.placesETARows.push(rs.routes[0].legs[0].duration.text);
 
       if(index<this.origins.length-1){
@@ -127,7 +131,13 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
   }
 
   viewMapClicked(){
-    this.navCtrl.push(MapPage,{mapdata:{from:"routes",api:this.api,data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation}}});
+    if(this.api=="google"){
+        this.navCtrl.push(MapPage,{mapdata:{from:"routes",api:this.api,data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation, googleDirectionResult:this.googleDirectionResult}}});
+    }
+    else {
+      this.navCtrl.push(MapPage,{mapdata:{from:"routes",api:this.api,data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation}}});
+    }
+
   }
 
   walkPolylinesFetchFinished(){

@@ -9,7 +9,7 @@ import { PreferencemodalPage } from '../preferencemodal/preferencemodal';
 import { DatepickerPage } from '../datepicker/datepicker';
 import { ProgressPage } from '../progress/progress';
 import { Http } from '@angular/http';
-
+declare var google:any;
 /**
  * Generated class for the RoutesPage page.
  *
@@ -38,6 +38,7 @@ export class RoutesPage {
   selectedDate: any;
   selectedTime: any;
   api:string;
+  googleDirectionResult:any;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController) {
     this.accessOptions = this.navParams.get("accessOptions");
@@ -63,6 +64,9 @@ export class RoutesPage {
     }
     else {
       //if google
+      this.calculateRoutesTimeGoogle();
+      this.googleDirectionResult=this.navParams.get('googleDirectionResult');
+
     }
 
 
@@ -71,6 +75,23 @@ export class RoutesPage {
     console.log(this.routes);
 
 
+  }
+
+
+  calculateRoutesTimeGoogle(){
+    var i=0;
+    for(let route of this.routes){
+      var s=0;
+      for(let trip of route.trips){
+        s+=trip.totalDurationValue;
+      }
+      this.routes[i]['totalDurationValue']=s;
+      var duration=this.secondsToTime(s);
+      this.routes[i]['totalDuration']=duration;
+      this.routes[i]['totalDurationText']=duration.h+"hr "+duration.m+"mins";
+
+      i++;
+    }
   }
 
   getAddressOnChange(place){
@@ -152,7 +173,7 @@ export class RoutesPage {
 
 
   viewRouteDetailsClicked(route){
-    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api});
+    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult});
   }
 
 
@@ -209,7 +230,7 @@ export class RoutesPage {
               this.routes=this.result.routes;
               this.calculateRoutesDuration();
               this.optimizeRoutes();
-
+              this.api="jpapp";
               error=false;
             }
             else {
@@ -226,13 +247,7 @@ export class RoutesPage {
         }
 
         if(error){
-          let toast = this.toastCtrl.create({
-            message: 'No Routes Found!',
-            duration: 3000,
-            position: 'bottom'
-          });
-
-          toast.present();
+          this.callGoogle();
         }
         this.progress.dismiss();
 
@@ -385,6 +400,87 @@ export class RoutesPage {
 
     }
   }
+
+
+  callGoogle(){
+    //var url=this.constants.getDirectionURLPublic(this.startLocation.lat+","+this.startLocation.lng,this.endLocation.lat+","+this.endLocation.lng);
+    var error=false;
+
+    var request = {
+      origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
+      destination: new google.maps.LatLng(this.endLocation.lat, this.endLocation.lng),
+      travelMode: 'TRANSIT'
+    };
+
+
+
+
+    var p=this.progress;
+    var tctrl=this.toastCtrl;
+    //p.present();
+    var directionsService = new google.maps.DirectionsService();
+    console.log(directionsService);
+    var obj=this;
+
+    directionsService.route(request, function(rs, status) {
+      //console.log("=======");
+      //console.log(rs);
+      if (status == 'OK') {
+        obj.mapResult(rs);
+        obj.api="google";
+      }
+      else {
+        //this.progress.dismiss();
+        let toast = tctrl.create({
+          message: 'No routes Found !',
+          duration: 3000,
+          position: 'bottom'
+        });
+
+        toast.present();
+      }
+
+    });
+  }
+
+
+  mapResult(result:any){
+    //console.log(result);
+    var data={};
+    var routes=[];
+    var trips=[];
+    var stops=[];
+
+    for(let route of result.routes){
+      var r={};
+
+      for(let trip of route.legs[0].steps){
+        var t={};
+        t['routeLongName']="";
+        t['totalDurationValue']=trip.duration.value;
+        t['totalDurationText']=trip.duration.text;
+        t['distanceValue']=trip.distance.value;
+        t['distanceText']=trip.distance.text;
+        t['instruction']=trip.instructions;
+        t['type']=trip.travel_mode;
+        t['polyline']=trip.encoded_lat_lngs;
+        t['stops']=[];
+        trips.push(t);
+      }
+      r['trips']=trips;
+      routes.push(r);
+    }
+    //data['body']={routes:routes};
+
+    this.result={routes:routes};
+    this.routes=this.result.routes;
+    this.calculateRoutesTimeGoogle();
+    this.googleDirectionResult=result;
+    //this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result});
+
+
+  }
+
 
 
 }
