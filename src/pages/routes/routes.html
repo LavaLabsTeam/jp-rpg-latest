@@ -126,7 +126,7 @@
                   <div class="icon bg-yellow">
                     <ion-icon name="bus" color="light" class="text-3x"></ion-icon>
                   </div>
-                  <div class="bus-no" *ngIf="api=='jpapp'">
+                  <div class="bus-no" *ngIf="api=='jpapp' || trip.routeLongName!=''">
                     <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span>
                   </div>
                 </div>
