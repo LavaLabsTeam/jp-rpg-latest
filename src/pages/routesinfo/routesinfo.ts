@@ -14,6 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RoutesinfoPage {
   routes: any;
+  showIndex:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.routes=navParams.get("routes");
   }
@@ -24,6 +25,10 @@ export class RoutesinfoPage {
 
   goBackClicked(){
     this.navCtrl.pop();
+  }
+
+  expand(index:any){
+    this.showIndex=this.showIndex==index?-1:index;
   }
 
 

@@ -49,20 +49,20 @@
     <ion-row *ngFor="let row of routes; let i=index">
 
       <ion-col col-12 class="padding-0">
-        <ion-row class="bg-light-orange">
-          <ion-col col-3>
+        <ion-row class="bg-light-orange" style="height:30px; border-bottom:solid #9f582f 1px;">
+          <ion-col col-6>
             <span class="text-orange size-2x align-right" color="primary">{{row.routeLongName}}</span>
           </ion-col>
 
-          <ion-col col-8>
+          <ion-col col-4>
             <span class="text-orange size-2x align-right" color="primary">{{row.routeId}}</span>
           </ion-col>
-          <ion-col col-1 text-center (click)="expand.hidden=!expand.hidden">
-              <ion-icon color="light" name="md-arrow-down"></ion-icon>
+          <ion-col col-1 text-center (click)="expand(i)">
+              <ion-icon color="light" name="ios-arrow-down"></ion-icon>
           </ion-col>
         </ion-row>
 
-        <div #expand [hidden]="i>0">
+        <div #expand *ngIf="showIndex==i" >
           <div *ngIf="row.stops!=null" class="stop-container">
             <ion-row>
               <ion-col col-4 class="bg-white text-blue">
@@ -71,10 +71,7 @@
 
               <ion-col col-8 class="bg-white">
                 <span class="text-blue size-2x" color="primary">Stop Name</span>
-
               </ion-col>
-
-
            </ion-row>
             <ion-row *ngFor="let stop of row.stops">
               <ion-col col-4 class="bg-white">

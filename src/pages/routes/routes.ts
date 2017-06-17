@@ -77,7 +77,12 @@ export class RoutesPage {
 
   }
 
-
+  /*
+  * Calculates time from google
+  * @since 1.0
+  * @params none
+  * @return none
+  */
   calculateRoutesTimeGoogle(){
     var i=0;
     for(let route of this.routes){
