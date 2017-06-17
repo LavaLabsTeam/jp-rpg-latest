@@ -414,7 +414,8 @@ export class RoutesPage {
     var request = {
       origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
       destination: new google.maps.LatLng(this.endLocation.lat, this.endLocation.lng),
-      travelMode: 'TRANSIT'
+      travelMode: 'TRANSIT',
+      provideRouteAlternatives:true
     };
 
 
@@ -453,12 +454,11 @@ export class RoutesPage {
     //console.log(result);
     var data={};
     var routes=[];
-    var trips=[];
-    var stops=[];
+
 
     for(let route of result.routes){
       var r={};
-
+      var trips=[];
       for(let trip of route.legs[0].steps){
         var t={};
         t['routeLongName']="";
@@ -474,6 +474,7 @@ export class RoutesPage {
       }
       r['trips']=trips;
       routes.push(r);
+
     }
     //data['body']={routes:routes};
 

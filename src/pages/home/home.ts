@@ -190,7 +190,8 @@ export class HomePage {
     var request = {
       origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
       destination: new google.maps.LatLng(this.endLocation.lat, this.endLocation.lng),
-      travelMode: 'TRANSIT'
+      travelMode: 'TRANSIT',
+      provideRouteAlternatives:true
     };
 
 
@@ -225,18 +226,28 @@ export class HomePage {
 
 
   mapResult(result:any){
-    //console.log(result);
+    console.log(result);
     var data={};
     var routes=[];
-    var trips=[];
-    var stops=[];
 
     for(let route of result.routes){
-      var r={};
 
+      var trips=[];
       for(let trip of route.legs[0].steps){
         var t={};
-        t['routeLongName']="";
+        if(trip.travel_mode=="TRANSIT"){
+            if(trip.transit.headway!=undefined){
+              t['routeLongName']=trip.transit.headway;
+            }
+            else {
+                t['routeLongName']="";
+            }
+
+        }
+        else {
+            t['routeLongName']="";
+        }
+
         t['totalDurationValue']=trip.duration.value;
         t['totalDurationText']=trip.duration.text;
         t['distanceValue']=trip.distance.value;
@@ -247,8 +258,7 @@ export class HomePage {
         t['stops']=[];
         trips.push(t);
       }
-      r['trips']=trips;
-      routes.push(r);
+      routes.push({trips:trips});
     }
     data['body']={routes:routes};
     this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result});
