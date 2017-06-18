@@ -63,8 +63,8 @@
         </ion-row>
 
         <div #expand *ngIf="showIndex==i" >
-          <div *ngIf="row.stops!=null" class="stop-container">
-            <ion-row>
+          <div *ngIf="row.stops!=null" class="bg-semi-transparent">
+            <!-- <ion-row>
               <ion-col col-4 class="bg-white text-blue">
                 <span class="text-blue size-2x" color="primary">Stop ID</span>
               </ion-col>
@@ -72,15 +72,20 @@
               <ion-col col-8 class="bg-white">
                 <span class="text-blue size-2x" color="primary">Stop Name</span>
               </ion-col>
-           </ion-row>
-            <ion-row *ngFor="let stop of row.stops">
-              <ion-col col-4 class="bg-white">
-                <span class="text-orange size-2x" color="primary">{{stop.stopId}}</span>
+           </ion-row> -->
+            <ion-row class="stops" *ngFor="let stop of row.stops">
+              <ion-col col-1>
+
+                <!-- <span class="text-orange size-2x" color="primary">{{stop.stopId}}</span> -->
               </ion-col>
 
-              <ion-col col-8 class="bg-white">
-                <span class="text-orange size-2x" color="primary" *ngIf="stop.stopName!=null">{{stop.stopName}}</span>
-                <span class="text-orange size-2x" color="primary" *ngIf="stop.stopName==null">N/A</span>
+              <ion-col col-1 class="stop-container">
+                <div class="pointblock"></div>
+              </ion-col>
+
+              <ion-col col-10>
+                <span class="text-white size-2x" color="primary" *ngIf="stop.stopName!=null">{{stop.stopName}}</span>
+                <span class="text-white size-2x" color="primary" *ngIf="stop.stopName==null">N/A</span>
               </ion-col>
 
 

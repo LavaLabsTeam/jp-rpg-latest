@@ -2,4 +2,17 @@ page-routesinfo {
   .stop-container{
     border-left: solid color($colors, orange, base) 10px;
   }
+
+  .stops .pointblock{
+    background: #FFF;
+    width: 17px;
+    height: 17px;
+    float: left;
+    position: relative;
+    z-index: 2;
+    border-radius: 50%;
+    display: block;
+    top: 2px;
+    left: -19px;
+  }
 }
