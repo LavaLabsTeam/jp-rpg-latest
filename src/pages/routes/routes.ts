@@ -39,6 +39,7 @@ export class RoutesPage {
   selectedTime: any;
   api:string;
   googleDirectionResult:any;
+  departureDate:Date;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController) {
     this.accessOptions = this.navParams.get("accessOptions");
@@ -313,6 +314,7 @@ export class RoutesPage {
         this.selected=true;
         this.selectedDate=data.date;
         this.selectedTime=data.hour+":"+data.min;
+        this.departureDate=data.departureDate;
         this.planJourney();
 
      }
@@ -411,12 +413,27 @@ export class RoutesPage {
     //var url=this.constants.getDirectionURLPublic(this.startLocation.lat+","+this.startLocation.lng,this.endLocation.lat+","+this.endLocation.lng);
     var error=false;
 
+
     var request = {
       origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
       destination: new google.maps.LatLng(this.endLocation.lat, this.endLocation.lng),
       travelMode: 'TRANSIT',
-      provideRouteAlternatives:true
+      provideRouteAlternatives:true,
+      transitOptions:{
+        modes: ['BUS']
+      }
     };
+
+
+
+    if(this.showOptions=="rwfc"){
+      request.transitOptions['routingPreference']='FEWER_TRANSFERS';
+    }
+    else if(this.showOptions=="rwlw"){
+      request.transitOptions['routingPreference']='LESS_WALKING';
+    }
+
+    request.transitOptions['departureTime']=this.departureDate;
 
 
 

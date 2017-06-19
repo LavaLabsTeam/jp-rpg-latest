@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
 })
 export class DatepickerPage {
   public dateOptions:Array<Object>=[];
-  public selectedDate:any;
+  public selectedDate:Date;
   public hours:Array<string>=[];
   public selectedHour:any;
   public mins:Array<string>=[];
@@ -92,7 +92,11 @@ export class DatepickerPage {
 
   onDateSet(){
       //console.log(this.selectedDate);
-      this.viewCtrl.dismiss({date:this.selectedDate,hour:this.selectedHour,min:this.selectedMinute,sec:0});
+      var departureDate=new Date(this.selectedDate);
+      //departureDate.setDate(this.selectedDate.get);
+      departureDate.setHours(this.selectedHour, this.selectedMinute, 0);
+
+      this.viewCtrl.dismiss({date:this.selectedDate,hour:this.selectedHour,min:this.selectedMinute,sec:0, departureDate:departureDate});
   }
 
   onDateCancelled(){

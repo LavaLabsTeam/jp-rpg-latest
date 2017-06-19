@@ -36,6 +36,7 @@ export class HomePage {
   private selected: boolean = false;
   selectedDate: any;
   selectedTime: any;
+  departureDate:Date;
   progress:any;
 
   private watch:any;
@@ -49,6 +50,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants, private toastCtrl: ToastController) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     console.log(constants);
+    this.departureDate=new Date();
   }
 
   sayMyName() {
@@ -191,8 +193,31 @@ export class HomePage {
       origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
       destination: new google.maps.LatLng(this.endLocation.lat, this.endLocation.lng),
       travelMode: 'TRANSIT',
-      provideRouteAlternatives:true
+      provideRouteAlternatives:true,
+      transitOptions:{
+        modes: ['BUS']
+      }
     };
+
+    // {
+    //   arrivalTime: Date,
+    //   departureTime: Date,
+    //   modes[]: TransitMode,
+    //   routingPreference: TransitRoutePreference
+    // }
+
+
+
+    if(this.showOptions=="rwfc"){
+      request.transitOptions['routingPreference']='FEWER_TRANSFERS';
+    }
+    else if(this.showOptions=="rwlw"){
+      request.transitOptions['routingPreference']='LESS_WALKING';
+    }
+
+    request.transitOptions['departureTime']=this.departureDate;
+
+    //console.log(request);
 
 
 
@@ -429,6 +454,8 @@ export class HomePage {
         this.selected=true;
         this.selectedDate=data.date;
         this.selectedTime=data.hour+":"+data.min;
+        this.departureDate=data.departureDate;
+
 
      }
     });
