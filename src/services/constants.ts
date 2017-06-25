@@ -10,6 +10,7 @@ export class Constants {
   BASE_URL_API:any = "http://58.27.125.82";
   public BASE_URL_ROUTE_SEARCH:string = this.BASE_URL_API+"/open/api/search";
   public BASE_URL_ROUTES:string = this.BASE_URL_API+"/open/api/routes";
+  public BASE_URL_SCHEDULES:string = this.BASE_URL_API+"/open/api/schedules";
   public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/on72z";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/k2lxf";

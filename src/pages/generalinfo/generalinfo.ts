@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage,  NavController, ModalController, NavParams } from 'ionic-angular';
 import { RoutesinfoPage } from '../routesinfo/routesinfo';
+import { SchedulesPage } from '../schedules/schedules';
 import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import { Constants } from '../../services/constants';
@@ -41,10 +42,20 @@ export class GeneralinfoPage {
     },
     error => {
       this.progress.dismiss();
-    }
-  );
+    });
+  }
 
 
+  schedulesClicked(){
+    this.progress.present();
+    this.http.get(this.constants.BASE_URL_SCHEDULES).subscribe(data => {
+        let json = data.json();
+        this.navCtrl.push(SchedulesPage,{schedules:json});
+        this.progress.dismiss();
+    },
+    error => {
+      this.progress.dismiss();
+    });
   }
 
 }

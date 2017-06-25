@@ -111,7 +111,8 @@ export class HomePage {
         startLon:this.startLocation.lng,
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
-        time:this.selectedTime+":30"
+        time:this.selectedTime+":30",
+        date:"123"
       }
       // params:{
       //   startLan:"3.2066336",

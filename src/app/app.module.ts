@@ -13,6 +13,7 @@ import { StopsnearmePage } from '../pages/stopsnearme/stopsnearme';
 import { DatepickerPage } from '../pages/datepicker/datepicker';
 import { ProgressPage } from '../pages/progress/progress';
 import { RoutesinfoPage } from '../pages/routesinfo/routesinfo';
+import { SchedulesPage } from '../pages/schedules/schedules';
 
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
@@ -42,7 +43,8 @@ import { Constants } from '../services/constants';
     RoutedetailPage,
     DatepickerPage,
     ProgressPage,
-    RoutesinfoPage
+    RoutesinfoPage,
+    SchedulesPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { Constants } from '../services/constants';
     RoutedetailPage,
     DatepickerPage,
     ProgressPage,
-    RoutesinfoPage
+    RoutesinfoPage,
+    SchedulesPage
   ],
 
   providers: [
