@@ -26,6 +26,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http';
 import { DatePipe } from '@angular/common';
 import { Constants } from '../services/constants';
+import { FocuserDirective } from '../directives/focuser/focuser';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { Constants } from '../services/constants';
     DatepickerPage,
     ProgressPage,
     RoutesinfoPage,
-    SchedulesPage
+    SchedulesPage,
+    FocuserDirective
   ],
   imports: [
     BrowserModule,

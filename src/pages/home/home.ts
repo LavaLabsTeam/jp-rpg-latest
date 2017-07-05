@@ -30,11 +30,14 @@ export class HomePage {
   endAddress: any;
   endLocation:any;
   whatTime:any;
+  stopName:any;
+  routeName:any;
 
   currentLocation:any;
 
   private selected: boolean = false;
   selectedDate: any;
+  selectedDateJPApi: any;
   selectedTime: any;
   departureDate:Date;
   progress:any;
@@ -42,6 +45,7 @@ export class HomePage {
   private watch:any;
   showOptions:any;
   accessOptions:any;
+  temp:any;
   @ViewChild('datePicker') datePicker; //inject element
 
  //sample places to see route
@@ -51,6 +55,11 @@ export class HomePage {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     console.log(constants);
     this.departureDate=new Date();
+    var curDate=new Date();
+    this.selectedTime=(curDate.getHours()<10)?("0"+curDate.getHours()):curDate.getHours()+":"+(curDate.getMinutes()<10)?("0"+curDate.getMinutes()):curDate.getMinutes();
+    this.selectedDateJPApi=curDate.toISOString().slice(0,10).replace(/-/g,"");
+
+    console.log((curDate.getHours()<10)?("0"+curDate.getHours()):curDate.getHours());
   }
 
   sayMyName() {
@@ -112,7 +121,7 @@ export class HomePage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:"123"
+        date:this.selectedDateJPApi
       }
       // params:{
       //   startLan:"3.2066336",
@@ -123,19 +132,19 @@ export class HomePage {
       // }
     }
 
-    if(this.accessOptions=="hasescal"){
-      config.params['hasEscalators']="true";
-    }
-    else {
-      config.params['hasEscalators']="false";
-    }
-
-    if(this.accessOptions=="hasstairs"){
-      config.params['hasStares']="true";
-    }
-    else {
-      config.params['hasStares']="false";
-    }
+    // if(this.accessOptions=="hasescal"){
+    //   config.params['hasEscalators']="true";
+    // }
+    // else {
+    //   config.params['hasEscalators']="false";
+    // }
+    //
+    // if(this.accessOptions=="hasstairs"){
+    //   config.params['hasStares']="true";
+    // }
+    // else {
+    //   config.params['hasStares']="false";
+    // }
 
 
     // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
@@ -152,7 +161,7 @@ export class HomePage {
         if(json.body!=null){
           if(json.body.routes!=null){
             if(json.body.routes.length>0){
-              this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"jpapp"});
+              this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"jpapp",selectedTime:this.selectedTime,selectedDate:this.selectedDate,selectedDateJPApi:this.selectedDateJPApi});
               error=false;
             }
             else {
@@ -287,7 +296,7 @@ export class HomePage {
       routes.push({trips:trips});
     }
     data['body']={routes:routes};
-    this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result});
+    this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result,selectedDate:this.selectedDate,selectedTime:this.selectedTime,selectedDateJPApi:this.selectedDateJPApi});
 
 
   }
@@ -297,7 +306,57 @@ export class HomePage {
   }
 
   viewETAClicked(){
-    this.navCtrl.push(EtaresultPage,{data:"sagar"})
+    //this.navCtrl.push(EtaresultPage,{data:"sagar"})
+    var config={};
+    if(this.stopName!="") {
+      config={
+        params:{
+          stopName:this.stopName,
+          stopId:this.stopName
+        }
+      }
+    }
+    else {
+      config={
+        params:{
+          routeName:this.routeName
+        }
+      }
+    }
+
+    var error=false;
+    this.http.get(this.constants.BASE_URL_NEAREST_STOPS,config).subscribe(data => {
+        let json = data.json();
+        //console.log(body);
+        if(json.body!=null){
+          if(json.body.length>0){
+            error=false;
+            this.navCtrl.push(StopsnearmePage,{data:json.body});
+          }
+          else {
+            {
+              error=true;
+            }
+          }
+
+        }
+        else {
+          error=true
+        }
+
+        if(error){
+          let toast = this.toastCtrl.create({
+            message: 'No Stops Found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
+        }
+
+    });
+
+
   }
 
   viewStopsNearMeClicked(){
@@ -355,6 +414,8 @@ export class HomePage {
 
   }
 
+
+
   onGeneralInfoClicked(){
     this.navCtrl.push(GeneralinfoPage,{data:"sagar"})
   }
@@ -377,6 +438,7 @@ export class HomePage {
      this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
      this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
      this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
+     this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
      //console.log(resp);
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -421,6 +483,15 @@ export class HomePage {
     });
   }
 
+  getWeatherInfo(lat:any,lng:any){
+    this.http.get(this.constants.getWeatherAPI(lat,lng)).subscribe(data => {
+        let body = data.json();
+        console.log(body.currently.temperature);
+        this.temp=body.currently.temperature;
+
+    });
+  }
+
 
   showPreference(){
     var data;
@@ -454,7 +525,8 @@ export class HomePage {
      if(data!=undefined){
         this.selected=true;
         this.selectedDate=data.date;
-        this.selectedTime=data.hour+":"+data.min;
+        this.selectedDateJPApi=new Date(this.selectedDate).toISOString().slice(0,10).replace(/-/g,"");
+        this.selectedTime=(data.hour<10)?"0"+data.hour:data.hour+":"+(data.min<10)?"0"+data.min:data.min;
         this.departureDate=data.departureDate;
 
 

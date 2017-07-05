@@ -37,6 +37,7 @@ export class RoutesPage {
   private selected: boolean = false;
   selectedDate: any;
   selectedTime: any;
+  selectedDateJPApi: any;
   api:string;
   googleDirectionResult:any;
   departureDate:Date;
@@ -45,6 +46,9 @@ export class RoutesPage {
     this.accessOptions = this.navParams.get("accessOptions");
     this.showOptions = this.navParams.get("showOptions");
     this.api=this.navParams.get("api");
+    this.selectedTime=this.navParams.get("selectedTime");
+    this.selectedDate=this.navParams.get("selectedDate");
+    this.selectedDateJPApi=this.navParams.get("selectedDateJPApi");
   }
 
   ionViewDidLoad() {
@@ -191,7 +195,7 @@ export class RoutesPage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:"123"
+        date:this.selectedDateJPApi
       }
 
       // params:{
@@ -203,19 +207,19 @@ export class RoutesPage {
       // }
     }
 
-    if(this.accessOptions=="hasescal"){
-      config.params['hasEscalators']="true";
-    }
-    else {
-      config.params['hasEscalators']="false";
-    }
-
-    if(this.accessOptions=="hasstairs"){
-      config.params['hasStares']="true";
-    }
-    else {
-      config.params['hasStares']="false";
-    }
+    // if(this.accessOptions=="hasescal"){
+    //   config.params['hasEscalators']="true";
+    // }
+    // else {
+    //   config.params['hasEscalators']="false";
+    // }
+    //
+    // if(this.accessOptions=="hasstairs"){
+    //   config.params['hasStares']="true";
+    // }
+    // else {
+    //   config.params['hasStares']="false";
+    // }
 
 
     // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
@@ -314,8 +318,9 @@ export class RoutesPage {
      if(data!=undefined){
         this.selected=true;
         this.selectedDate=data.date;
-        this.selectedTime=data.hour+":"+data.min;
+        this.selectedTime=(data.hour<10)?"0"+data.hour:data.hour+":"+(data.min<10)?"0"+data.min:data.min;
         this.departureDate=data.departureDate;
+        this.selectedDateJPApi=new Date(this.selectedDate).toISOString().slice(0,10).replace(/-/g,"");
         this.planJourney();
 
      }
