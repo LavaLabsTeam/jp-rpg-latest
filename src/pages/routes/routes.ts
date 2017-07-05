@@ -318,7 +318,7 @@ export class RoutesPage {
      if(data!=undefined){
         this.selected=true;
         this.selectedDate=data.date;
-        this.selectedTime=(data.hour<10)?"0"+data.hour:data.hour+":"+(data.min<10)?"0"+data.min:data.min;
+        this.selectedTime=data.hour+":"+data.min;
         this.departureDate=data.departureDate;
         this.selectedDateJPApi=new Date(this.selectedDate).toISOString().slice(0,10).replace(/-/g,"");
         this.planJourney();

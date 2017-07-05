@@ -56,10 +56,25 @@ export class HomePage {
     console.log(constants);
     this.departureDate=new Date();
     var curDate=new Date();
-    this.selectedTime=(curDate.getHours()<10)?("0"+curDate.getHours()):curDate.getHours()+":"+(curDate.getMinutes()<10)?("0"+curDate.getMinutes()):curDate.getMinutes();
+    var h,m;
+    if(curDate.getHours()<10){
+      h="0"+curDate.getHours();
+    }
+    else {
+      h=""+curDate.getHours();
+    }
+
+    if(curDate.getMinutes()<10){
+      m="0"+curDate.getMinutes();
+    }
+    else {
+      m=curDate.getMinutes();
+    }
+
+    this.selectedTime=h+":"+m;
     this.selectedDateJPApi=curDate.toISOString().slice(0,10).replace(/-/g,"");
 
-    console.log((curDate.getHours()<10)?("0"+curDate.getHours()):curDate.getHours());
+    //console.log(h+" "+m);
   }
 
   sayMyName() {
@@ -308,7 +323,7 @@ export class HomePage {
   viewETAClicked(){
     //this.navCtrl.push(EtaresultPage,{data:"sagar"})
     var config={};
-    if(this.stopName!="") {
+    if(this.stopName!=undefined && this.stopName!="") {
       config={
         params:{
           stopName:this.stopName,
@@ -526,7 +541,8 @@ export class HomePage {
         this.selected=true;
         this.selectedDate=data.date;
         this.selectedDateJPApi=new Date(this.selectedDate).toISOString().slice(0,10).replace(/-/g,"");
-        this.selectedTime=(data.hour<10)?"0"+data.hour:data.hour+":"+(data.min<10)?"0"+data.min:data.min;
+
+        this.selectedTime=data.hour+":"+data.min;
         this.departureDate=data.departureDate;
 
 
