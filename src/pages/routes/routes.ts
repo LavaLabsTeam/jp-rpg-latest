@@ -195,7 +195,11 @@ export class RoutesPage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:this.selectedDateJPApi
+        date:this.selectedDateJPApi,
+        hasEscalators:"false",
+        hasStares:"false",
+        leastWalking:"false",
+        lowestTransit:"false"
       }
 
       // params:{
@@ -265,13 +269,14 @@ export class RoutesPage {
     },
     error => {
       this.progress.dismiss();
-      let toast = this.toastCtrl.create({
-        message: 'Error Occured!',
-        duration: 3000,
-        position: 'bottom'
-      });
+      // let toast = this.toastCtrl.create({
+      //   message: 'Error Occured!',
+      //   duration: 3000,
+      //   position: 'bottom'
+      // });
 
-      toast.present();
+      //toast.present();
+      this.callGoogle();
     });
   }
 

@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { PlacesearchPage } from '../placesearch/placesearch';
 import { RoutesPage } from '../routes/routes';
 import { EtaresultPage } from '../etaresult/etaresult';
@@ -51,7 +52,7 @@ export class HomePage {
  //sample places to see route
  //MRT & KTM Sungai Buloh Drop Off and Kuarters Integrasi Hospital Sungai Buloh and time 12:24 to 12:55
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants, private toastCtrl: ToastController, public plt: Platform) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     console.log(constants);
     this.departureDate=new Date();
@@ -136,7 +137,11 @@ export class HomePage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:this.selectedDateJPApi
+        date:this.selectedDateJPApi,
+        hasEscalators:"false",
+        hasStares:"false",
+        leastWalking:"false",
+        lowestTransit:"false"
       }
       // params:{
       //   startLan:"3.2066336",
@@ -170,7 +175,7 @@ export class HomePage {
 
     var error=false;
     this.progress.present();
-    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH,config).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH,config).timeout(30000).subscribe(data => {
         let json = data.json();
         //console.log(body);
         if(json.body!=null){
@@ -200,13 +205,15 @@ export class HomePage {
     },
     error => {
       this.progress.dismiss();
-      let toast = this.toastCtrl.create({
-        message: 'Error Occured!',
-        duration: 3000,
-        position: 'bottom'
-      });
+      // let toast = this.toastCtrl.create({
+      //   message: 'Error Occured!',
+      //   duration: 3000,
+      //   position: 'bottom'
+      // });
+      //
+      // toast.present();
 
-      toast.present();
+      this.callGoogle();
     });
   }
 
@@ -447,30 +454,36 @@ export class HomePage {
 
 
   ionViewDidLoad() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-     // resp.coords.latitude
-     // resp.coords.longitude
-     this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-     this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-     this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
-     this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
-     //console.log(resp);
-    }).catch((error) => {
-      console.log('Error getting location', error);
+    this.plt.ready().then((readySource) => {
+      //console.log('Platform ready from', readySource);
+      // Platform now ready, execute any required native code
+      this.geolocation.getCurrentPosition().then((resp) => {
+       // resp.coords.latitude
+       // resp.coords.longitude
+       this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+       this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+       this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
+       this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
+       //console.log(resp);
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+
+      this.watch = this.geolocation.watchPosition();
+      this.watch.subscribe((data) => {
+       // data can be a set of coordinates, or an error (if an error occurred).
+       // data.coords.latitude
+       // data.coords.longitude
+       if(data.coords!=undefined){
+         this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
+       }
+
+       console.log(data);
+       //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
+      });
     });
 
-    this.watch = this.geolocation.watchPosition();
-    this.watch.subscribe((data) => {
-     // data can be a set of coordinates, or an error (if an error occurred).
-     // data.coords.latitude
-     // data.coords.longitude
-     if(data.coords!=undefined){
-       this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
-     }
 
-     console.log(data);
-     //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
-    });
 
 
     this.progress = this.modalCtrl.create(ProgressPage);
