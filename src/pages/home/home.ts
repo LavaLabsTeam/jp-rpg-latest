@@ -137,11 +137,11 @@ export class HomePage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:this.selectedDateJPApi,
-        hasEscalators:"false",
-        hasStares:"false",
-        leastWalking:"false",
-        lowestTransit:"false"
+        date:this.selectedDateJPApi
+        // hasEscalators:"false",
+        // hasStares:"false",
+        // leastWalking:"false",
+        // lowestTransit:"false"
       }
       // params:{
       //   startLan:"3.2066336",
@@ -240,12 +240,12 @@ export class HomePage {
 
 
 
-    if(this.showOptions=="rwfc"){
-      request.transitOptions['routingPreference']='FEWER_TRANSFERS';
-    }
-    else if(this.showOptions=="rwlw"){
-      request.transitOptions['routingPreference']='LESS_WALKING';
-    }
+    // if(this.showOptions=="rwfc"){
+    //   request.transitOptions['routingPreference']='FEWER_TRANSFERS';
+    // }
+    // else if(this.showOptions=="rwlw"){
+    //   request.transitOptions['routingPreference']='LESS_WALKING';
+    // }
 
     request.transitOptions['departureTime']=this.departureDate;
 
@@ -270,7 +270,7 @@ export class HomePage {
       else {
         //this.progress.dismiss();
         let toast = tctrl.create({
-          message: 'Error Occured!',
+          message: 'No routes found!',
           duration: 3000,
           position: 'bottom'
         });
@@ -455,7 +455,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.plt.ready().then((readySource) => {
-      //console.log('Platform ready from', readySource);
+      console.log('Platform ready from', readySource);
       // Platform now ready, execute any required native code
       this.geolocation.getCurrentPosition().then((resp) => {
        // resp.coords.latitude

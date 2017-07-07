@@ -195,11 +195,11 @@ export class RoutesPage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:this.selectedDateJPApi,
-        hasEscalators:"false",
-        hasStares:"false",
-        leastWalking:"false",
-        lowestTransit:"false"
+        date:this.selectedDateJPApi
+        // hasEscalators:"false",
+        // hasStares:"false",
+        // leastWalking:"false",
+        // lowestTransit:"false"
       }
 
       // params:{
@@ -437,12 +437,12 @@ export class RoutesPage {
 
 
 
-    if(this.showOptions=="rwfc"){
-      request.transitOptions['routingPreference']='FEWER_TRANSFERS';
-    }
-    else if(this.showOptions=="rwlw"){
-      request.transitOptions['routingPreference']='LESS_WALKING';
-    }
+    // if(this.showOptions=="rwfc"){
+    //   request.transitOptions['routingPreference']='FEWER_TRANSFERS';
+    // }
+    // else if(this.showOptions=="rwlw"){
+    //   request.transitOptions['routingPreference']='LESS_WALKING';
+    // }
 
     request.transitOptions['departureTime']=this.departureDate;
 
