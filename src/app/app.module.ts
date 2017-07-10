@@ -14,6 +14,7 @@ import { DatepickerPage } from '../pages/datepicker/datepicker';
 import { ProgressPage } from '../pages/progress/progress';
 import { RoutesinfoPage } from '../pages/routesinfo/routesinfo';
 import { SchedulesPage } from '../pages/schedules/schedules';
+import { FaresPage } from '../pages/fares/fares';
 
 import { HighlightDirective } from '../directives/highlight.directive';
 import { GoogleplaceDirective } from '../directives/googleplace.directive';
@@ -46,7 +47,8 @@ import { FocuserDirective } from '../directives/focuser/focuser';
     ProgressPage,
     RoutesinfoPage,
     SchedulesPage,
-    FocuserDirective
+    FocuserDirective,
+    FaresPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { FocuserDirective } from '../directives/focuser/focuser';
     DatepickerPage,
     ProgressPage,
     RoutesinfoPage,
-    SchedulesPage
+    SchedulesPage,
+    FaresPage
   ],
 
   providers: [

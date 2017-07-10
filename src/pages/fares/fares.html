@@ -1,0 +1,101 @@
+<!--
+  Generated template for the FaresPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Fares</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="row bg-semi-transparent">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <h1 class="text-white text-4x" color="primary">General Information</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <h1 class="text-white text-2x" color="primary">Fares</h1>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-grid class="padding-0 margin-top">
+    <ion-row>
+      <ion-col col-2 class="bg-orange">
+        <span class="text-white size-2x" color="primary">RouteId</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-orange">
+        <span class="text-white size-2x" color="primary">Start Stop</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-orange">
+        <span class="text-white size-2x" color="primary">End Stop</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-orange">
+        <span class="text-white size-2x" color="primary">First trip</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-orange">
+        <span class="text-white size-2x" color="primary">Last trip</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-orange">
+        <span class="text-white size-2x" color="primary">Frequency</span>
+      </ion-col>
+
+    </ion-row>
+    <ion-row *ngFor="let schedule of schedules; let i=index">
+      <ion-col col-2 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{schedule.routeId}}</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{schedule.startStop}}</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{schedule.endStop}}</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{schedule.firstTrip}}</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{schedule.lastTrip}}</span>
+      </ion-col>
+
+      <ion-col col-2 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{schedule.frequency}}</span>
+      </ion-col>
+
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row class="padding-0 margin-top">
+
+      <ion-col col-12 class="padding-right-1">
+        <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
+          BACK
+        </button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-footer>
