@@ -14,6 +14,7 @@ export class Constants {
   public BASE_URL_ROUTES:string = this.BASE_URL_API+"/open/api/routes";
   public BASE_URL_SCHEDULES:string = this.BASE_URL_API+"/open/api/schedules";
   public BASE_URL_FARES:string = this.BASE_URL_API+"/open/api/fares-data";
+  public BASE_URL_FARES_ROUTES:string = this.BASE_URL_API+"/open/api/fares-for-routes";
   public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/on72z";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/k2lxf";

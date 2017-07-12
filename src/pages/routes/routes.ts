@@ -66,6 +66,7 @@ export class RoutesPage {
     if(this.api=="jpapp"){
       this.calculateRoutesDuration();
       this.optimizeRoutes();
+      this.calculateFares();
     }
     else {
       //if google
@@ -104,10 +105,57 @@ export class RoutesPage {
     }
   }
 
+  calculateFares(){
+    var error=false;
+
+    var params:Array<any>=[];
+    for(let r of this.routes){
+      var trip=r.trips[1];
+      //console.log(trip);
+      params.push({
+        routeId:trip.routeId,
+        startStopId: r.startStop.stopId,
+        endStopId: r.endStop.stopId
+      });
+    };
+
+
+
+    this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).subscribe(data => {
+        let fares = data.json();
+        //console.log(body);
+        if(fares!=null){
+          if(fares.length>0){
+            error=false;
+            var i=0;
+            var fr=[0.7,1,2.5,3.0];
+            for(let f of fares){
+              //this.routes[i]['fare']=f.fare;
+              this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)];
+              i++;
+            }
+
+          }
+          else {
+            {
+              error=true;
+            }
+          }
+
+        }
+        else {
+          error=true
+        }
+
+    });
+  }
+
   getAddressOnChange(place){
     //console.log(place);
     //this.viewCtrl.dismiss({place:place});
   }
+
+
 
   timeDiff(time1,time2) {
     //console.log(time1+"  "+time2);

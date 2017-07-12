@@ -18,13 +18,13 @@ export class PlacesearchPage {
   name:string;
   constructor(public viewCtrl: ViewController,public navParams: NavParams) {
     //alert(this.navParams.data.name);
-    if(this.navParams.data.name=="start"){
-      this.search="Bus Terminal Komtar";
-    }
-
-    if(this.navParams.data.name=="end"){
-      this.search="Masjid Jamek Al-munauwar";
-    }
+    // if(this.navParams.data.name=="start"){
+    //   this.search="Bus Terminal Komtar";
+    // }
+    //
+    // if(this.navParams.data.name=="end"){
+    //   this.search="Masjid Jamek Al-munauwar";
+    // }
   }
 
   ionViewDidLoad() {

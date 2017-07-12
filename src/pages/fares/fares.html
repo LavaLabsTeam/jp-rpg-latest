@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Fares</ion-title>
+  <ion-navbar color="secondary">
+    <ion-title>General Information &raquo; Fares</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,14 +18,16 @@
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-          <h1 class="text-white text-3x" color="primary">General Information:Fares</h1>
+          <h1 class="text-white text-3x" color="primary">Fares</h1>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <span class="text-white text-2x" color="primary">LPKP Fare Structure</span><br>
+          <span class="text-white size-2x" color="primary">LPKP Fare Structure</span><br>
           <div *ngFor="let fare of fares.fareDatas">
-            <span class="text-white text-2x" color="primary">{{fare.fareType}} - Till {{fare.date}}</span><br>
+            <span class="text-white size-2x" color="primary">{{fare.fareType}} - Till {{fare.date}}</span><br>
+            <span class="text-white size-2x" color="primary">First 2 kilometer - {{fare.firstTwoKm}}</span><br>
+            <span class="text-white size-2x" color="primary">For every additional km - {{fare.everyAdditionalKm}}</span><br><br>
           </div>
         </ion-col>
       </ion-row>
@@ -52,11 +54,11 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-12 class="bg-white">
-        <span class="text-orange size-2x" color="primary">NORMAL FARE</span>
+      <ion-col col-12 class="bg-blue">
+        <span class="text-white size-2x" color="primary">NORMAL FARE</span>
       </ion-col>
     </ion-row>
-    
+
     <ion-row *ngFor="let fareStruct of normalFares; let i=index">
       <ion-col col-4 class="bg-white">
         <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>
@@ -77,7 +79,7 @@
         <span class="text-white size-2x" color="primary">CONCESSION FARE</span>
       </ion-col>
     </ion-row>
-    
+
     <ion-row *ngFor="let fareStruct of concessionFares; let i=index">
       <ion-col col-4 class="bg-white">
         <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>

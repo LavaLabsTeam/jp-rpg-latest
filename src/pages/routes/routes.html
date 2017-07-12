@@ -160,15 +160,15 @@
         </ion-col>
       </ion-row>
 
-      <!-- <ion-row>
+      <ion-row *ngIf="api=='jpapp' && route.trips.length>0">
         <ion-col col-12 text-center class="price margin-top">
           <div class="inner-block">
             <div class="duration">
-              <h2 class="text-white">RM 25</h2>
+              <h2 class="text-white">RM {{route.fare}}</h2>
             </div>
           </div>
         </ion-col>
-      </ion-row> -->
+      </ion-row>
 
       <ion-row>
         <ion-col col-12 text-center>
