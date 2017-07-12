@@ -18,12 +18,15 @@
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-          <h1 class="text-white text-4x" color="primary">General Information</h1>
+          <h1 class="text-white text-3x" color="primary">General Information:Fares</h1>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col text-center>
-          <h1 class="text-white text-2x" color="primary">Fares</h1>
+        <ion-col>
+          <span class="text-white text-2x" color="primary">LPKP Fare Structure</span><br>
+          <div *ngFor="let fare of fares.fareDatas">
+            <span class="text-white text-2x" color="primary">{{fare.fareType}} - Till {{fare.date}}</span><br>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -31,58 +34,65 @@
 
   <ion-grid class="padding-0 margin-top">
     <ion-row>
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">RouteId</span>
+      <ion-col col-12 class="bg-orange">
+        <span class="text-white size-2x" color="primary">RAPID PENANG FARE STRUCTURE</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4 class="bg-orange">
+        <span class="text-white size-2x" color="primary">FARE STAGES</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Start Stop</span>
+      <ion-col col-4 class="bg-orange">
+        <span class="text-white size-2x" color="primary">CURRENT FARES</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">End Stop</span>
+      <ion-col col-4 class="bg-orange">
+        <span class="text-white size-2x" color="primary">NEW FARES</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 class="bg-white">
+        <span class="text-orange size-2x" color="primary">NORMAL FARE</span>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row *ngFor="let fareStruct of normalFares; let i=index">
+      <ion-col col-4 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">First trip</span>
+      <ion-col col-4 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{fareStruct.currentFare}}</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Last trip</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Frequency</span>
+      <ion-col col-4 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{fareStruct.newFare}}</span>
       </ion-col>
 
     </ion-row>
-    <ion-row *ngFor="let schedule of schedules; let i=index">
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.routeId}}</span>
+
+     <ion-row>
+      <ion-col col-12 class="bg-blue">
+        <span class="text-white size-2x" color="primary">CONCESSION FARE</span>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row *ngFor="let fareStruct of concessionFares; let i=index">
+      <ion-col col-4 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.startStop}}</span>
+      <ion-col col-4 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{fareStruct.currentFare}}</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.endStop}}</span>
+      <ion-col col-4 class="bg-white">
+        <span class="text-orange size-2x" color="primary">{{fareStruct.newFare}}</span>
       </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.firstTrip}}</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.lastTrip}}</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.frequency}}</span>
-      </ion-col>
-
 
     </ion-row>
+
   </ion-grid>
 </ion-content>
 

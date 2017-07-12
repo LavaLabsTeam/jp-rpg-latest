@@ -51,6 +51,8 @@ export class HomePage {
 
  //sample places to see route
  //MRT & KTM Sungai Buloh Drop Off and Kuarters Integrasi Hospital Sungai Buloh and time 12:24 to 12:55
+ // Start: Bus Terminal Komtar
+ // End: Masjid Jamek Al-munauwar
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants, private toastCtrl: ToastController, public plt: Platform) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
@@ -85,7 +87,7 @@ export class HomePage {
   }
 
   setStartLocation(){
-    let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+    let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
 
     modal.onDidDismiss(data => {
      console.log(data);
@@ -101,7 +103,7 @@ export class HomePage {
 
 
   setEndLocation(){
-    let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+    let modal = this.modalCtrl.create(PlacesearchPage,{name:"end"});
 
     modal.onDidDismiss(data => {
      console.log(data);

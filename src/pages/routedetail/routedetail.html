@@ -74,9 +74,13 @@
                 </div>
 
 
-                <div class="logo margin-top">
+                <div class="logo margin-top" (click)="stoplist.hidden=!stoplist.hidden">
                   <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                  <span class="eta text-2x text-white">About {{trip.totalDurationText}}</span>
+                  <span class="eta text-2x text-white">About {{trip.totalDurationText}} <span *ngIf="api=='jpapp'">({{trip.stops.length}} Stops)</span></span><br>
+                  <ul #stoplist [hidden]="true">
+                    <li *ngFor="let stop of trip.stops" class="text-white text-2x">{{stop.stopName}}</li>
+
+                  </ul>
                 </div>
 
                 <!-- <div class="alert" *ngIf="false">
