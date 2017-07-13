@@ -83,8 +83,8 @@
                   </ul>
                 </div>
 
-                <div class="alert" *ngIf="false">
-                  <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
+                <div class="alert" *ngIf="trip.hasOwnProperty('roadClosure') && trip.roadClosure!=null && trip.roadClosure.incidentActive==true">
+                  <span class="text-1x text-white">This route will not be available in the following period {{trip.roadClosure.startDate}} {{trip.roadClosure.startTime}} till {{trip.roadClosure.endDate}} {{trip.roadClosure.endTime}}</span>
                 </div>
 
 

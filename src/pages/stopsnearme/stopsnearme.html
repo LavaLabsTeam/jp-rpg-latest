@@ -44,12 +44,12 @@
       </ion-col>
 
     </ion-row>
-    <ion-row *ngFor="let row of records; let i=index">
+    <ion-row *ngFor="let row of records; let i=index" class="margin-bottom-1">
 
       <ion-col col-12 class="padding-0">
         <ion-row class="bg-light-orange">
-          <ion-col col-11>
-            <span class="text-orange size-2x align-right" color="primary">{{row.stopName}}</span>
+          <ion-col col-11 (click)="showConfrimation(row)">
+            <span class="text-orange text-2x align-right" color="primary">{{row.stopName}}</span>
           </ion-col>
           <ion-col col-1 text-center (click)="expand.hidden=!expand.hidden">
               <ion-icon color="light" name="md-arrow-down"></ion-icon>
@@ -60,24 +60,24 @@
           <div *ngIf="row.eta.routes!=null">
             <ion-row *ngFor="let route of row.eta.routes">
               <ion-col col-6 class="bg-white">
-                <span class="text-orange size-2x" color="primary">{{route.routeLongName}}</span>
+                <span class="text-orange text-2x" color="primary">{{route.routeLongName}}</span>
               </ion-col>
 
               <ion-col col-3 class="bg-white" text-center>
-                <span class="text-orange size-2x" color="primary" *ngIf="route.stops!=null">{{route.stops[0].eta}} min</span>
-                <span class="text-orange size-2x" color="primary" *ngIf="route.stops==null">N/A</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.stops!=null">{{route.stops[0].eta}} min</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.stops==null">N/A</span>
               </ion-col>
 
               <ion-col col-3 class="bg-white" text-center>
-                <span class="text-orange size-2x" color="primary" *ngIf="route.stops!=null">{{route.stops[0]?.eta}} min</span>
-                <span class="text-orange size-2x" color="primary" *ngIf="route.stops==null">N/A</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.stops!=null">{{route.stops[0]?.eta}} min</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.stops==null">N/A</span>
              </ion-col>
            </ion-row>
          </div>
 
          <ion-row *ngIf="row.eta.routes==null">
            <ion-col col-12 class="bg-white">
-             <span class="text-orange size-2x" color="primary">ETA Not Available</span>
+             <span class="text-orange text-2x padding-5" color="primary">ETA Not Available</span>
            </ion-col>
         </ion-row>
        </div>

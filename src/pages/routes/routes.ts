@@ -294,6 +294,7 @@ export class RoutesPage {
               this.calculateRoutesDuration();
               this.optimizeRoutes();
               this.api="jpapp";
+              this.calculateFares();
               error=false;
             }
             else {

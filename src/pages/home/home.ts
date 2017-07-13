@@ -16,6 +16,7 @@ import { Constants } from '../../services/constants';
 import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 
 declare var google:any;
 
@@ -54,7 +55,16 @@ export class HomePage {
  // Start: Bus Terminal Komtar
  // End: Masjid Jamek Al-munauwar
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private geolocation: Geolocation, private http:Http, private constants:Constants, private toastCtrl: ToastController, public plt: Platform) {
+  constructor(
+      public navCtrl: NavController
+    , public modalCtrl: ModalController
+    , private geolocation: Geolocation
+    , private http:Http
+    , private constants:Constants
+    , private toastCtrl: ToastController
+    , public plt: Platform
+    , public events: Events
+  ) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     console.log(constants);
     this.departureDate=new Date();
@@ -78,6 +88,22 @@ export class HomePage {
     this.selectedDateJPApi=curDate.toISOString().slice(0,10).replace(/-/g,"");
 
     //console.log(h+" "+m);
+
+    // second page (listen for the user created event)
+    this.events.subscribe('stop:tapped', (data) => {
+      // userEventData is an array of parameters, so grab our first and only arg
+      //console.log(data);
+      if(data.type=="start"){
+        this.startAddress=data.address;
+        this.startLocation=data.location;
+      }
+      else
+      {
+        this.endAddress=data.address;
+        this.endLocation=data.location;
+      }
+    });
+
   }
 
   sayMyName() {
@@ -485,19 +511,12 @@ export class HomePage {
       });
     });
 
-
-
-
     this.progress = this.modalCtrl.create(ProgressPage);
 
+  }
 
-
-
-
-
-
-
-
+  ionViewDidEnter() {
+    //console.log();
   }
 
   ionViewWillUnload() {
