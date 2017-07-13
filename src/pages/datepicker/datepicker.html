@@ -10,7 +10,7 @@
   </ion-navbar>
 </div>
 <div class="content">
-  <ion-list *ngFor="let item of dateOptions" radio-group [(ngModel)]="selectedDate">
+  <ion-list *ngFor="let item of dateOptions" radio-group [(ngModel)]="selectedDate" class="margin-bottom-5">
       <ion-item>
         <ion-label>{{item.label}}</ion-label>
         <ion-radio value="{{item.value}}"></ion-radio>

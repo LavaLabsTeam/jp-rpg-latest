@@ -84,7 +84,7 @@
               </ion-col>
 
               <ion-col col-10>
-                <span class="text-white size-2x" color="primary" *ngIf="stop.stopName!=null">{{stop.stopName}}</span>
+                <span class="text-white size-2x" color="primary" *ngIf="stop.stopName!=null" (click)="showConfrimation()">{{stop.stopName}}</span>
                 <span class="text-white size-2x" color="primary" *ngIf="stop.stopName==null">N/A</span>
               </ion-col>
 

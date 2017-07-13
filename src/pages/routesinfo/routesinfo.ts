@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, NavOptions } from 'ionic-angular';
 
 /**
  * Generated class for the RoutesinfoPage page.
@@ -29,6 +29,13 @@ export class RoutesinfoPage {
 
   expand(index:any){
     this.showIndex=this.showIndex==index?-1:index;
+  }
+
+
+  showConfrimation(){
+    var options:NavOptions;
+
+    this.navCtrl.popToRoot();
   }
 
 
