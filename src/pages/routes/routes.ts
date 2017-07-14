@@ -41,6 +41,7 @@ export class RoutesPage {
   api:string;
   googleDirectionResult:any;
   departureDate:Date;
+  showIndex:any;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController) {
     this.accessOptions = this.navParams.get("accessOptions");
@@ -562,6 +563,10 @@ export class RoutesPage {
     //this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result});
 
 
+  }
+
+  expand(index:any){
+    this.showIndex=this.showIndex==index?-1:index;
   }
 
 

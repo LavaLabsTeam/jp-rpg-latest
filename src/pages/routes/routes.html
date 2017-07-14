@@ -86,67 +86,90 @@
 
     </ion-grid>
 
-    <ion-grid class="bg-semi-transparent margin-top" padding *ngFor="let route of routes">
+    <ion-grid class="bg-semi-transparent margin-top" padding *ngFor="let route of routes; let x=index" (click)="expand(x)">
+      <ion-row>
+        <ion-col col-4>
+          <h2 class="text-white">{{route.name}}</h2>
+        </ion-col>
 
-      <div *ngFor="let trip of route.trips; let i=index">
-        <ion-row *ngIf="i>0">
-          <ion-col col-12 class= "waypoint">
-            <div class="inner-block">
-              <div class="point"></div>
-              <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-            </div>
-          </ion-col>
-        </ion-row>
+        <ion-col col-4 text-center>
+         <h3 class="text-white">{{route.totalDurationText}} </h3>
+        </ion-col>
 
-        <div *ngIf="trip.type=='WALKING'">
-          <ion-row>
-            <ion-col col-12 text-center class="block walk">
-                <div class="inner-block">
-                    <div class="logo align-center">
-                      <div class="icon">
-                        <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
-                      </div>
-                    </div>
-                    <div class="address">
-                      <h3 class="text-white" *ngIf="api=='jpapp'">Walk</h3>
-                      <h5 class="text-white">{{trip.instruction}}</h5>
-                    </div>
+        <ion-col col-3 text-center>
+           <h3 class="text-white">RM {{route.fare}}</h3>
+        </ion-col>
 
-                </div>
+
+        <ion-col col-1 text-center>
+          <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+        </ion-col>
+
+      </ion-row>
+
+      
+
+      <div #expand *ngIf="showIndex==x">
+        <div *ngFor="let trip of route.trips; let i=index">
+          <ion-row *ngIf="i>0">
+            <ion-col col-12 class= "waypoint">
+              <div class="inner-block">
+                <div class="point"></div>
+                <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+              </div>
             </ion-col>
           </ion-row>
 
+          <div *ngIf="trip.type=='WALKING'">
+            <ion-row>
+              <ion-col col-12 text-center class="block walk">
+                  <div class="inner-block">
+                      <div class="logo align-center">
+                        <div class="icon">
+                          <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
+                        </div>
+                      </div>
+                      <div class="address">
+                        <h3 class="text-white" *ngIf="api=='jpapp'">Walk</h3>
+                        <h5 class="text-white">{{trip.instruction}}</h5>
+                      </div>
+
+                  </div>
+              </ion-col>
+            </ion-row>
+
+
+          </div>
+
+          <ion-row *ngIf="trip.type=='TRANSIT'">
+            <ion-col col-12 text-center class="block">
+              <div class="inner-block">
+                  <div class="logo align-center">
+                    <div class="icon bg-yellow">
+                      <ion-icon name="bus" color="light" class="text-3x"></ion-icon>
+                    </div>
+                    <div class="bus-no" *ngIf="api=='jpapp' || trip.routeLongName!=''">
+                      <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span>
+                    </div>
+                  </div>
+                  <div class="address">
+                    <div *ngIf="route.trips.length>=1">
+                      <!-- <h3 class="text-white" *ngIf="i==route.trips.length-1">{{trip.stops[trip.stops.length-1].stopName}}</h3> -->
+                      <h3 class="text-white">{{trip.instruction}}</h3>
+
+                    </div>
+
+                    <!-- <h3 class="text-white" *ngIf="route.trips.length==1">From {{trip.stops[0].stopName}}</h3> -->
+                  </div>
+
+              </div>
+            </ion-col>
+          </ion-row>
 
         </div>
-
-        <ion-row *ngIf="trip.type=='TRANSIT'">
-          <ion-col col-12 text-center class="block">
-            <div class="inner-block">
-                <div class="logo align-center">
-                  <div class="icon bg-yellow">
-                    <ion-icon name="bus" color="light" class="text-3x"></ion-icon>
-                  </div>
-                  <div class="bus-no" *ngIf="api=='jpapp' || trip.routeLongName!=''">
-                    <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span>
-                  </div>
-                </div>
-                <div class="address">
-                  <div *ngIf="route.trips.length>=1">
-                    <!-- <h3 class="text-white" *ngIf="i==route.trips.length-1">{{trip.stops[trip.stops.length-1].stopName}}</h3> -->
-                    <h3 class="text-white">{{trip.instruction}}</h3>
-
-                  </div>
-
-                  <!-- <h3 class="text-white" *ngIf="route.trips.length==1">From {{trip.stops[0].stopName}}</h3> -->
-                </div>
-
-            </div>
-          </ion-col>
-        </ion-row>
-
       </div>
 
-      <ion-row>
+      <!-- <ion-row>
         <ion-col col-12 text-center class="time">
           <div class="inner-block">
             <div class="duration">
@@ -156,11 +179,11 @@
                 <span class="text-white size-1x">12:20pm - 2:30pm</span>
               </div> -->
 
-          </div>
+         <!-- </div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
-      <ion-row *ngIf="api=='jpapp' && route.trips.length>0">
+      <!-- <ion-row *ngIf="api=='jpapp' && route.trips.length>0">
         <ion-col col-12 text-center class="price margin-top">
           <div class="inner-block">
             <div class="duration">
@@ -168,7 +191,7 @@
             </div>
           </div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
       <ion-row>
         <ion-col col-12 text-center>
@@ -178,7 +201,7 @@
             </button>
           </div>
         </ion-col>
-      </ion-row>
+      </ion-row> 
 
 
     </ion-grid>

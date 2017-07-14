@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="alert" *ngIf="trip.hasOwnProperty('roadClosure') && trip.roadClosure!=null && trip.roadClosure.incidentActive==true">
-                  <span class="text-1x text-white">This route will not be available in the following period {{trip.roadClosure.startDate}} {{trip.roadClosure.startTime}} till {{trip.roadClosure.endDate}} {{trip.roadClosure.endTime}}</span>
+                  <span class="text-1x text-white">Incident reported for this route as {{trip.roadClosure.startDate}} from {{trip.roadClosure.startDate}} {{trip.roadClosure.startTime}} to {{trip.roadClosure.endDate}} {{trip.roadClosure.endTime}}</span>
                 </div>
 
 

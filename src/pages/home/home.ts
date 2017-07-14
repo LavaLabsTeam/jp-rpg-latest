@@ -48,7 +48,9 @@ export class HomePage {
   showOptions:any;
   accessOptions:any;
   temp:any;
+  leaveNowChecked:boolean;
   @ViewChild('datePicker') datePicker; //inject element
+  @ViewChild('leavenow') chkleaveNow; //inject element
 
  //sample places to see route
  //MRT & KTM Sungai Buloh Drop Off and Kuarters Integrasi Hospital Sungai Buloh and time 12:24 to 12:55
@@ -110,6 +112,34 @@ export class HomePage {
     console.log('My name is sagar')
     this.registered=!this.registered;
     this.name="sagar";
+  }
+
+
+  leaveNowClicked(){
+    this.chkleaveNow.checked=!this.chkleaveNow.checked;
+
+    if(this.chkleaveNow.checked){
+      var curDate=new Date();
+      var h,m;
+      if(curDate.getHours()<10){
+        h="0"+curDate.getHours();
+      }
+      else {
+        h=""+curDate.getHours();
+      }
+
+      if(curDate.getMinutes()<10){
+        m="0"+curDate.getMinutes();
+      }
+      else {
+        m=curDate.getMinutes();
+      }
+
+      this.selectedTime=h+":"+m;
+      this.selectedDateJPApi=curDate.toISOString().slice(0,10).replace(/-/g,"");
+      console.log(this.selectedTime);
+    }
+
   }
 
   setStartLocation(){
@@ -578,12 +608,21 @@ export class HomePage {
 
         this.selectedTime=data.hour+":"+data.min;
         this.departureDate=data.departureDate;
+        this.chkleaveNow.checked=false;
 
 
      }
     });
 
     modal.present();
+  }
+
+
+  clearSearch(){
+    this.startAddress="";
+    this.endAddress="";
+    this.routeName="";
+    this.stopName="";
   }
 
 }
