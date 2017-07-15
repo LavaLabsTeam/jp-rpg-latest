@@ -136,6 +136,11 @@ ion-content{
   color:color($colors, blue, base);
 }
 
+.text-orange-bright{
+  color:color($colors, brightorange, base);
+}
+
+
 
 //align
 .text-align-left{
@@ -250,7 +255,7 @@ ion-content.no-bgimage{
 }
 
 .full-width{
-  width: 100%;
+  width: 100%!important;
 }
 
 .table{

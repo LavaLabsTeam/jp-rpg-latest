@@ -11,8 +11,6 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
     <!-- <ion-grid>
       <ion-row>
@@ -86,26 +84,40 @@
 
     </ion-grid>
 
-    <ion-grid class="bg-semi-transparent margin-top" padding *ngFor="let route of routes; let x=index" (click)="expand(x)">
+    <ion-grid padding class="bg-semi-transparent margin-top" *ngFor="let route of routes; let x=index" (click)="expand(x)">
       <ion-row>
-        <ion-col col-4>
-          <h2 class="text-white">{{route.name}}</h2>
-        </ion-col>
-
-        <ion-col col-4 text-center>
-         <h3 class="text-white">{{route.totalDurationText}} </h3>
-        </ion-col>
-
-        <ion-col col-3 text-center>
-           <h3 class="text-white">RM {{route.fare}}</h3>
-        </ion-col>
-
-
-        <ion-col col-1 text-center>
-          <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
+        <ion-col col-12>
+          <h2 class="text-orange-bright text-2x-smaller" *ngIf="route.routeLabel!=''">{{route.routeLabel}}</h2>
         </ion-col>
 
       </ion-row>
+
+
+
+      <ion-row>
+        <ion-col col-4>
+          <h2 class="text-white text-2x">{{route.name}}</h2>
+        </ion-col>
+
+        <ion-col col-4 *ngIf="api=='jpapp'" text-center>
+         <h3 class="text-white text-2x">{{route.totalDurationText}} </h3>
+        </ion-col>
+
+        <ion-col col-7 *ngIf="api!='jpapp'" text-center>
+         <h3 class="text-white text-2x">{{route.totalDurationText}} </h3>
+        </ion-col>
+
+        <ion-col col-3 text-right *ngIf="api=='jpapp'">
+           <h3 class="text-white text-2x">RM {{route.fare}}</h3>
+        </ion-col>
+
+         <ion-col col-1 text-right>
+          <ion-icon *ngIf="showIndex!=x" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon>
+           <ion-icon *ngIf="showIndex==x" name="ios-arrow-down" color="light" class="text-2x"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+
 
       
 
@@ -167,21 +179,36 @@
           </ion-row>
 
         </div>
-      </div>
+        
+      
+        <ion-row>
+          <ion-col col-12 text-center class="time">
+            <div class="inner-block">
+              <div class="duration">
+                <h3 class="text-white">{{route.totalDurationText}} </h3>
+              </div>
+              <div class="time" *ngIf="api=='jpapp'">
+                <span class="text-white size-1x">{{tConvert((route.trips[1]).stops[0].arrivalTime)}}-{{tConvert((route.trips[route.trips.length-2]).stops[route.trips[route.trips.length-2].stops.length-1].departureTime)}}</span>
+              </div>
+              
+              <div class="time" *ngIf="api=='google'">
+                <span class="text-white size-1x">{{route.departureTime.text}}-{{route.arrivalTime.text}}</span>
+              </div>
 
-      <!-- <ion-row>
-        <ion-col col-12 text-center class="time">
-          <div class="inner-block">
-            <div class="duration">
-              <h3 class="text-white">{{route.totalDurationText}} </h3>
             </div>
-              <!-- <div class="time">
-                <span class="text-white size-1x">12:20pm - 2:30pm</span>
-              </div> -->
+          </ion-col>
+        </ion-row>
 
-         <!-- </div>
-        </ion-col>
-      </ion-row> -->
+        <ion-row>
+          <ion-col col-12 text-center>
+            <div class="inner-block">
+              <button ion-button full (click)="viewRouteDetailsClicked(route)">
+                View Details
+              </button>
+            </div>
+          </ion-col>
+        </ion-row> 
+      </div>
 
       <!-- <ion-row *ngIf="api=='jpapp' && route.trips.length>0">
         <ion-col col-12 text-center class="price margin-top">
@@ -192,16 +219,6 @@
           </div>
         </ion-col>
       </ion-row> -->
-
-      <ion-row>
-        <ion-col col-12 text-center>
-          <div class="inner-block">
-            <button ion-button full (click)="viewRouteDetailsClicked(route)">
-              View Details
-            </button>
-          </div>
-        </ion-col>
-      </ion-row> 
 
 
     </ion-grid>

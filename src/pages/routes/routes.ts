@@ -97,10 +97,35 @@ export class RoutesPage {
       for(let trip of route.trips){
         s+=trip.totalDurationValue;
       }
+
+      this.routes[i]['name']="Route "+(i+1);
       this.routes[i]['totalDurationValue']=s;
       var duration=this.secondsToTime(s);
       this.routes[i]['totalDuration']=duration;
-      this.routes[i]['totalDurationText']=duration.h+"hr "+duration.m+"mins";
+      // if(duration.h>0)
+      //   this.routes[i]['totalDurationText']=duration.h+"hr "+duration.m+"min";
+      // else
+      //   this.routes[i]['totalDurationText']=duration.m+"min";
+
+      //this.routes[i]['totalDurationText']=route.duration.text;
+
+      var routeLabel="";
+      if(i==0){
+          routeLabel='Recommended Route';
+      }
+      if(i==1){
+          routeLabel='Fastest Route';
+      }
+      if(this.routes[i].trips.length<2){
+          routeLabel='Direct Route';
+      }
+
+      if(this.routes[i].trips.length<2 && i==0){
+          routeLabel='Recommended Direct Route';
+      }
+
+      //this.routes[i].routeLabel=routeLabel;
+      this.routes[i]['routeLabel']=routeLabel;
 
       i++;
     }
@@ -454,7 +479,10 @@ export class RoutesPage {
 
         this.routes[i].trips[j].totalDuration=this.secondsToTime(duration);
         this.routes[i].trips[j].totalDurationValue=duration;
-        this.routes[i].trips[j].totalDurationText=this.routes[i].trips[j].totalDuration.h+"hr"+" "+this.routes[i].trips[j].totalDuration.m+"mins";
+        if(this.routes[i].trips[j].totalDuration.h>0)
+          this.routes[i].trips[j].totalDurationText=this.routes[i].trips[j].totalDuration.h+"hr"+" "+this.routes[i].trips[j].totalDuration.m+"min";
+        else
+          this.routes[i].trips[j].totalDurationText=this.routes[i].trips[j].totalDuration.m+"min";          
 
         j++;
       }
@@ -463,7 +491,34 @@ export class RoutesPage {
 
       this.routes[i].totalDurationValue=sum;
       this.routes[i].totalDuration=this.secondsToTime(sum);
-      this.routes[i].totalDurationText=this.routes[i].totalDuration.h+"hr"+" "+this.routes[i].totalDuration.m+"mins";;
+
+      if(this.routes[i].totalDuration.h>0){
+        this.routes[i].totalDurationText=this.routes[i].totalDuration.h+"hr"+" "+this.routes[i].totalDuration.m+"min";
+      }
+      else
+      {
+        this.routes[i].totalDurationText=this.routes[i].totalDuration.m+"min";          
+      }
+
+      var routeLabel="";
+      if(i==0){
+          routeLabel='Recommended Route';
+      }
+      if(i==1){
+          routeLabel='Fastest Route';
+      }
+      
+      if(this.routes[i].trips.length<2){
+          routeLabel='Direct Route';
+      }
+
+      if(this.routes[i].trips.length<2 && i==0){
+          routeLabel='Recommended Fastest Route';
+      }
+
+      this.routes[i]['routeLabel']=routeLabel;
+
+
       i++;
 
     }
@@ -533,7 +588,7 @@ export class RoutesPage {
     var data={};
     var routes=[];
 
-
+    var i=0;
     for(let route of result.routes){
       var r={};
       var trips=[];
@@ -550,8 +605,14 @@ export class RoutesPage {
         t['stops']=[];
         trips.push(t);
       }
+      
       r['trips']=trips;
+      r['totalDurationText']=route.legs[0].duration.text;
+      r['arrivalTime']=route.legs[0].arrival_time;
+      r['departureTime']=route.legs[0].departure_time;
+
       routes.push(r);
+      i++;
 
     }
     //data['body']={routes:routes};
@@ -567,6 +628,24 @@ export class RoutesPage {
 
   expand(index:any){
     this.showIndex=this.showIndex==index?-1:index;
+  }
+
+
+  tConvert (time) {
+    // Check correct time format and split into components
+    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      //console.log(time);
+      time[3] = " ";
+      time[4] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+      //time = time.splice(5,1);
+      //time.pop();
+      
+    }
+    return time.join (''); // return adjusted time or original string
   }
 
 

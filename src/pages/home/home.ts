@@ -373,11 +373,11 @@ export class HomePage {
         t['stops']=[];
         trips.push(t);
       }
-      routes.push({trips:trips});
+      routes.push({trips:trips,totalDurationText:route.legs[0].duration.text,arrivalTime:route.legs[0].arrival_time,departureTime:route.legs[0].departure_time});
     }
+
     data['body']={routes:routes};
     this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result,selectedDate:this.selectedDate,selectedTime:this.selectedTime,selectedDateJPApi:this.selectedDateJPApi});
-
 
   }
 
@@ -609,8 +609,6 @@ export class HomePage {
         this.selectedTime=data.hour+":"+data.min;
         this.departureDate=data.departureDate;
         this.chkleaveNow.checked=false;
-
-
      }
     });
 

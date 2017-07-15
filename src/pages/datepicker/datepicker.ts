@@ -21,10 +21,12 @@ export class DatepickerPage {
   public selectedHour:any;
   public mins:Array<string>=[];
   public selectedMinute:any;
+  public ampm:number=0;
+  public ampmText:string="AM";
 
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public datePipe:DatePipe) {
-    for(var i=1; i<=24; i++){
+    for(var i=1; i<=12; i++){
       var hr;
       var d=new Date();
       if(i<=9)
@@ -34,12 +36,19 @@ export class DatepickerPage {
 
       this.hours.push(hr);
 
-      if(d.getHours()==i){
+      if(d.getHours()%12==i){
         this.selectedHour=hr;
       }
+    }
 
-
-
+    if(d.getHours()>12){
+      this.ampm=12;
+      this.ampmText="PM";
+    }
+    else
+    {
+      this.ampm=0;
+      this.ampmText="AM";
     }
 
     for(i=0; i<=60; i+=15){
@@ -94,6 +103,8 @@ export class DatepickerPage {
       //console.log(this.selectedDate);
       var departureDate=new Date(this.selectedDate);
       //departureDate.setDate(this.selectedDate.get);
+      this.selectedHour = parseInt(this.selectedHour)+this.ampm;
+      console.log(this.selectedHour);
       departureDate.setHours(this.selectedHour, this.selectedMinute, 0);
 
       this.viewCtrl.dismiss({date:this.selectedDate,hour:this.selectedHour,min:this.selectedMinute,sec:0, departureDate:departureDate});
@@ -101,6 +112,17 @@ export class DatepickerPage {
 
   onDateCancelled(){
     this.viewCtrl.dismiss();
+  }
+
+  setAMPM(){
+    if(this.ampm==0){
+      this.ampm=12;
+      this.ampmText="PM";
+    }
+    else{
+      this.ampm=0;
+      this.ampmText="AM";
+    }
   }
 
 }
