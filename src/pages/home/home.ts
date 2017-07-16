@@ -17,6 +17,7 @@ import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
+import { Network } from '@ionic-native/network';
 
 declare var google:any;
 
@@ -66,9 +67,10 @@ export class HomePage {
     , private toastCtrl: ToastController
     , public plt: Platform
     , public events: Events
+    , private network: Network
   ) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
-    console.log(constants);
+    //console.log(constants);
     this.departureDate=new Date();
     var curDate=new Date();
     var h,m;
@@ -106,12 +108,87 @@ export class HomePage {
       }
     });
 
+    //perform network resolve
+
+    this.resolveLocation();
+
+    this.plt.ready().then((readySource) => {
+      this.watch = this.geolocation.watchPosition();
+      this.watch.subscribe((data) => {
+       // data can be a set of coordinates, or an error (if an error occurred).
+       // data.coords.latitude
+       // data.coords.longitude
+       if(data.coords!=undefined){
+         this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
+       }
+
+       console.log(data);
+       //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
+      });
+    });
+
+    var networkToast;
+    
+    // i
+
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      //console.log('network was disconnected :-(');
+      if(networkToast!=undefined) networkToast.dismiss();
+
+      networkToast = this.toastCtrl.create({
+        message: 'Network Connection Lost !',
+        position: 'bottom'
+      });
+
+      if(plt.is("ios") || plt.is("ipad")){
+        networkToast = this.toastCtrl.create({
+          message: 'Network Connection Lost !',
+          position: 'bottom',
+          duration: 3000
+        });
+      }
+      else
+      {
+        networkToast = this.toastCtrl.create({
+          message: 'Network Connection Lost !',
+          position: 'bottom'
+        });
+      }
+      
+      networkToast.present();
+    });
+
+    let connectSubscription = this.network.onConnect().subscribe(() => {
+      networkToast.dismiss();
+      this.resolveLocation();
+    });
+
   }
 
   sayMyName() {
     console.log('My name is sagar')
     this.registered=!this.registered;
     this.name="sagar";
+  }
+
+
+  resolveLocation(){
+    this.plt.ready().then((readySource) => {
+      console.log('Platform ready from', readySource);
+      // Platform now ready, execute any required native code
+      this.geolocation.getCurrentPosition().then((resp) => {
+       // resp.coords.latitude
+       // resp.coords.longitude
+       this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+       this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+       this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
+       this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
+       //console.log(resp);
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+    });
+
   }
 
 
@@ -512,35 +589,7 @@ export class HomePage {
 
 
   ionViewDidLoad() {
-    this.plt.ready().then((readySource) => {
-      console.log('Platform ready from', readySource);
-      // Platform now ready, execute any required native code
-      this.geolocation.getCurrentPosition().then((resp) => {
-       // resp.coords.latitude
-       // resp.coords.longitude
-       this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-       this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-       this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
-       this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
-       //console.log(resp);
-      }).catch((error) => {
-        console.log('Error getting location', error);
-      });
-
-      this.watch = this.geolocation.watchPosition();
-      this.watch.subscribe((data) => {
-       // data can be a set of coordinates, or an error (if an error occurred).
-       // data.coords.latitude
-       // data.coords.longitude
-       if(data.coords!=undefined){
-         this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
-       }
-
-       console.log(data);
-       //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
-      });
-    });
-
+    
     this.progress = this.modalCtrl.create(ProgressPage);
 
   }

@@ -28,6 +28,7 @@ import { HttpModule } from '@angular/http';
 import { DatePipe } from '@angular/common';
 import { Constants } from '../services/constants';
 import { FocuserDirective } from '../directives/focuser/focuser';
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { FocuserDirective } from '../directives/focuser/focuser';
     StatusBar,
     SplashScreen,
     Geolocation,
+    Network,
     DatePipe,
     Constants,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
