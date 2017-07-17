@@ -23,7 +23,6 @@ export class GoogleplaceDirective {
     this._el = el.nativeElement;
     this.modelValue = this.model;
     var input = this._el;
-
     this.autocomplete = new google.maps.places.Autocomplete(input, {});
     google.maps.event.addListener(this.autocomplete, 'place_changed', ()=> {
       var place = this.autocomplete.getPlace();

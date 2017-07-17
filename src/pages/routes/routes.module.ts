@@ -1,3 +1,4 @@
+import { RoutedetailPageModule } from './../routedetail/routedetail.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { RoutesPage } from './routes';
@@ -8,6 +9,7 @@ import { RoutesPage } from './routes';
   ],
   imports: [
     IonicPageModule.forChild(RoutesPage),
+    RoutedetailPageModule
   ],
   exports: [
     RoutesPage
