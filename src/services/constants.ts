@@ -8,8 +8,8 @@ export class Constants {
   //public BASE_URL_ROUTE_SEARCH:string = "http://172.27.26.20/open/api/search?startLan=3.218561&startLon=101.564353&endLan=3.219405&endLon=101.593238&time=12:28:32";
   //public BASE_URL_ROUTE_SEARCH:string = "http://172.27.26.20/open/api/search";
   //BASE_URL_API:any = "http://58.27.125.82";
-  //BASE_URL_API:any = "http://drpgwebex.rpgbistest.com.my:1008"; //sit server
-  BASE_URL_API:any = "http://rpgwebex.prasarana.com.my:10080";
+  //BASE_URL_API:any = "http://drpgwebex.rpgbistest.com.my:10080"; //sit server
+  //BASE_URL_API:any = "http://rpgwebex.prasarana.com.my:10080";
   BASE_URL_WEATHER_API:any = "https://api.darksky.net/forecast/b1d0bd16d1b49fca14e923b3a1dc39a1/";
   public BASE_URL_ROUTE_SEARCH:string = this.BASE_URL_API+"/open/api/search";
   public BASE_URL_ROUTES:string = this.BASE_URL_API+"/open/api/routes";
