@@ -110,10 +110,8 @@ export class RoutesPage {
       //this.routes[i]['totalDurationText']=route.duration.text;
 
       var routeLabel="";
+      
       if(i==0){
-          routeLabel='Recommended Route';
-      }
-      if(i==1){
           routeLabel='Fastest Route';
       }
       if(this.routes[i].trips.length<2){
@@ -121,7 +119,7 @@ export class RoutesPage {
       }
 
       if(this.routes[i].trips.length<2 && i==0){
-          routeLabel='Recommended Direct Route';
+          routeLabel='Fastest Direct Route';
       }
 
       //this.routes[i].routeLabel=routeLabel;
@@ -222,7 +220,7 @@ export class RoutesPage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.startAddress=data.place.formatted_address;
+       this.startAddress=data.place.name;
        this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
 
        console.log(this.startLocation);
@@ -241,7 +239,7 @@ export class RoutesPage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.endAddress=data.place.formatted_address;
+       this.endAddress=data.place.name;
        this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
        this.planJourney();
        //console.log(this.startLocation);
@@ -501,10 +499,8 @@ export class RoutesPage {
       }
 
       var routeLabel="";
+      
       if(i==0){
-          routeLabel='Recommended Route';
-      }
-      if(i==1){
           routeLabel='Fastest Route';
       }
       

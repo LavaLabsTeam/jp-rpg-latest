@@ -225,7 +225,7 @@ export class HomePage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.startAddress=data.place.formatted_address;
+       this.startAddress=data.place.name;
        this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
        //console.log(this.startLocation);
       }
@@ -241,7 +241,7 @@ export class HomePage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.endAddress=data.place.formatted_address;
+       this.endAddress=data.place.name;
        this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()}
 
        console.log(this.startLocation);
