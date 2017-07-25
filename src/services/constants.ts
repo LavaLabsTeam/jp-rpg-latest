@@ -9,8 +9,8 @@ export class Constants {
   //public BASE_URL_ROUTE_SEARCH:string = "http://172.27.26.20/open/api/search";
   //BASE_URL_API:any = "http://58.27.125.82";
   //BASE_URL_API:any = "http://drpgwebex.rpgbistest.com.my:10080"; //RPG sit server
-  BASE_URL_API:any = "http://rpgwebex.prasarana.com.my:10080"; // RPG PROD
-  //BASE_URL_API:any = "http://mrtwebex.bus-kvmrt.com.my:10080"; // MRT PROD
+  //BASE_URL_API:any = "http://rpgwebex.prasarana.com.my:10080"; // RPG PROD
+  BASE_URL_API:any = "http://mrtwebex.bus-kvmrt.com.my:10080"; // MRT PROD
 
   BASE_URL_WEATHER_API:any = "https://api.darksky.net/forecast/b1d0bd16d1b49fca14e923b3a1dc39a1/";
   public BASE_URL_ROUTE_SEARCH:string = this.BASE_URL_API+"/open/api/search";
