@@ -154,8 +154,8 @@ export class RoutesPage {
             var i=0;
             var fr=[0.7,1,2.5,3.0];
             for(let f of fares){
-              //this.routes[i]['fare']=f.fare;
-              this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
+              this.routes[i]['fare']=f.fare;
+              //this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
               i++;
             }
 
