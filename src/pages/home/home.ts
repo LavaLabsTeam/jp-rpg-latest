@@ -464,6 +464,7 @@ export class HomePage {
 
   viewETAClicked(){
     //this.navCtrl.push(EtaresultPage,{data:"sagar"})
+    this.progress.present();
     var config={};
     if(this.stopName!=undefined && this.stopName!="") {
       config={
@@ -482,8 +483,9 @@ export class HomePage {
     }
 
     var error=false;
-    this.http.get(this.constants.BASE_URL_NEAREST_STOPS,config).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_NEAREST_STOPS,config).timeout(30000).subscribe(data => {
         let json = data.json();
+        this.progress.dismiss();
         //console.log(body);
         if(json.body!=null){
           if(json.body.length>0){
@@ -502,6 +504,7 @@ export class HomePage {
         }
 
         if(error){
+          this.progress.dismiss();
           let toast = this.toastCtrl.create({
             message: 'No Stops Found!',
             duration: 3000,
@@ -517,7 +520,7 @@ export class HomePage {
   }
 
   viewStopsNearMeClicked(){
-
+    this.progress.present();
     if(this.currentLocation==null){
       let toast = this.toastCtrl.create({
         message: 'Current location not resolved !',
@@ -540,6 +543,7 @@ export class HomePage {
     this.http.get(this.constants.BASE_URL_NEAREST_STOPS,config).subscribe(data => {
         let json = data.json();
         //console.log(body);
+        this.progress.dismiss();
         if(json.body!=null){
           if(json.body.length>0){
             error=false;
@@ -557,6 +561,7 @@ export class HomePage {
         }
 
         if(error){
+          this.progress.dismiss();
           let toast = this.toastCtrl.create({
             message: 'No Stops Found!',
             duration: 3000,

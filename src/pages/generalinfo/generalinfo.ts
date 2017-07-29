@@ -36,7 +36,7 @@ export class GeneralinfoPage {
 
   busRoutesClicked(){
     this.progress.present();
-    this.http.get(this.constants.BASE_URL_ROUTES).timeout(30000).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_ROUTES).timeout(60000).subscribe(data => {
         let json = data.json();
         this.navCtrl.push(RoutesinfoPage,{routes:json});
         this.progress.dismiss();
