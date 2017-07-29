@@ -46,15 +46,15 @@
           <div *ngIf="row.eta.routes!=null">
             <ion-row>
               <ion-col col-4 class="bg-orange">
-                <span class="text-white text-1x" color="primary">Route ID</span>
+                <span class="text-white size-2x" color="primary">Route ID</span>
               </ion-col>
 
               <ion-col col-4 class="bg-orange" text-center>
-                <span class="text-white text-1x" color="primary">ETA of Next Bus</span>
+                <span class="text-white size-2x" color="primary">ETA of Next Bus</span>
               </ion-col>
 
               <ion-col col-4 class="bg-orange" text-center>
-                <span class="text-white text-1x" color="primary">ETA of Subsequent/Following Bus</span>
+                <span class="text-white size-2x" color="primary">ETA of Subsequent/Following Bus</span>
               </ion-col>
 
             </ion-row>
@@ -62,18 +62,18 @@
 
             <ion-row *ngFor="let route of row.eta.routes">
               <ion-col col-4 class="bg-white">
-                <span class="text-orange text-1x" *ngIf="route.routeId!=null" color="primary">{{route.routeId}}</span>
-                <span class="text-orange text-1x" *ngIf="route.routeId==null" color="primary">N/A</span>
+                <span class="text-orange size-2x" *ngIf="route.routeId!=null" color="primary">{{route.routeId}}</span>
+                <span class="text-orange size-2x" *ngIf="route.routeId==null" color="primary">N/A</span>
               </ion-col>
 
               <ion-col col-4 class="bg-white" text-center>
-                <span class="text-orange text-1x" color="primary" *ngIf="route.vehicles[0]!=null">{{route.vehicles[0].eta}} min</span>
-                <span class="text-orange text-1x" color="primary" *ngIf="route.vehicles[1]==null">N/A</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[0].eta!=null">{{route.vehicles[0].eta}} min</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1].eta==null">N/A</span>
               </ion-col>
 
               <ion-col col-4 class="bg-white" text-center>
-                <span class="text-orange text-1x" color="primary" *ngIf="route.vehicles[1]!=null">{{route.vehicles[1]?.eta}} min</span>
-                <span class="text-orange text-1x" color="primary" *ngIf="route.vehicles[1]==null">N/A</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1].eta!=null">{{route.vehicles[1]?.eta}} min</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1].eta==null">N/A</span>
              </ion-col>
            </ion-row>
          </div>
