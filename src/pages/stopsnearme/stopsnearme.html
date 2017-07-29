@@ -68,12 +68,12 @@
 
               <ion-col col-4 class="bg-white" text-center>
                 <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[0].eta!=null">{{route.vehicles[0].eta}} min</span>
-                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1].eta==null">N/A</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[0]==null || route.vehicles[0]==undefined">N/A</span>
               </ion-col>
 
               <ion-col col-4 class="bg-white" text-center>
-                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1].eta!=null">{{route.vehicles[1]?.eta}} min</span>
-                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1].eta==null">N/A</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1]!=null">{{route.vehicles[1]?.eta}} min</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="route.vehicles[1]==null || route.vehicles[1]==undefined">N/A</span>
              </ion-col>
            </ion-row>
          </div>
