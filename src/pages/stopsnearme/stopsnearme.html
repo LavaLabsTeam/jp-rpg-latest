@@ -64,13 +64,13 @@
               </ion-col>
 
               <ion-col col-3 class="bg-white" text-center>
-                <span class="text-orange text-2x" color="primary" *ngIf="route.stops!=null">{{route.stops[0].eta}} min</span>
-                <span class="text-orange text-2x" color="primary" *ngIf="route.stops==null">N/A</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.vehicles!=null">{{route.vehicles[0].eta}} min</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.vehicles==null">N/A</span>
               </ion-col>
 
               <ion-col col-3 class="bg-white" text-center>
-                <span class="text-orange text-2x" color="primary" *ngIf="route.stops!=null">{{route.stops[0]?.eta}} min</span>
-                <span class="text-orange text-2x" color="primary" *ngIf="route.stops==null">N/A</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.vehicles!=null">{{route.vehicles[1]?.eta}} min</span>
+                <span class="text-orange text-2x" color="primary" *ngIf="route.vehicles==null">N/A</span>
              </ion-col>
            </ion-row>
          </div>
