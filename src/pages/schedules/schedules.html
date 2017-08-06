@@ -30,57 +30,60 @@
   </div>
 
   <ion-grid class="padding-0 margin-top">
-    <ion-row>
-      <ion-col col-2 class="bg-orange">
+    <!-- <ion-row>
+      <ion-col col-10 class="bg-orange">
         <span class="text-white size-2x" color="primary">RouteId</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-orange">
+      <ion-col col-12 class="bg-orange">
         <span class="text-white size-2x" color="primary">Start Stop</span>
       </ion-col>
-
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">End Stop</span>
+    </ion-row> -->
+    <ion-row *ngFor="let schedule of schedules; let i=index" (click)="expand(i)" style="border-bottom:solid #9f582f 1px;">
+      <ion-col col-11 class="bg-light-orange">
+        <span class="text-white size-2x" color="primary">Route: {{schedule.routeId}}({{schedule.routeName}})</span>
       </ion-col>
 
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">First trip</span>
+  
+      <ion-col col-1 text-right class="bg-light-orange">
+          <ion-icon *ngIf="showIndex!=i" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon>
+          <ion-icon *ngIf="showIndex==i" name="ios-arrow-down" color="light" class="text-2x"></ion-icon>
       </ion-col>
 
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Last trip</span>
-      </ion-col>
+      <ion-col col-12  class="bg-white" #expand *ngIf="showIndex==i">
+        <ion-row>
+            <ion-col col-5 class="bg-orange">
+              <span class="text-white size-2x" color="primary">Day</span>
+            </ion-col>
+            <ion-col col-3 class="bg-orange text-align-right">
+              <span class="text-white size-2x" color="primary">First Trip</span>
+            </ion-col>
+            <ion-col col-3 class="bg-orange text-align-right">
+              <span class="text-white size-2x" color="primary">Last Trip</span>
+            </ion-col>
+            <ion-col col-1 class="bg-orange text-align-right">
+              
+            </ion-col>
+          </ion-row>
 
-      <ion-col col-2 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Frequency</span>
-      </ion-col>
+        <div *ngFor="let x of [0,1,2,3,4]">
+          <ion-row>
+            <ion-col col-5 class="bg-white">
+              <span class="text-orange size-2x" color="primary">{{ days[x] }}</span>
+            </ion-col>
+            <ion-col col-3 class="bg-white text-align-right">
+              <span class="text-orange size-2x" color="primary">{{schedule.trips[0].arrivalTime}}</span>
+            </ion-col>
+            <ion-col col-3 class="bg-white text-align-right">
+              <span class="text-orange size-2x" color="primary">{{schedule.trips[schedule.trips.length-1].arrivalTime}}</span>
+            </ion-col>
+            <ion-col col-1 class="bg-white text-align-right">
+              
+            </ion-col>
+          </ion-row>
+        </div>
 
-    </ion-row>
-    <ion-row *ngFor="let schedule of schedules; let i=index">
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.routeId}}</span>
       </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.startStop}}</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.endStop}}</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.firstTrip}}</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.lastTrip}}</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{schedule.frequency}}</span>
-      </ion-col>
-
 
     </ion-row>
   </ion-grid>
