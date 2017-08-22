@@ -9,8 +9,8 @@ export class Constants {
   //public BASE_URL_ROUTE_SEARCH:string = "http://172.27.26.20/open/api/search";
   //BASE_URL_API:any = "http://58.27.125.82";
   //BASE_URL_API:any = "http://drpgwebex.rpgbistest.com.my:10080"; //RPG sit server
-  BASE_URL_API:any = "http://rpgwebex.prasarana.com.my:10080"; // RPG PROD
-  //BASE_URL_API:any = "http://mrtwebex.bus-kvmrt.com.my:10080"; // MRT PROD
+  //BASE_URL_API:any = "http://rpgwebex.prasarana.com.my:10080"; // RPG PROD
+  BASE_URL_API:any = "http://mrtwebex.bus-kvmrt.com.my:10080"; // MRT PROD
 
   BASE_URL_WEATHER_API:any = "https://api.darksky.net/forecast/b1d0bd16d1b49fca14e923b3a1dc39a1/";
   public BASE_URL_ROUTE_SEARCH:string = this.BASE_URL_API+"/open/api/search";
@@ -19,6 +19,7 @@ export class Constants {
   public BASE_URL_FARES:string = this.BASE_URL_API+"/open/api/fares-data";
   public BASE_URL_FARES_ROUTES:string = this.BASE_URL_API+"/open/api/fares-for-routes";
   public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
+  public BASE_URL_ROUTE_SEARCH_ETA:string = this.BASE_URL_API+"/open/api/search-routes";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/on72z";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/k2lxf";
   public GOOGLE_API_KEY:string="AIzaSyCUo-4x6rSmsd1dts4lvB6jJU5uVP1zvqQ";
