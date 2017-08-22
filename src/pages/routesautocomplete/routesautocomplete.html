@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-row>
+    <ion-col col-12>
+      <ion-item no-lines class="bg-secondary">
+        <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
+        <ion-icon color="light" name="pin" item-right></ion-icon>
+        <ion-icon color="light" name="arrow-back" item-left (click)="goBackClicked()"></ion-icon>
+        <input focuser ion-input type="text"  [(ngModel)]="search" (keypress)="onSearchKeyPress()" class="text-2x full-width no-border padding-10" placeholder="Search">
+
+      </ion-item>
+    </ion-col>
+
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="bg-semi-transparent">
+  <ion-list>
+    <ion-item *ngFor="let item of items" (click)="onItemClick(item)">{{item.routeLongName}} >> {{item.routeId}}</ion-item>
+  </ion-list>
+</ion-content>

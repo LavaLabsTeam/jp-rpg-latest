@@ -49,7 +49,7 @@ export class GeneralinfoPage {
 
   schedulesClicked(){
     this.progress.present();
-    this.http.get(this.constants.BASE_URL_SCHEDULES).timeout(30000).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_SCHEDULES).timeout(90000).subscribe(data => {
         let json = data.json();
         this.navCtrl.push(SchedulesPage,{schedules:json});
         this.progress.dismiss();

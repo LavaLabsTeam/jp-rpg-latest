@@ -1,3 +1,4 @@
+import { RoutesautocompletePageModule } from './../routesautocomplete/routesautocomplete.module';
 import { StopsnearmePageModule } from './../stopsnearme/stopsnearme.module';
 import { ProgressPageModule } from './../progress/progress.module';
 import { PlacesearchPageModule } from './../placesearch/placesearch.module';
@@ -23,7 +24,8 @@ import { IonicPageModule } from 'ionic-angular';
     DatepickerPageModule,
     PlacesearchPageModule,
     ProgressPageModule,
-    StopsnearmePageModule
+    StopsnearmePageModule,
+    RoutesautocompletePageModule
   ],
   exports: [
     HomePage

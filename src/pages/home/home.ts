@@ -1,3 +1,4 @@
+import { RoutesautocompletePageModule } from './../routesautocomplete/routesautocomplete.module';
 import {Component, ViewChild} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
@@ -18,6 +19,7 @@ import {Observable} from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
+import { RoutesautocompletePage } from "../routesautocomplete/routesautocomplete";
 
 declare var google:any;
 
@@ -675,6 +677,20 @@ export class HomePage {
     this.endAddress="";
     this.routeName="";
     this.stopName="";
+  }
+
+  routesEtaFieldClicked(){
+    let modal = this.modalCtrl.create(RoutesautocompletePage,{name:"start"});
+
+    modal.onDidDismiss(data => {
+     //console.log(data);
+     if(data!=undefined){
+       //console.log(data.routeId);
+       this.routeName=data.item.routeLongName;
+      }
+    });
+
+    modal.present();
   }
 
 }

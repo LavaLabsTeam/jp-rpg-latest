@@ -14,6 +14,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SchedulesPage {
   schedules:any;
+  showIndex:any;
+  days:any=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.schedules=navParams.get("schedules");
   }
@@ -24,6 +26,10 @@ export class SchedulesPage {
 
   goBackClicked(){
     this.navCtrl.pop();
+  }
+
+  expand(index:any){
+    this.showIndex=this.showIndex==index?-1:index;
   }
 
 
