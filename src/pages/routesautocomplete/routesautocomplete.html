@@ -5,7 +5,7 @@
         <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
         <ion-icon color="light" name="pin" item-right></ion-icon>
         <ion-icon color="light" name="arrow-back" item-left (click)="goBackClicked()"></ion-icon>
-        <input focuser ion-input type="text"  [(ngModel)]="search" (keypress)="onSearchKeyPress()" class="text-2x full-width no-border padding-10" placeholder="Search">
+        <input focuser ion-input type="text"  [(ngModel)]="search" (change)="onSearchKeyPress()" class="text-2x full-width no-border padding-10" placeholder="Search">
 
       </ion-item>
     </ion-col>
