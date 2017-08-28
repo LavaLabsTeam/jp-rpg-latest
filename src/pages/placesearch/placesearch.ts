@@ -1,7 +1,8 @@
+import { Http } from '@angular/http';
 import { Component } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
-
+declare var google:any;
 /**
  * Generated class for the PlacesearchPage page.
  *
@@ -16,7 +17,8 @@ import { ViewController } from 'ionic-angular';
 export class PlacesearchPage {
   search: string;
   name:string;
-  constructor(public viewCtrl: ViewController,public navParams: NavParams) {
+  geocoder:any;
+  constructor(public viewCtrl: ViewController,public navParams: NavParams, private http:Http) {
     //alert(this.navParams.data.name);
     // if(this.navParams.data.name=="start"){
     //   this.search="Bus Terminal Komtar";
@@ -25,6 +27,8 @@ export class PlacesearchPage {
     // if(this.navParams.data.name=="end"){
     //   this.search="Masjid Jamek Al-munauwar";
     // }
+
+    this.geocoder = new google.maps.Geocoder();
   }
 
   ionViewDidLoad() {
@@ -38,12 +42,29 @@ export class PlacesearchPage {
   }
 
   getAddressOnChange(place){
-    //console.log(place);
-    this.viewCtrl.dismiss({place:place});
+    console.log(place.geometry);
+    var obj=this;
+    if(place.geometry===undefined){
+      this.geocoder.geocode( { 'address': this.search}, function(results, status) {
+        if (status == 'OK') {
+          results[0]['name']=obj.search;
+          obj.viewCtrl.dismiss({place:results[0]});
+        } else {
+          console.log('Geocode was not successful for the following reason: ' + status);
+          obj.viewCtrl.dismiss({place:place});
+        }
+      });
+    }
+    else
+    {
+      this.viewCtrl.dismiss({place:place});
+    }
   }
 
   goBackClicked(){
     this.viewCtrl.dismiss();
   }
+
+
 
 }
