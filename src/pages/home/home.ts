@@ -468,11 +468,21 @@ export class HomePage {
     //this.navCtrl.push(EtaresultPage,{data:"sagar"})
     this.progress.present();
     var config={};
+    //console.log(Number(this.stopName));
+
     if(this.stopName!=undefined && this.stopName!="") {
-      config={
-        params:{
-          stopName:this.stopName,
-          stopId:this.stopName
+      if(isNaN(this.stopName)){
+        config={
+          params:{
+            stopName:this.stopName
+          }
+        }
+      }
+      else{
+        config={
+          params:{
+            stopId:this.stopName
+          }
         }
       }
     }
