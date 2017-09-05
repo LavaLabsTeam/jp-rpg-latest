@@ -21,19 +21,24 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Routes with fewer changes</ion-label>
-        <ion-radio value="rwfc"></ion-radio>
+        <ion-label>Routes with fewest interchange</ion-label>
+        <ion-radio value="rwfi"></ion-radio>
       </ion-item>
 
 
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Routes with least walking</ion-label>
         <ion-radio value="rwlw"></ion-radio>
+      </ion-item> -->
+      
+      <ion-item>
+        <ion-label>Cheapest Route</ion-label>
+        <ion-radio value="cr"></ion-radio>
       </ion-item>
 
     </ion-list>
 
-    <ion-list radio-group [(ngModel)]="accessOptions">
+    <!-- <ion-list radio-group [(ngModel)]="accessOptions">
       <ion-list-header>
         Access Options
       </ion-list-header>
@@ -51,9 +56,9 @@
       <ion-item>
         <ion-label>Use stairs, not escalator</ion-label>
         <ion-radio value="hasstairs"></ion-radio>
-      </ion-item> -->
+      </ion-item> 
 
-    </ion-list>
+    </ion-list> -->
 </div>
 
 <div class="footer padding-0">

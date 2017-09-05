@@ -82,13 +82,13 @@
 <div class="row bg-semi-transparent">
   <ion-grid>
     <ion-row class="padding-0">
-      <ion-col col-4>
+      <ion-col col-3>
         <button ion-button icon-right full small (click)="leaveNowClicked()" class="padding-right-1">
           Leave Now&nbsp;
           <ion-checkbox #leavenow [checked]="true"></ion-checkbox>
         </button>
       </ion-col>
-      <ion-col col-4>
+      <ion-col col-3>
         <button ion-button icon-right full  small (click)="showDatePicker()">
           <span *ngIf="!selected">Change Time</span>
           <span *ngIf="selected">{{selectedDate | date: 'dd/MM/yyyy'}} {{selectedTime}}</span>
@@ -100,18 +100,20 @@
       </ion-col>
 
       <ion-col col-4>
+        <button ion-button icon-right full small (click)="showPreference()"  class="padding-left-1">
+          Preferrence
+          <ion-icon name="options"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-2>
         <button ion-button icon-right full small (click)="clearSearch()"  class="padding-left-1">
           Clear
           <ion-icon name="delete"></ion-icon>
         </button>
       </ion-col>
 
-      <!-- <ion-col col-4>
-        <button ion-button icon-right full small (click)="showPreference()"  class="padding-left-1">
-          Preferrence
-          <ion-icon name="options"></ion-icon>
-        </button>
-      </ion-col> -->
+      
     </ion-row>
   </ion-grid>
 

@@ -307,6 +307,16 @@ export class HomePage {
     // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
     // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
 
+    if(this.showOptions=="tfr"){
+      config.params['filter']="FASTEST_ROUTE";
+    }
+    else if(this.showOptions=="rwfi"){
+      config.params['filter']="LEAST_INTERCHANGES";
+    }
+    else if(this.showOptions=="cr"){
+      config.params['filter']="CHEAPEST_ROUTE";
+    }
+
     this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
     this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
 
@@ -318,7 +328,7 @@ export class HomePage {
         if(json.body!=null){
           if(json.body.routes!=null){
             if(json.body.routes.length>0){
-              this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"jpapp",selectedTime:this.selectedTime,selectedDate:this.selectedDate,selectedDateJPApi:this.selectedDateJPApi});
+              this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"jpapp",selectedTime:this.selectedTime,selectedDate:this.selectedDate,selectedDateJPApi:this.selectedDateJPApi, showOptions: this.showOptions});
               error=false;
             }
             else {
@@ -456,7 +466,7 @@ export class HomePage {
     }
 
     data['body']={routes:routes};
-    this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result,selectedDate:this.selectedDate,selectedTime:this.selectedTime,selectedDateJPApi:this.selectedDateJPApi});
+    this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result,selectedDate:this.selectedDate,selectedTime:this.selectedTime,selectedDateJPApi:this.selectedDateJPApi, showOptions: this.showOptions});
 
   }
 

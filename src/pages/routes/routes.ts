@@ -297,6 +297,16 @@ export class RoutesPage {
     //   config.params['hasStares']="false";
     // }
 
+    if(this.showOptions=="tfr"){
+      config.params['filter']="FASTEST_ROUTE";
+    }
+    else if(this.showOptions=="rwfi"){
+      config.params['filter']="LEAST_INTERCHANGES";
+    }
+    else if(this.showOptions=="cr"){
+      config.params['filter']="CHEAPEST_ROUTE";
+    }
+
 
     // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
     // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
@@ -365,7 +375,13 @@ export class RoutesPage {
 
   showPreference(){
     var data;
-    if(this.showOptions!=null && this.accessOptions!=null)
+    // if(this.showOptions!=null && this.accessOptions!=null)
+    //   data={accessOptions:this.accessOptions,showOptions:this.showOptions};
+    // else {
+    //   data=null;
+    // }
+
+    if(this.showOptions!=null)
       data={accessOptions:this.accessOptions,showOptions:this.showOptions};
     else {
       data=null;
@@ -501,7 +517,10 @@ export class RoutesPage {
       var routeLabel="";
       
       if(i==0){
-          routeLabel='Fastest Route';
+         if(this.showOptions=="cr")
+            routeLabel='Cheapest Route';
+         else
+            routeLabel='Fastest Route';
       }
       
       if(this.routes[i].trips.length<2){
@@ -509,7 +528,12 @@ export class RoutesPage {
       }
 
       if(this.routes[i].trips.length<2 && i==0){
-          routeLabel='Recommended Fastest Route';
+          //routeLabel='Recommended Fastest Route';
+          if(this.showOptions=="cr")
+            routeLabel='Cheapest Route';
+          else if(this.showOptions=="rwfi")
+            routeLabel='Direct Route';
+        
       }
 
       this.routes[i]['routeLabel']=routeLabel;
