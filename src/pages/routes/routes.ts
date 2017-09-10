@@ -556,7 +556,7 @@ export class RoutesPage {
       travelMode: 'TRANSIT',
       provideRouteAlternatives:true,
       transitOptions:{
-        modes: ['BUS']
+        modes: ['SUBWAY', 'BUS','TRAIN', 'RAIL']
       }
     };
 

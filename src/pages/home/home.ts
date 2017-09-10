@@ -28,6 +28,7 @@ declare var google:any;
   templateUrl: 'home.html'
 })
 export class HomePage {
+  etaSearchData: any;
   registered: boolean;
   name: string;
   startAddress: any;
@@ -374,7 +375,7 @@ export class HomePage {
       travelMode: 'TRANSIT',
       provideRouteAlternatives:true,
       transitOptions:{
-        modes: ['BUS']
+        modes: ['SUBWAY', 'BUS','TRAIN', 'RAIL']
       }
     };
 
@@ -499,13 +500,16 @@ export class HomePage {
     else {
       config={
         params:{
-          routeName:this.routeName
+          routeId:this.etaSearchData.routeId,
+          lineId:this.etaSearchData.lingId
         }
       }
     }
 
+    console.log(config);
+
     var error=false;
-    this.http.get(this.constants.BASE_URL_NEAREST_STOPS,config).timeout(30000).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH_ETA_DATA,config).timeout(30000).subscribe(data => {
         let json = data.json();
         this.progress.dismiss();
         //console.log(body);
@@ -706,7 +710,9 @@ export class HomePage {
      //console.log(data);
      if(data!=undefined){
        //console.log(data.routeId);
-       this.routeName=data.item.routeLongName;
+       this.etaSearchData=data.item;
+       this.routeName=data.item.routeNm+":"+data.item.lingNm;
+       
       }
     });
 
