@@ -35,6 +35,9 @@ export class GeneralinfoPage {
   }
 
   busRoutesClicked(){
+    //this.navCtrl.push(RoutesinfoPage,{routes:[{routeId:100},{routeId:101}]});
+    
+
     this.progress.present();
     this.http.get(this.constants.BASE_URL_ROUTES).timeout(100000).subscribe(data => {
         let json = data.json();

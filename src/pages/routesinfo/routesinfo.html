@@ -7,101 +7,191 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-title>Routes</ion-title>
+    <ion-title>General Information</ion-title>
   </ion-navbar>
+
+  <div class="row bg-semi-transparent">
+      <ion-grid class="padding-0">
+        <!-- <ion-row>
+          <ion-col text-center>
+            <h1 class="text-white text-3x" color="primary">GENERAL INFORMATION</h1>
+          </ion-col>
+        </ion-row> -->
+        <ion-row>
+          <ion-col text-center>
+            <h1 class="text-white text-2x" color="primary">Bus Routes</h1>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+  
+    <div class="row bg-semi-transparent">
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center>
+            <ion-item class="custom">
+              <ion-label>Route ID</ion-label>
+              <ion-select [(ngModel)]="selecteRouteId">
+                <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeId}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row>
+          <ion-col text-center>
+            <ion-item class="custom">
+              <ion-label>Date</ion-label>
+              <ion-select [(ngModel)]="selectedDate">
+                <ion-option *ngFor="let item of dateOptions" [value]="item.value">{{item.label}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+  
+  
+        <ion-row>
+          <ion-col text-center>
+            <button (click)="onSearchClicked()" ion-button icon-right full large class="bg-primary text-white">
+              Search
+              <ion-icon name="check"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+  
+        
+      </ion-grid>
+    </div>
 
 </ion-header>
 
 
 <ion-content padding>
-  <div class="row bg-semi-transparent">
-    <ion-grid>
+  
+
+  <div class="row bg-semi-transparent margin-top" *ngIf="routeData?.directionOneTrip!=null">
+    <ion-grid class="padding-0 margin-top">
+        <ion-row>
+          
+            <ion-col col-12 class="text-white text-2x">
+                Direction #1
+            </ion-col>
+        </ion-row>
+
       <ion-row>
-        <ion-col text-center>
-          <h1 class="text-white text-4x" color="primary">GENERAL INFORMATION</h1>
-        </ion-col>
+          <ion-col col-12 class="text-white">
+            {{routeData.directionOneTrip.routeId}} / {{routeData.directionOneTrip.tripHeadsign}}
+          </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col text-center>
-          <h1 class="text-white text-2x" color="primary">Bus Routes</h1>
+        <ion-col col-2 class="bg-orange">
+              
         </ion-col>
+              
+        <ion-col col-4 class="bg-orange">
+          <span class="text-white size-2x" color="primary">Stop Code</span>
+        </ion-col>
+
+        <ion-col col-6 class="bg-orange">
+          <span class="text-white size-2x" color="primary">Stop Name</span>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+
+        <ion-col col-12 class="padding-0">
+            <div *ngIf="routeData?.directionOneTrip.stops!=null" class="bg-semi-transparent">
+                <ion-row class="stops" *ngFor="let stop of routeData?.directionOneTrip.stops">
+                    <ion-col col-1>
+                    </ion-col>
+    
+                    <ion-col col-1 class="stop-container">
+                      <div class="pointblock"></div>
+                    </ion-col>
+    
+                    <ion-col col-10>
+                      <span class="text-white size-2x" color="primary" *ngIf="stop.stopName!=null" (click)="showConfrimation(stop)">{{stop.stopName}}</span>
+                      <span class="text-white size-2x" color="primary" *ngIf="stop.stopName==null">N/A</span>
+                    </ion-col>
+    
+    
+                </ion-row>
+              
+          </div>
+
+          <ion-row *ngIf="routeData?.directionOneTrip.stops==null">
+            <ion-col col-12 class="bg-white">
+              <span class="text-orange size-2x" color="primary">Stop Not Available</span>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
       </ion-row>
     </ion-grid>
   </div>
 
-  <ion-grid class="padding-0 margin-top">
-    <ion-row>
-      <ion-col col-6 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Route</span>
-      </ion-col>
-
-      <ion-col col-4 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Route ID</span>
-      </ion-col>
-
-      <ion-col col-2 class="bg-orange" text-center>
-        <span class="text-white size-2x" color="primary">Stops</span>
-      </ion-col>
-
-
-
-    </ion-row>
-    <ion-row *ngFor="let row of routes; let i=index">
-
-      <ion-col col-12 class="padding-0">
-        <ion-row class="bg-light-orange" style="height:30px; border-bottom:solid #9f582f 1px;" (click)="expand(i)">
-          <ion-col col-6>
-            <span class="text-orange size-2x align-right" color="primary">{{row.routeLongName}}</span>
-          </ion-col>
-
-          <ion-col col-4>
-            <span class="text-orange size-2x align-right" color="primary">{{row.routeId}}</span>
-          </ion-col>
-          <ion-col col-2 text-center>
-              <ion-icon color="light" name="ios-arrow-down"></ion-icon>
-          </ion-col>
+  <div class="row bg-semi-transparent margin-top" *ngIf="routeData?.directionTwoTrip!=null">
+      <ion-grid class="padding-0 margin-top">
+          <ion-row>
+            
+              <ion-col col-12 class="text-white text-2x">
+                  Direction #2
+              </ion-col>
+          </ion-row>
+  
+        <ion-row>
+            <ion-col col-12 class="text-white">
+              {{routeData.directionTwoTrip.routeId}} / {{routeData.directionTwoTrip.tripHeadsign}}
+            </ion-col>
         </ion-row>
-
-        <div #expand *ngIf="showIndex==i" >
-          <div *ngIf="row.stops!=null" class="bg-semi-transparent">
-            <!-- <ion-row>
-              <ion-col col-4 class="bg-white text-blue">
-                <span class="text-blue size-2x" color="primary">Stop ID</span>
-              </ion-col>
-
-              <ion-col col-8 class="bg-white">
-                <span class="text-blue size-2x" color="primary">Stop Name</span>
-              </ion-col>
-           </ion-row> -->
-            <ion-row class="stops" *ngFor="let stop of row.stops">
-              <ion-col col-1>
-
-                <!-- <span class="text-orange size-2x" color="primary">{{stop.stopId}}</span> -->
-              </ion-col>
-
-              <ion-col col-1 class="stop-container">
-                <div class="pointblock"></div>
-              </ion-col>
-
-              <ion-col col-10>
-                <span class="text-white size-2x" color="primary" *ngIf="stop.stopName!=null" (click)="showConfrimation(stop)">{{stop.stopName}}</span>
-                <span class="text-white size-2x" color="primary" *ngIf="stop.stopName==null">N/A</span>
-              </ion-col>
-
-
-           </ion-row>
-         </div>
-
-         <ion-row *ngIf="row.stops==null">
-           <ion-col col-12 class="bg-white">
-             <span class="text-orange size-2x" color="primary">Stop Not Available</span>
-           </ion-col>
+        <ion-row>
+          <ion-col col-2 class="bg-orange">
+                
+          </ion-col>
+                
+          <ion-col col-4 class="bg-orange">
+            <span class="text-white size-2x" color="primary">Stop Code</span>
+          </ion-col>
+  
+          <ion-col col-6 class="bg-orange">
+            <span class="text-white size-2x" color="primary">Stop Name</span>
+          </ion-col>
+  
         </ion-row>
-       </div>
-      </ion-col>
+        <ion-row>
+  
+          <ion-col col-12 class="padding-0">
+              <div *ngIf="routeData?.directionOneTrip.stops!=null" class="bg-semi-transparent">
+                  <ion-row class="stops" *ngFor="let stop of routeData?.directionOneTrip.stops">
+                      <ion-col col-1>
+                      </ion-col>
+      
+                      <ion-col col-1 class="stop-container">
+                        <div class="pointblock"></div>
+                      </ion-col>
+      
+                      <ion-col col-10>
+                        <span class="text-white size-2x" color="primary" *ngIf="stop.stopName!=null" (click)="showConfrimation(stop)">{{stop.stopName}}</span>
+                        <span class="text-white size-2x" color="primary" *ngIf="stop.stopName==null">N/A</span>
+                      </ion-col>
+      
+      
+                  </ion-row>
+                
+            </div>
+  
+            <ion-row *ngIf="routeData?.directionOneTrip.stops==null">
+              <ion-col col-12 class="bg-white">
+                <span class="text-orange size-2x" color="primary">Stop Not Available</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+  
+        </ion-row>
+      </ion-grid>
+    </div>
 
-    </ion-row>
-  </ion-grid>
 </ion-content>
 
 <ion-footer>
