@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, NavOptions, ModalController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
@@ -28,6 +28,7 @@ export class RoutesinfoPage {
 
   public dateOptions:Array<Object>=[];
   public selectedDate:Date;
+  @ViewChild('searchbox') searchbox; //inject element
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alert: AlertController, public datePipe:DatePipe, public modalCtrl:ModalController, public constants:Constants, public http:Http) {
     this.routes=navParams.get("routes");
@@ -134,7 +135,11 @@ export class RoutesinfoPage {
     }
     this.progress.present();
     this.http.get(this.constants.BASE_URL_ROUTE_ROUTE_STOPS, config).timeout(100000).subscribe(data => {
-        this.routeData=data.json();
+        
+        if(data.text().length>0){
+          this.routeData=data.json();
+        }
+
         this.progress.dismiss();
     },
     error => {
@@ -143,6 +148,12 @@ export class RoutesinfoPage {
 
 
 
+  }
+
+
+  onScroll(event){
+    console.log(event);
+    //this.searchbox.nativeElement.hidden=true;
   }
 
 

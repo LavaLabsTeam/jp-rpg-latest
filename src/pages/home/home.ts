@@ -440,20 +440,15 @@ export class HomePage {
       var trips=[];
       for(let trip of route.legs[0].steps){
         var t={};
+        t['routeLongName']="";
         if(trip.travel_mode=="TRANSIT"){
             if(trip.transit.headway!=undefined){
-              t['routeLongName']=trip.transit.headway;
+              t['routeLongName']+=trip.transit.headway;
             }
-            else {
-              if(trip.transit.line.short_name!=undefined){
-                t['routeLongName']=trip.transit.line.short_name;
-              }
-              else
-                {
-                  t['routeLongName']=trip.transit.headway;
-                }
+            
+            if(trip.transit.line.short_name!=undefined){
+              t['routeLongName']+=" "+trip.transit.line.short_name;
             }
-
         }
         else {
             t['routeLongName']="";

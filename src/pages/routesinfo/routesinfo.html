@@ -10,65 +10,57 @@
     <ion-title>General Information</ion-title>
   </ion-navbar>
 
-  <div class="row bg-semi-transparent">
-      <ion-grid class="padding-0">
-        <!-- <ion-row>
-          <ion-col text-center>
-            <h1 class="text-white text-3x" color="primary">GENERAL INFORMATION</h1>
-          </ion-col>
-        </ion-row> -->
-        <ion-row>
-          <ion-col text-center>
-            <h1 class="text-white text-2x" color="primary">Bus Routes</h1>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  
-  
-    <div class="row bg-semi-transparent">
-      <ion-grid>
-        <ion-row>
-          <ion-col text-center>
-            <ion-item class="custom">
-              <ion-label>Route ID</ion-label>
-              <ion-select [(ngModel)]="selecteRouteId">
-                <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeId}}</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-  
-        <ion-row>
-          <ion-col text-center>
-            <ion-item class="custom">
-              <ion-label>Date</ion-label>
-              <ion-select [(ngModel)]="selectedDate">
-                <ion-option *ngFor="let item of dateOptions" [value]="item.value">{{item.label}}</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-  
-  
-        <ion-row>
-          <ion-col text-center>
-            <button (click)="onSearchClicked()" ion-button icon-right full large class="bg-primary text-white">
-              Search
-              <ion-icon name="check"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-  
-        
-      </ion-grid>
-    </div>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding (ionScroll)="onScroll($event)">
   
+  <div class="row bg-semi-transparent" #searchbox>
+    <ion-grid>
+      <!-- <ion-row>
+        <ion-col text-center>
+          <h1 class="text-white text-3x" color="primary">GENERAL INFORMATION</h1>
+        </ion-col>
+      </ion-row> -->
+      <ion-row>
+        <ion-col text-center>
+          <h1 class="text-white text-2x" color="primary">Bus Routes</h1>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-center>
+          <ion-item class="custom">
+            <ion-label>Route ID</ion-label>
+            <ion-select [(ngModel)]="selecteRouteId">
+              <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeId}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-center>
+          <ion-item class="custom">
+            <ion-label>Date</ion-label>
+            <ion-select [(ngModel)]="selectedDate">
+              <ion-option *ngFor="let item of dateOptions" [value]="item.value">{{item.label}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col text-center>
+          <button (click)="onSearchClicked()" ion-button icon-right full class="bg-primary text-white">
+            Search
+            <ion-icon name="check"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
   <div class="row bg-semi-transparent margin-top" *ngIf="routeData?.directionOneTrip!=null">
     <ion-grid class="padding-0 margin-top">
