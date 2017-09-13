@@ -613,8 +613,26 @@ export class RoutesPage {
       var r={};
       var trips=[];
       for(let trip of route.legs[0].steps){
-        var t={};
-        t['routeLongName']="";
+          var t={};
+          if(trip.travel_mode=="TRANSIT"){
+            if(trip.transit.headway!=undefined){
+              t['routeLongName']=trip.transit.headway;
+            }
+            else {
+              if(trip.transit.line.short_name!=undefined){
+                t['routeLongName']=trip.transit.line.short_name;
+              }
+              else
+                {
+                  t['routeLongName']=trip.transit.headway;
+                }
+            }
+
+        }
+        else {
+            t['routeLongName']="";
+        }
+
         t['totalDurationValue']=trip.duration.value;
         t['totalDurationText']=trip.duration.text;
         t['distanceValue']=trip.distance.value;

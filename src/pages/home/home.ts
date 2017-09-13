@@ -445,7 +445,13 @@ export class HomePage {
               t['routeLongName']=trip.transit.headway;
             }
             else {
-                t['routeLongName']="";
+              if(trip.transit.line.short_name!=undefined){
+                t['routeLongName']=trip.transit.line.short_name;
+              }
+              else
+                {
+                  t['routeLongName']=trip.transit.headway;
+                }
             }
 
         }
