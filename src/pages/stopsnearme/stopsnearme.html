@@ -67,18 +67,18 @@
 
             <ion-row>
               <ion-col col-4 class="bg-white">
-                <span class="text-orange size-2x" *ngIf="row.etaList[0].routeId!=null" color="primary">{{row.etaList[0].routeId}}</span>
-                <span class="text-orange size-2x" *ngIf="row.etaList[0].routeId==null" color="primary">N/A</span>
+                <span class="text-orange size-2x" *ngIf="row.etaList[0]?.routeId!=null" color="primary">{{row.etaList[0]?.routeId}}</span>
+                <span class="text-orange size-2x" *ngIf="row.etaList[0]?.routeId==null" color="primary">N/A</span>
               </ion-col>
 
               <ion-col col-4 class="bg-white" text-center>
-                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[0].eta!=null">{{row.etaList[0].eta}} min</span>
-                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[0].eta==null || row.etaList[0]==undefined">N/A</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[0]?.eta!=null">{{row.etaList[0]?.eta}} min</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[0]?.eta==null || row.etaList[0]==undefined">N/A</span>
               </ion-col>
 
               <ion-col col-4 class="bg-white" text-center>
-                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[1].eta!=null">{{row.etaList[1].eta}} min</span>
-                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[1].eta==null || row.etaList[1]==undefined">N/A</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[1]?.eta!=null">{{row.etaList[1]?.eta}} min</span>
+                <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[1]?.eta==null || row.etaList[1]==undefined">N/A</span>
               </ion-col>
            </ion-row>
          </div>
