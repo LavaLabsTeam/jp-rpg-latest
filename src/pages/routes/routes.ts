@@ -505,6 +505,7 @@ export class RoutesPage {
 
       this.routes[i].totalDurationValue=sum;
       this.routes[i].totalDuration=this.secondsToTime(sum);
+      this.routes[i].totalWalkDurationValue=10;
 
       if(this.routes[i].totalDuration.h>0){
         this.routes[i].totalDurationText=this.routes[i].totalDuration.h+"hr"+" "+this.routes[i].totalDuration.m+"min";

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, NavOptions, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, NavOptions, ModalController, ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { DatePipe } from '@angular/common';
@@ -30,7 +30,17 @@ export class RoutesinfoPage {
   public selectedDate:Date;
   @ViewChild('searchbox') searchbox; //inject element
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alert: AlertController, public datePipe:DatePipe, public modalCtrl:ModalController, public constants:Constants, public http:Http) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public events: Events, 
+    public alert: AlertController, 
+    public datePipe:DatePipe, 
+    public modalCtrl:ModalController, 
+    public constants:Constants, 
+    public http:Http,
+    private toastCtrl: ToastController
+  ) {
     this.routes=navParams.get("routes");
     this.progress = this.modalCtrl.create(ProgressPage);
   }
@@ -139,11 +149,27 @@ export class RoutesinfoPage {
         if(data.text().length>0){
           this.routeData=data.json();
         }
+        else{
+          let toast = this.toastCtrl.create({
+            message: 'No Stops Found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
+        }
 
         this.progress.dismiss();
     },
     error => {
       this.progress.dismiss();
+      let toast = this.toastCtrl.create({
+        message: 'No Stops Found!',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
     });
 
 
