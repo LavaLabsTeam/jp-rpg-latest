@@ -31,7 +31,7 @@
       <ion-row>
         <ion-col text-center>
           <ion-item class="custom">
-            <ion-label>Route ID</ion-label>
+            <ion-label>Route Name/ID</ion-label>
             <ion-select [(ngModel)]="selecteRouteId">
               <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeLongName}} &raquo; {{route.routeId}}</ion-option>
             </ion-select>
