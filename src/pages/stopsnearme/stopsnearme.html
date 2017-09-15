@@ -33,7 +33,7 @@
         <ion-row *ngFor="let row of records; let i=index" class="margin-bottom-1">
 
       <ion-col col-12 class="padding-0">
-        <ion-row class="bg-light-orange">
+        <ion-row class="bg-light-orange" (click)="expand(i)">
           <ion-col col-5>
             <span class="text-orange text-2x align-right" color="primary">{{row.stopId}}&raquo;{{row.stopNm}}</span>
           </ion-col>
@@ -42,12 +42,12 @@
             <span class="text-orange text-2x align-right" color="primary">{{row.lingNm}}</span>
           </ion-col>
 
-          <ion-col col-1 text-center (click)="expand.hidden=!expand.hidden">
+          <ion-col col-1 text-center>
               <ion-icon color="light" name="md-arrow-down"></ion-icon>
           </ion-col>
         </ion-row>
 
-        <div #expand [hidden]="i>0">
+        <div #expand *ngIf="showIndex==i">
           <div *ngIf="row.etaList!=null">
             <ion-row>
               <ion-col col-4 class="bg-orange">

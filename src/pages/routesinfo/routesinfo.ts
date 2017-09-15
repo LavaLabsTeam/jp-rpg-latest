@@ -28,6 +28,7 @@ export class RoutesinfoPage {
 
   public dateOptions:Array<Object>=[];
   public selectedDate:Date;
+  public selectedDateOption:any;
   @ViewChild('searchbox') searchbox; //inject element
 
   constructor(
@@ -68,6 +69,9 @@ export class RoutesinfoPage {
         }
       )
     }
+
+    this.selectedDateOption=this.dateOptions[0];
+
 
   }
 
@@ -135,8 +139,9 @@ export class RoutesinfoPage {
   }
 
   onSearchClicked(){
-    console.log(this.selectedDate);
+    console.log(this.selectedDateOption);
     console.log(this.selecteRouteId);
+    this.selectedDate=this.selectedDateOption.value;
     var config={
       params:{
         routeId:this.selecteRouteId,
@@ -147,7 +152,7 @@ export class RoutesinfoPage {
     this.http.get(this.constants.BASE_URL_ROUTE_ROUTE_STOPS, config).timeout(100000).subscribe(data => {
         
         if(data.text().length>0){
-          this.routeData=data.json();
+          this.routeData=data.json().body;
         }
         else{
           let toast = this.toastCtrl.create({

@@ -33,7 +33,7 @@
           <ion-item class="custom">
             <ion-label>Route ID</ion-label>
             <ion-select [(ngModel)]="selecteRouteId">
-              <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeId}}</ion-option>
+              <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeLongName}} &raquo; {{route.routeId}}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -43,8 +43,8 @@
         <ion-col text-center>
           <ion-item class="custom">
             <ion-label>Date</ion-label>
-            <ion-select [(ngModel)]="selectedDate">
-              <ion-option *ngFor="let item of dateOptions" [value]="item.value">{{item.label}}</ion-option>
+            <ion-select [(ngModel)]="selectedDateOption">
+              <ion-option *ngFor="let item of dateOptions" [value]="item">{{item.label}}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>

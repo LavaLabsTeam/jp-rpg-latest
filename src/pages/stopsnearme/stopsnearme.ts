@@ -17,6 +17,7 @@ import { Events } from 'ionic-angular';
 })
 
 export class StopsnearmePage {
+  showIndex: any;
   records: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alert: AlertController) {
     // this.records=[
@@ -97,6 +98,10 @@ export class StopsnearmePage {
   setEndLocation(stop){
     this.events.publish('stop:tapped', {type:"end",address:stop.stopName,location:{lat:stop.stopLat,lng:stop.stopLon}});
     this.navCtrl.popToRoot();
+  }
+
+  expand(index:any){
+    this.showIndex=this.showIndex==index?-1:index;
   }
 
 
