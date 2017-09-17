@@ -112,7 +112,7 @@ export class RoutesPage {
       var routeLabel="";
       
       if(i==0){
-          routeLabel='Fastest Route';
+          routeLabel='Recommended Route';
       }
       if(this.routes[i].trips.length<2){
           routeLabel='Direct Route';

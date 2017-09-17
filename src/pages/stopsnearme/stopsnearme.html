@@ -35,7 +35,7 @@
       <ion-col col-12 class="padding-0">
         <ion-row class="bg-light-orange" (click)="expand(i)">
           <ion-col col-5>
-            <span class="text-orange text-2x align-right" color="primary">{{row.stopId}}&raquo;{{row.stopNm}}</span>
+            <span class="text-orange text-2x align-right" color="primary">{{row.routeNm}}&raquo;{{row.stopNm}}</span>
           </ion-col>
 
           <ion-col col-6>
@@ -100,14 +100,14 @@
     <ion-row class="padding-0 margin-top">
 
 
-      <ion-col col-6 class="padding-left-1">
+      <!-- <ion-col col-6 class="padding-left-1">
         <button  (click)="viewMapClicked()" ion-button full large icon-right class="bg-white text-orange">
           VIEW MAP
           <ion-icon name="map"></ion-icon>
         </button>
-      </ion-col>
+      </ion-col> -->
 
-      <ion-col col-6 class="padding-right-1">
+      <ion-col col-12 class="padding-right-1">
         <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
           BACK
         </button>
