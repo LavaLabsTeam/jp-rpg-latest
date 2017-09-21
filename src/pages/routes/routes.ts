@@ -156,6 +156,9 @@ export class RoutesPage {
             for(let f of fares){
               this.routes[i]['fare']=f.fare;
               //this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
+              if(f.fare==0){
+                this.routes[i]['fare']=this.routes[i].trips.length-2;
+              }
               i++;
             }
 
@@ -444,7 +447,8 @@ export class RoutesPage {
         if(lastTrip!=null && t<route.trips.length-1){
           if(lastTrip.stops[lastTrip.stops.length-1].stopName!=trip.stops[0].stopName){
             tempTrips.push({
-              instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
+              //instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
+              instruction:"Get down at "+trip.stops[0].stopName,
               type:'WALKING',
               stops:[]
             })
@@ -452,10 +456,12 @@ export class RoutesPage {
         }
 
         if(trip.stops.length==1){
-          trip['instruction']=trip.stop[0].stopName;
+          //trip['instruction']=trip.stop[0].stopName;
+          trip['instruction']="Get down at "+trip.stop[0].stopName;
         }
         else {
-          trip['instruction']="From "+trip.stops[0].stopName+" to "+trip.stops[trip.stops.length-1].stopName;
+          //trip['instruction']="Get down at "+trip.stops[0].stopName+" to "+trip.stops[trip.stops.length-1].stopName;
+          trip['instruction']="Get down at "+trip.stops[trip.stops.length-1].stopName;
         }
         trip['type']='TRANSIT';
         tempTrips.push(trip);

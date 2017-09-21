@@ -5,100 +5,137 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar color="secondary">
-    <ion-title>Schedules</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <div class="row bg-semi-transparent">
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          <h1 class="text-white text-4x" color="primary">General Information</h1>
+  
+    <ion-navbar color="secondary">
+      <ion-title>Schedules</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <div class="row bg-semi-transparent" #searchbox>
+      <ion-grid>
+        <!-- <ion-row>
+          <ion-col text-center>
+            <h1 class="text-white text-3x" color="primary">GENERAL INFORMATION</h1>
+          </ion-col>
+        </ion-row> -->
+        <ion-row>
+          <ion-col text-center>
+            <h1 class="text-white text-2x" color="primary">Schedules</h1>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row>
+          <ion-col text-center>
+            <ion-item class="custom">
+              <ion-label>Date</ion-label>
+              <ion-select [(ngModel)]="selectedDateOption">
+                <ion-option *ngFor="let item of dateOptions" [value]="item">{{item.label}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+  
+  
+        <ion-row>
+          <ion-col text-center>
+            <button (click)="onSearchClicked()" ion-button icon-right full class="bg-primary text-white">
+              Search
+              <ion-icon name="check"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <ion-grid class="padding-0 margin-top">
+      <!-- <ion-row>
+        <ion-col col-10 class="bg-orange">
+          <span class="text-white size-2x" color="primary">RouteId</span>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col text-center>
-          <h1 class="text-white text-2x" color="primary">Schedules</h1>
+  
+        <ion-col col-12 class="bg-orange">
+          <span class="text-white size-2x" color="primary">Start Stop</span>
         </ion-col>
+      </ion-row> -->
+      <ion-row *ngFor="let schedule of schedules; let i=index" (click)="expand(i)" style="border-bottom:solid #9f582f 1px;">
+        <ion-col col-11 class="bg-light-orange">
+          <span class="text-white size-2x" color="primary">Route: {{schedule.routeId}} ({{schedule.routeLongName}})</span>
+        </ion-col>
+  
+    
+        <ion-col col-1 text-right class="bg-light-orange">
+            <ion-icon *ngIf="showIndex!=i" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon>
+            <ion-icon *ngIf="showIndex==i" name="ios-arrow-down" color="light" class="text-2x"></ion-icon>
+        </ion-col>
+  
+        <ion-col col-12  class="bg-white" #expand *ngIf="showIndex==i">
+            <ion-row>
+              <ion-col col-3 class="bg-orange">
+                <span class="text-white size-2x" color="primary">Direction</span>
+              </ion-col>
+              <ion-col col-3 class="bg-orange text-align-right">
+                <span class="text-white size-2x" color="primary">First Trip</span>
+              </ion-col>
+              <ion-col col-3 class="bg-orange text-align-right">
+                <span class="text-white size-2x" color="primary">Last Trip</span>
+              </ion-col>
+              <ion-col col-3 class="bg-orange text-align-right">
+                <span class="text-white size-2x" color="primary">Frequency</span>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="schedule.directionOneTrip!=null">
+              <ion-col col-3 class="bg-white">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionOneTrip.tripHeadsign}}</span>
+              </ion-col>
+              <ion-col col-3 class="bg-white text-align-right">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionOneTrip.firstTripTime}}</span>
+              </ion-col>
+              <ion-col col-3 class="bg-white text-align-right">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionOneTrip.lastTripTime}}</span>
+              </ion-col>
+              <ion-col col-3 class="bg-white text-align-right">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionOneTrip.minFrequency}}-{{schedule?.directionOneTrip.maxFrequency}}</span>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="schedule.directionTwoTrip!=null">
+              <ion-col col-3 class="bg-white">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionTwoTrip.tripHeadsign}}</span>
+              </ion-col>
+              <ion-col col-3 class="bg-white text-align-right">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionTwoTrip.firstTripTime}}</span>
+              </ion-col>
+              <ion-col col-3 class="bg-white text-align-right">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionTwoTrip.lastTripTime}}</span>
+              </ion-col>
+              <ion-col col-3 class="bg-white text-align-right">
+                <span class="text-orange size-2x" color="primary">{{schedule?.directionTwoTrip.minFrequency}}-{{schedule?.directionTwoTrip.maxFrequency}}</span>
+              </ion-col>
+            </ion-row>
+  
+          
+  
+        </ion-col>
+  
       </ion-row>
     </ion-grid>
-  </div>
-
-  <ion-grid class="padding-0 margin-top">
-    <!-- <ion-row>
-      <ion-col col-10 class="bg-orange">
-        <span class="text-white size-2x" color="primary">RouteId</span>
-      </ion-col>
-
-      <ion-col col-12 class="bg-orange">
-        <span class="text-white size-2x" color="primary">Start Stop</span>
-      </ion-col>
-    </ion-row> -->
-    <ion-row *ngFor="let schedule of schedules; let i=index" (click)="expand(i)" style="border-bottom:solid #9f582f 1px;">
-      <ion-col col-11 class="bg-light-orange">
-        <span class="text-white size-2x" color="primary">Route: {{schedule.routeId}}({{schedule.routeName}})</span>
-      </ion-col>
-
+  </ion-content>
   
-      <ion-col col-1 text-right class="bg-light-orange">
-          <ion-icon *ngIf="showIndex!=i" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon>
-          <ion-icon *ngIf="showIndex==i" name="ios-arrow-down" color="light" class="text-2x"></ion-icon>
-      </ion-col>
-
-      <ion-col col-12  class="bg-white" #expand *ngIf="showIndex==i">
-        <ion-row>
-            <ion-col col-5 class="bg-orange">
-              <span class="text-white size-2x" color="primary">Day</span>
-            </ion-col>
-            <ion-col col-3 class="bg-orange text-align-right">
-              <span class="text-white size-2x" color="primary">First Trip</span>
-            </ion-col>
-            <ion-col col-3 class="bg-orange text-align-right">
-              <span class="text-white size-2x" color="primary">Last Trip</span>
-            </ion-col>
-            <ion-col col-1 class="bg-orange text-align-right">
-              
-            </ion-col>
-          </ion-row>
-
-        <div *ngFor="let x of [0,1,2,3,4]">
-          <ion-row>
-            <ion-col col-5 class="bg-white">
-              <span class="text-orange size-2x" color="primary">{{ days[x] }}</span>
-            </ion-col>
-            <ion-col col-3 class="bg-white text-align-right">
-              <span class="text-orange size-2x" color="primary">{{schedule.trips[0].arrivalTime}}</span>
-            </ion-col>
-            <ion-col col-3 class="bg-white text-align-right">
-              <span class="text-orange size-2x" color="primary">{{schedule.trips[schedule.trips.length-1].arrivalTime}}</span>
-            </ion-col>
-            <ion-col col-1 class="bg-white text-align-right">
-              
-            </ion-col>
-          </ion-row>
-        </div>
-
-      </ion-col>
-
-    </ion-row>
-  </ion-grid>
-</ion-content>
-
-<ion-footer>
-  <ion-grid>
-    <ion-row class="padding-0 margin-top">
-
-      <ion-col col-12 class="padding-right-1">
-        <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
-          BACK
-        </button>
-      </ion-col>
-
-    </ion-row>
-  </ion-grid>
-</ion-footer>
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="padding-0 margin-top">
+  
+        <ion-col col-12 class="padding-right-1">
+          <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
+            BACK
+          </button>
+        </ion-col>
+  
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
+  
