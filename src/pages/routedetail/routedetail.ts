@@ -163,7 +163,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
           this.route.trips[i]['departureInfo']="Departure time- "+this.tConvert(this.route.trips[i].stops[0]['departureTime']);
         }
         else{
-          this.route.trips[i]['departureInfo']="Leave time- "+this.tConvert(this.route.trips[i-1].stops[this.route.trips[i-1].stops.length-1]['departureTime']);
+          this.route.trips[i]['departureInfo']="Leave at "+this.tConvert(this.route.trips[i-1].stops[this.route.trips[i-1].stops.length-1]['departureTime']);
         }
       }
       i++;
