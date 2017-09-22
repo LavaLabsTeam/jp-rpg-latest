@@ -226,7 +226,7 @@ export class HomePage {
     let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
 
     modal.onDidDismiss(data => {
-     console.log(data);
+     //console.log(data);
      if(data!=undefined){
        this.startAddress=data.place.name;
        this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};

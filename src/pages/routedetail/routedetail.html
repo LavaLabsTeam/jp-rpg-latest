@@ -63,18 +63,26 @@
               <ion-col col-11 class="block text-align-left padding-left-16">
                 <div class="logo ">
                   <div class="bus-no">
-                    <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span>
+                    <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span><span class="text-white text-3x">{{trip.tripHeadsign}}</span>
                   </div>
                 </div>
 
+                <div class="address">
+                  <span class="text-white text-2x" *ngIf="api=='jpapp'">{{trip.instructionRide}}</span>
+                </div>
                 <div class="address">
                   <!-- <span class="text-white text-3x">Drive</span><br> -->
                   <span class="text-white text-2x">{{trip.instruction}}</span>
                   <!-- <span class="text-white text-2x" *ngIf="route.trips.length==1">{{trip.stops[0].stopName}}</span> -->
                 </div>
 
+                <div class="address margin-top">
+                  <span class="text-white text-2x">{{trip.departureInfo}}</span>
+                </div>
 
-                <div class="logo margin-top" (click)="stoplist.hidden=!stoplist.hidden">
+
+
+                <div class="logo" (click)="stoplist.hidden=!stoplist.hidden">
                   <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
                   <span class="eta text-2x text-white">About {{trip.totalDurationText}} <span *ngIf="api=='jpapp'">({{trip.stops.length}} Stops)</span></span><br>
                   <ul #stoplist [hidden]="true">
@@ -110,7 +118,11 @@
                     <span class="text-white text-2x">{{trip.instruction}}</span>
                   </div>
 
-                  <div class="logo margin-top">
+                  <div class="address margin-top">
+                    <span class="text-white text-2x">{{trip.departureInfo}}</span>
+                  </div>
+
+                  <div class="logo">
                     <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
                     <span class="eta text-2x text-white">About {{trip.totalDurationText}}</span>
                   </div>

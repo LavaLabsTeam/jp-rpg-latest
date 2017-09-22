@@ -157,7 +157,14 @@ export class RoutesPage {
               this.routes[i]['fare']=f.fare;
               //this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
               if(f.fare==0){
-                this.routes[i]['fare']=this.routes[i].trips.length-2;
+                var far=0;
+
+                for(let trip of this.routes[i].trips){
+                  if(trip.type=='TRANSIT'){
+                    far++;
+                  }
+                }
+                this.routes[i]['fare']=far;
               }
               i++;
             }
@@ -213,6 +220,12 @@ export class RoutesPage {
           "m": minutes,
           "s": seconds
       };
+
+      //just for approx as we are skipping second so rounding it to minutes
+      if(obj.s>=0){
+        obj.m+=1;
+        obj.s=0;
+      }
       return obj;
   }
 
@@ -258,7 +271,7 @@ export class RoutesPage {
 
 
   viewRouteDetailsClicked(route){
-    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult});
+    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});
   }
 
 
@@ -444,15 +457,23 @@ export class RoutesPage {
       var lastTrip=null;
       for(let trip of route.trips){
 
-        if(lastTrip!=null && t<route.trips.length-1){
-          if(lastTrip.stops[lastTrip.stops.length-1].stopName!=trip.stops[0].stopName){
-            tempTrips.push({
-              //instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
-              instruction:"Get down at "+trip.stops[0].stopName,
-              type:'WALKING',
-              stops:[]
-            })
-          }
+        if(lastTrip!=null && t<=route.trips.length-1){
+          // if(lastTrip.stops[lastTrip.stops.length-1].stopName!=trip.stops[0].stopName){
+          //   tempTrips.push({
+          //     //instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
+          //     instruction:trip.stops[0].stopName,
+          //     type:'WALKING',
+          //     stops:[]
+          //   })
+          // }
+
+          tempTrips.push({
+            //instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
+            instruction:trip.stops[0].stopName,
+            type:'WALKING',
+            stops:[]
+          });
+
         }
 
         if(trip.stops.length==1){
@@ -461,6 +482,7 @@ export class RoutesPage {
         }
         else {
           //trip['instruction']="Get down at "+trip.stops[0].stopName+" to "+trip.stops[trip.stops.length-1].stopName;
+          trip['instructionRide']="Ride at "+trip.stops[0].stopName+" Bus towards "+trip.tripHeadsign,
           trip['instruction']="Get down at "+trip.stops[trip.stops.length-1].stopName;
         }
         trip['type']='TRANSIT';
@@ -468,6 +490,7 @@ export class RoutesPage {
         lastTrip=trip;
         t++;
       }
+
       tempTrips.push({
         type:'WALKING',
         instruction:this.endAddress
@@ -493,7 +516,7 @@ export class RoutesPage {
       var sum:number=0;
       for (let trip of route.trips) {
         var duration=this.timeDiff(trip.stops[0].departureTime,trip.stops[route.trips[j].stops.length-1].arrivalTime);
-        sum=sum+duration;
+        
 
 
 
@@ -507,6 +530,7 @@ export class RoutesPage {
         j++;
       }
 
+      sum=this.timeDiff(route.trips[0].stops[0].departureTime,route.trips[route.trips.length-1].stops[route.trips[route.trips.length-1].stops.length-1].arrivalTime);
 
 
       this.routes[i].totalDurationValue=sum;

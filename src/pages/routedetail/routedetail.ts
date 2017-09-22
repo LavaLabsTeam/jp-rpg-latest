@@ -30,8 +30,10 @@ export class RoutedetailPage {
   placesETARows:Array<string>=[];
   walkPolyLines:Array<string>=[];
   busPolyLines:Array<string>=[];
+  placeNames:Array<string>=[];
   api:any;
   googleDirectionResult:any;
+  selectedTime:any;
 
 
 constructor(public navCtrl: NavController, public navParams: NavParams, public constants:Constants, public http:Http) {
@@ -41,6 +43,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
     this.endAddress = this.navParams.get("endAddress");
     this.startLocation = this.navParams.get("startLocation");
     this.endLocation = this.navParams.get("endLocation");
+    this.selectedTime=this.navParams.get("selectedTime");
     this.api=this.navParams.get("api");
   }
 
@@ -113,6 +116,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
     if (status == 'OK') {
       this.walkPolyLines.push(rs.routes[0].overview_polyline);
       this.placesETARows.push(rs.routes[0].legs[0].duration.text);
+      this.placeNames.push(rs.routes[0].legs[0].start_address);
 
       if(index<this.origins.length-1){
         this.fetchPolylineWalk(index+1);
@@ -147,7 +151,20 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       if(trip.type=='WALKING'){
         this.route.trips[i]['totalDurationText']=this.placesETARows[j];
         this.route.trips[i]['polyline']=this.walkPolyLines[j];
+        this.route.trips[i]['instruction']=this.placeNames[j];
         j++;
+      }
+
+      if(i==0){
+        this.route.trips[i]['departureInfo']="Leave at "+this.tConvert(this.selectedTime);
+      }
+      else{
+        if(trip.type=='TRANSIT'){
+          this.route.trips[i]['departureInfo']="Departure time- "+this.tConvert(this.route.trips[i].stops[0]['departureTime']);
+        }
+        else{
+          this.route.trips[i]['departureInfo']="Leave time- "+this.tConvert(this.route.trips[i-1].stops[this.route.trips[i-1].stops.length-1]['departureTime']);
+        }
       }
       i++;
 
