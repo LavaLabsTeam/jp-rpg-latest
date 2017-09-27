@@ -138,8 +138,8 @@ export class MapPage {
     for(let trip of route.trips){
       var locations:Array<string>=[];
       if(trip.type=="TRANSIT") {
-        for(let stop of trip.stops){
-          locations.push(new google.maps.LatLng(parseFloat(stop.stopLat),parseFloat(stop.stopLon)));
+        for(let poly of trip.polyline){
+          locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
         }
       }
       this.renderRouteBus(locations);

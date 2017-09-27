@@ -151,7 +151,8 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       if(trip.type=='WALKING'){
         this.route.trips[i]['totalDurationText']=this.placesETARows[j];
         this.route.trips[i]['polyline']=this.walkPolyLines[j];
-        this.route.trips[i]['instruction']=this.placeNames[j];
+        if(j==0 || j==this.route.trips.length-1)
+          this.route.trips[i]['instruction']=this.placeNames[j];
         j++;
       }
 

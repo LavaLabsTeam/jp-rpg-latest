@@ -114,8 +114,9 @@
                 </ion-col>
                 <ion-col col-11 class="block walk text-align-left padding-left-16">
                   <div class="address">
-                    <span class="text-white text-2x" *ngIf="api=='jpapp'">Walk</span><br>
-                    <span class="text-white text-2x">{{trip.instruction}}</span>
+                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instructionHeading}}</span><br>
+                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instruction}}</span>
+                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i>0 && i<route.trips.length-1)">Change from {{trip.instruction}}</span>
                   </div>
 
                   <div class="address margin-top">

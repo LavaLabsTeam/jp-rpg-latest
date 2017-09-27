@@ -451,7 +451,8 @@ export class RoutesPage {
       var tempTrips=[];
       tempTrips.push({
         type:'WALKING',
-        instruction:this.startAddress
+        instruction:this.startAddress,
+        instructionHeading:"Walk to"
 
       });
       var lastTrip=null;
@@ -468,8 +469,9 @@ export class RoutesPage {
           // }
 
           tempTrips.push({
-            //instruction:"From "+lastTrip.stops[lastTrip.stops.length-1].stopName+" to "+trip.stops[0].stopName,
-            instruction:trip.stops[0].stopName,
+            instruction:lastTrip.routeLongName+" to "+trip.routeLongName,
+            //instruction:trip.stops[0].stopName,
+            instructionHeading:"Change from",
             type:'WALKING',
             stops:[]
           });
@@ -493,7 +495,8 @@ export class RoutesPage {
 
       tempTrips.push({
         type:'WALKING',
-        instruction:this.endAddress
+        instruction:this.endAddress,
+        instructionHeading:"Walk to"
 
       });
 
