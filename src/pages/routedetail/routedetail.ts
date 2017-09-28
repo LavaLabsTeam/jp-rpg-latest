@@ -55,8 +55,11 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       let i=0;
       for(let trip of this.route.trips){
         if(trip.type=='TRANSIT'){
-          this.destinations.push(new google.maps.LatLng(trip.stops[0].stopLat,trip.stops[0].stopLon));
-          this.origins.push(new google.maps.LatLng(trip.stops[trip.stops.length-1].stopLat,trip.stops[trip.stops.length-1].stopLon));
+          // this.destinations.push(new google.maps.LatLng(trip.stops[0].stopLat,trip.stops[0].stopLon));
+          // this.origins.push(new google.maps.LatLng(trip.stops[trip.stops.length-1].stopLat,trip.stops[trip.stops.length-1].stopLon));
+          this.destinations.push(new google.maps.LatLng(trip.polyline[0].shapePtLat,trip.polyline[0].shapePtLon));
+          this.origins.push(new google.maps.LatLng(trip.polyline[trip.polyline.length-1].shapePtLat,trip.polyline[trip.polyline.length-1].shapePtLon));
+          
         }
 
         i++;

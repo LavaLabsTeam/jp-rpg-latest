@@ -108,6 +108,10 @@ export class MapPage {
     var startLocation=this.mapData.data.startLocation;
     var endLocation=this.mapData.data.endLocation;
 
+    var startPathFromOriginToFirstWalkPoint=[];
+    var endPathFromLastWalkPointToDest=[];
+    var startPathFromFirstWalkPointToFirstTripFirstPoint=[];
+
     let latLng = new google.maps.LatLng(startLocation.lat, startLocation.lng);
 
 
@@ -144,8 +148,58 @@ export class MapPage {
       }
       this.renderRouteBus(locations);
     }
-    console.log(walkPolyLines);
+    //console.log(walkPolyLines);
+
+    var startWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[0]);
+    var endWalkWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[walkPolyLines.length-1]);
+
+    startPathFromOriginToFirstWalkPoint.push(myLatLngOrig);
+    startPathFromOriginToFirstWalkPoint.push(startWalkPoints[0]);
+
+    //now make all joining paths complete
+    var sflightPath = new google.maps.Polyline({
+      path: startPathFromOriginToFirstWalkPoint,
+      geodesic: true,
+      strokeColor: '#0000FF',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    sflightPath.setMap(this.map);
+
+
+    startPathFromFirstWalkPointToFirstTripFirstPoint.push(startWalkPoints[startWalkPoints.length-1]);
+    startPathFromFirstWalkPointToFirstTripFirstPoint.push(new google.maps.LatLng(parseFloat(route.trips[1].polyline[0].shapePtLat),parseFloat(route.trips[1].polyline[0].shapePtLon)));
+
+  
+    var startPathFromFirstWalkPointToFirstTripFirstPointPath = new google.maps.Polyline({
+      path: startPathFromFirstWalkPointToFirstTripFirstPoint,
+      geodesic: true,
+      strokeColor: '#0000FF',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    startPathFromFirstWalkPointToFirstTripFirstPointPath.setMap(this.map);
+
+
+    endPathFromLastWalkPointToDest.push(endWalkWalkPoints[endWalkWalkPoints.length-1]);
+    endPathFromLastWalkPointToDest.push(myLatLngDest);
+
+    var eflightPath = new google.maps.Polyline({
+      path: endPathFromLastWalkPointToDest,
+      geodesic: true,
+      strokeColor: '#0000FF',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    eflightPath.setMap(this.map);
+
+
     this.renderRouteWalk(walkPolyLines);
+
+    
   }
 
   renderRouteBus(flightPlanCoordinates:any){
@@ -165,10 +219,17 @@ export class MapPage {
 
 
   renderRouteWalk(polylines:any){
+    var i=0;
     for(let polyline of polylines){
       //console.log("sagar "+polyline);
+      var paths=google.maps.geometry.encoding.decodePath(polyline);
+      
+      
+
+
+      
       var flightPath = new google.maps.Polyline({
-         path: google.maps.geometry.encoding.decodePath(polyline),
+         path:paths ,
          geodesic: true,
          strokeColor: '#0000FF',
          strokeOpacity: 1.0,
@@ -176,7 +237,7 @@ export class MapPage {
        });
 
        flightPath.setMap(this.map);
-
+       i++;
 
       //  var myLatLngOrig=flightPlanCoordinates[0];
       //  var myLatLngDest=flightPlanCoordinates[flightPlanCoordinates.length-1];
