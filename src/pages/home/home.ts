@@ -1,3 +1,4 @@
+import { StopsautocompletePage } from './../stopsautocomplete/stopsautocomplete';
 import { RoutesautocompletePageModule } from './../routesautocomplete/routesautocomplete.module';
 import {Component, ViewChild} from '@angular/core';
 import { NavController } from 'ionic-angular';
@@ -28,6 +29,7 @@ declare var google:any;
   templateUrl: 'home.html'
 })
 export class HomePage {
+  stopSearchData: any;
   etaSearchData: any;
   registered: boolean;
   name: string;
@@ -257,7 +259,7 @@ export class HomePage {
 
   planJourneyClicked(){
 
-    if(this.startLocation==null || this.endLocation==null && false){
+    if(this.startLocation==null || this.endLocation==null){
       let toast = this.toastCtrl.create({
         message: 'Please select start and destination locations !',
         duration: 3000,
@@ -718,6 +720,22 @@ export class HomePage {
     });
 
     modal.present();
+  }
+
+  stopNameFieldClicked(){
+    let modal = this.modalCtrl.create(StopsautocompletePage,{name:"start"});
+    
+        modal.onDidDismiss(data => {
+         //console.log(data);
+         if(data!=undefined){
+           //console.log(data.routeId);
+           this.stopSearchData=data.item;
+           this.stopName=data.item.stopNm;
+           
+          }
+        });
+    
+        modal.present();
   }
 
 }

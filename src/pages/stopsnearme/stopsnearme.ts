@@ -17,7 +17,7 @@ import { Events } from 'ionic-angular';
 })
 
 export class StopsnearmePage {
-  showIndex: any;
+  showIndex: any = 0;
   records: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alert: AlertController) {
     // this.records=[

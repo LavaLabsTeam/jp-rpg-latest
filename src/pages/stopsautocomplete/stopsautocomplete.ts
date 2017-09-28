@@ -1,3 +1,5 @@
+import { StopsautocompletePageModule } from './stopsautocomplete.module';
+import { StopsnearmePage } from './../stopsnearme/stopsnearme';
 import { Http } from '@angular/http';
 import { Constants } from './../../services/constants';
 import { Component } from '@angular/core';
@@ -5,17 +7,18 @@ import { IonicPage, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 
 /**
- * Generated class for the PlacesearchPage page.
+ * Generated class for the StopsautocompletePage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
+
 @IonicPage()
 @Component({
-  selector: 'page-routesautocomplete',
-  templateUrl: 'routesautocomplete.html',
+  selector: 'page-stopsautocomplete',
+  templateUrl: 'stopsautocomplete.html',
 })
-export class RoutesautocompletePage {
+export class StopsautocompletePage {
   search: string;
   name:string;
   items: any;
@@ -50,7 +53,7 @@ export class RoutesautocompletePage {
   }
 
   onSearchKeyPress(){
-    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH_ETA+"?query="+this.search).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_STOPS_AUTOCOMPLETE+"?query="+this.search).subscribe(data => {
         this.items = data.json();
         //console.log(body);
     });
@@ -61,3 +64,4 @@ export class RoutesautocompletePage {
   }
 
 }
+

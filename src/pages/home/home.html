@@ -144,7 +144,7 @@
       <ion-row>
         <ion-col col-5>
           <ion-item class="custom">
-            <ion-input type="text" placeholder="STOP ID/Name" [(ngModel)]="stopName"></ion-input>
+            <ion-input type="text" placeholder="STOP ID/Name" [(ngModel)]="stopName" [disabled]=true  (click)="stopNameFieldClicked()"></ion-input>
           </ion-item>
         </ion-col>
 

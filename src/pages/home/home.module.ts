@@ -1,3 +1,4 @@
+import { StopsautocompletePageModule } from './../stopsautocomplete/stopsautocomplete.module';
 import { PreferencemodalPageModule } from './../preferencemodal/preferencemodal.module';
 import { RoutesautocompletePageModule } from './../routesautocomplete/routesautocomplete.module';
 import { StopsnearmePageModule } from './../stopsnearme/stopsnearme.module';
@@ -27,7 +28,8 @@ import { IonicPageModule } from 'ionic-angular';
     ProgressPageModule,
     StopsnearmePageModule,
     RoutesautocompletePageModule,
-    PreferencemodalPageModule
+    PreferencemodalPageModule,
+    StopsautocompletePageModule
   ],
   exports: [
     HomePage
