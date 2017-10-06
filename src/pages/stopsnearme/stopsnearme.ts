@@ -17,8 +17,10 @@ import { Events } from 'ionic-angular';
 })
 
 export class StopsnearmePage {
+  searchTerm: any;
   showIndex: any = 0;
   records: any;
+  searchType: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alert: AlertController) {
     // this.records=[
     //   {
@@ -36,6 +38,8 @@ export class StopsnearmePage {
     // ];
 
     this.records = navParams.get("data");
+    this.searchType = navParams.get("searchtype");
+    this.searchTerm = navParams.get("searchTerm");
   }
 
   ionViewDidLoad() {

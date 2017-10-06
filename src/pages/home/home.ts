@@ -55,6 +55,7 @@ export class HomePage {
   accessOptions:any;
   temp:any;
   leaveNowChecked:boolean;
+  searchTerm:any;
   @ViewChild('datePicker') datePicker; //inject element
   @ViewChild('leavenow') chkleaveNow; //inject element
 
@@ -123,6 +124,7 @@ export class HomePage {
        // data can be a set of coordinates, or an error (if an error occurred).
        // data.coords.latitude
        // data.coords.longitude
+       
        if(data.coords!=undefined){
          this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
        }
@@ -168,6 +170,9 @@ export class HomePage {
       this.resolveLocation();
     });
 
+
+    this.showOptions=="tfr";
+
   }
 
   sayMyName() {
@@ -182,6 +187,7 @@ export class HomePage {
       console.log('Platform ready from', readySource);
       // Platform now ready, execute any required native code
       this.geolocation.getCurrentPosition().then((resp) => {
+       //console.log('sssssssss');
        // resp.coords.latitude
        // resp.coords.longitude
        this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
@@ -193,6 +199,8 @@ export class HomePage {
         console.log('Error getting location', error);
       });
     });
+
+    
 
   }
 
@@ -259,7 +267,7 @@ export class HomePage {
 
   planJourneyClicked(){
 
-    if(this.startLocation==null || this.endLocation==null){
+    if(this.startAddress=="" || this.endAddress==""){
       let toast = this.toastCtrl.create({
         message: 'Please select start and destination locations !',
         duration: 3000,
@@ -390,12 +398,14 @@ export class HomePage {
 
 
 
-    // if(this.showOptions=="rwfc"){
-    //   request.transitOptions['routingPreference']='FEWER_TRANSFERS';
-    // }
-    // else if(this.showOptions=="rwlw"){
-    //   request.transitOptions['routingPreference']='LESS_WALKING';
-    // }
+    if(this.showOptions=="rwfi"){
+      request.transitOptions['routingPreference']='LEAST_INTERCHANGES';
+    }
+    else if(this.showOptions=="tfr"){
+      request.transitOptions['routingPreference']='LEAST_WALKING';
+    }
+
+
 
     request.transitOptions['departureTime']=this.departureDate;
 
@@ -440,6 +450,7 @@ export class HomePage {
     for(let route of result.routes){
 
       var trips=[];
+      var counter=0;
       for(let trip of route.legs[0].steps){
         var t={};
         t['routeLongName']="";
@@ -447,24 +458,53 @@ export class HomePage {
             if(trip.transit.headway!=undefined){
               t['routeLongName']+=trip.transit.headway;
             }
+
+            if(trip.transit.headway!=undefined){
+              t['headway']=trip.transit.headway;
+            }
             
             if(trip.transit.line.short_name!=undefined){
               t['routeLongName']+=" "+trip.transit.line.short_name;
             }
+
+            if(trip.transit.line.name!=undefined){
+              t['lineName']=" "+trip.transit.line.name;
+            }
+
+            //t['departureInfo']="Departure time- "+trip.transit_details.departure_time.text;
+            //console.log(trip);
+            //console.log("========++++++++===========");
+
+            if(trip.transit!=undefined){
+              t['departureInfo']="Departure time- "+trip.transit.departure_time.text;
+              t['instruction']="Get down at "+trip.transit.arrival_stop.name;
+
+              if(counter>0)
+                t['instructionRide']="Ride at "+trip.transit.departure_stop.name+" "+trip.instructions;
+              else
+                t['instructionRide']=this.startAddress;
+
+            } 
+            counter++;
+
+            
+
+            
         }
         else {
             t['routeLongName']="";
+            t['instruction']=trip.instructions;
         }
 
         t['totalDurationValue']=trip.duration.value;
         t['totalDurationText']=trip.duration.text;
         t['distanceValue']=trip.distance.value;
         t['distanceText']=trip.distance.text;
-        t['instruction']=trip.instructions;
         t['type']=trip.travel_mode;
         t['polyline']=trip.encoded_lat_lngs;
         t['stops']=[];
         trips.push(t);
+        
       }
       routes.push({trips:trips,totalDurationText:route.legs[0].duration.text,arrivalTime:route.legs[0].arrival_time,departureTime:route.legs[0].departure_time});
     }
@@ -483,7 +523,7 @@ export class HomePage {
     this.progress.present();
     var config={};
     //console.log(Number(this.stopName));
-
+    var etaSearchType;
     if(this.stopName!=undefined && this.stopName!="") {
       if(isNaN(this.stopName)){
         config={
@@ -499,6 +539,9 @@ export class HomePage {
           }
         }
       }
+
+      etaSearchType="stop";
+      this.searchTerm="Stop "+this.stopName;
     }
     else {
       config={
@@ -507,6 +550,8 @@ export class HomePage {
           lineId:this.etaSearchData.lingId
         }
       }
+      etaSearchType="route";
+      this.searchTerm="Route "+this.etaSearchData.routeNm;
     }
 
     console.log(config);
@@ -519,7 +564,7 @@ export class HomePage {
         if(json.body!=null){
           if(json.body.length>0){
             error=false;
-            this.navCtrl.push(StopsnearmePage,{data:json.body});
+            this.navCtrl.push(StopsnearmePage,{data:json.body,searchtype:etaSearchType,searchTerm:this.searchTerm});
           }
           else {
             {
@@ -561,6 +606,12 @@ export class HomePage {
       return false;
     }
 
+    // var config={
+    //   params:{
+    //     lat:this.currentLocation.lat=3.206381,
+    //     lon:this.currentLocation.lng=101.580754
+    //   }
+    // }
     var config={
       params:{
         lat:this.currentLocation.lat,
@@ -569,14 +620,14 @@ export class HomePage {
     }
 
     var error=false;
-    this.http.get(this.constants.BASE_URL_NEAREST_STOPS,config).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH_ETA_DATA,config).subscribe(data => {
         let json = data.json();
         //console.log(body);
         this.progress.dismiss();
         if(json.body!=null){
           if(json.body.length>0){
             error=false;
-            this.navCtrl.push(StopsnearmePage,{data:json.body});
+            this.navCtrl.push(StopsnearmePage,{data:json.body, searchtype:"stopsnearme"});
           }
           else {
             {
@@ -704,6 +755,7 @@ export class HomePage {
     this.endAddress="";
     this.routeName="";
     this.stopName="";
+
   }
 
   routesEtaFieldClicked(){
@@ -736,6 +788,24 @@ export class HomePage {
         });
     
         modal.present();
+  }
+
+
+  onPickLocation(){
+    if(this.currentLocation!=undefined){
+      this.startLocation=this.currentLocation;
+      this.getGeoCodeReverse(this.currentLocation.lat,this.currentLocation.lng);
+    }
+    else{
+      let toast = this.toastCtrl.create({
+        message: 'Location is not resolved, Wait.. !',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present(); 
+    }
+    
   }
 
 }

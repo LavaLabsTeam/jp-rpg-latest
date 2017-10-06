@@ -43,6 +43,11 @@ export class RoutesinfoPage {
     private toastCtrl: ToastController
   ) {
     this.routes=navParams.get("routes");
+    this.routes.sort(function(a, b) {
+      return parseFloat(a.routeLongName.substr(1)) - parseFloat(b.routeLongName.substr(1));
+    });
+  
+
     this.progress = this.modalCtrl.create(ProgressPage);
   }
 

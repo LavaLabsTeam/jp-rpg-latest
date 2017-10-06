@@ -646,6 +646,7 @@ export class RoutesPage {
     for(let route of result.routes){
       var r={};
       var trips=[];
+      var counter=0;
       for(let trip of route.legs[0].steps){
           var t={};
           t['routeLongName']="";
@@ -657,16 +658,38 @@ export class RoutesPage {
               if(trip.transit.line.short_name!=undefined){
                 t['routeLongName']+=" "+trip.transit.line.short_name;
               }
+
+              if(trip.transit.headway!=undefined){
+                t['headway']=trip.transit.headway;
+              }
+
+              if(trip.transit.line.name!=undefined){
+                t['lineName']=" "+trip.transit.line.name;
+              }
+
+            
+              if(trip.transit!=undefined){
+                t['departureInfo']="Departure time- "+trip.transit.departure_time.text;
+                t['instruction']="Get down at "+trip.transit.departure_stop.name;
+                
+                if(counter==0)
+                  t['instructionRide']="Ride at "+trip.transit.departure_stop.name+" "+trip.instructions;
+                else
+                  t['instructionRide']="Ride at "+this.startAddress;
+              } 
+
+              counter++;
+
           }
           else {
               t['routeLongName']="";
+              t['instruction']=trip.instructions;
           }
 
         t['totalDurationValue']=trip.duration.value;
         t['totalDurationText']=trip.duration.text;
         t['distanceValue']=trip.distance.value;
         t['distanceText']=trip.distance.text;
-        t['instruction']=trip.instructions;
         t['type']=trip.travel_mode;
         t['polyline']=trip.encoded_lat_lngs;
         t['stops']=[];

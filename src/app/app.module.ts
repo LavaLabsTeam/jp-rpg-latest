@@ -11,10 +11,12 @@ import { HttpModule } from '@angular/http';
 import { DatePipe } from '@angular/common';
 import { Constants } from '../services/constants';
 import { Network } from '@ionic-native/network';
+import { SortObjectPipe } from '../pipes/sort-object/sort-object';
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    SortObjectPipe
   ],
   imports: [
     BrowserModule,

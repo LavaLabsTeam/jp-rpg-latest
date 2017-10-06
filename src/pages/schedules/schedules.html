@@ -62,16 +62,17 @@
       </ion-row> -->
       <ion-row *ngFor="let schedule of schedules; let i=index" (click)="expand(i)" style="border-bottom:solid #9f582f 1px;">
         <ion-col col-11 class="bg-light-orange">
-          <span class="text-white size-2x" color="primary">Route: {{schedule.routeId}} ({{schedule.routeLongName}})</span>
+          <span class="text-white size-2x" color="primary">Route ID: {{schedule.routeLongName}}</span>
         </ion-col>
   
     
         <ion-col col-1 text-right class="bg-light-orange">
-            <ion-icon *ngIf="showIndex!=i" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon>
-            <ion-icon *ngIf="showIndex==i" name="ios-arrow-down" color="light" class="text-2x"></ion-icon>
+            <ion-icon name="ios-arrow-down" color="light" class="text-2x"></ion-icon>
+            <!-- <ion-icon *ngIf="showIndex!=i" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon> -->
+            <!-- <ion-icon *ngIf="showIndex==i" name="ios-arrow-down" color="light" class="text-2x"></ion-icon> -->
         </ion-col>
   
-        <ion-col col-12  class="bg-white" #expand *ngIf="showIndex==i">
+        <ion-col col-12  class="bg-white" #expand *ngIf="showIndex==i || true">
             <ion-row>
               <ion-col col-3 class="bg-orange">
                 <span class="text-white size-2x" color="primary">Direction</span>

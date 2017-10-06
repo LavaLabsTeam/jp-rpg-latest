@@ -62,18 +62,41 @@
               </ion-col>
               <ion-col col-11 class="block text-align-left padding-left-16">
                 <div class="logo ">
-                  <div class="bus-no">
-                    <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span><span class="text-white text-3x">{{trip.tripHeadsign}}</span>
+      
+                  <div class="bus-no" *ngIf="api=='jpapp'">
+                    <span class="text-white text-3x bg-blue">{{trip.routeLongName}}</span>
+                    <span class="text-white text-3x">{{trip.tripHeadsign}}</span>
                   </div>
+
+                  <div class="bus-no" *ngIf="api=='google'">
+                      <span class="text-white text-3x" *ngIf="trip.headway!=undefined && trip.headway!=null">{{trip.headWay}}</span>
+                      <span class="text-white text-3x">{{trip.lineName}}</span>
+                    </div>
                 </div>
 
-                <div class="address">
-                  <span class="text-white text-2x" *ngIf="api=='jpapp'">{{trip.instructionRide}}</span>
+                <div class="address" *ngIf="api=='google'">
+                  <span class="text-white text-2x">{{trip.instructionRide}}&nbsp;</span>
                 </div>
-                <div class="address">
-                  <!-- <span class="text-white text-3x">Drive</span><br> -->
+                <div class="address" *ngIf="api=='google'">
+                  <span class="text-white text-2x sag">{{trip.instruction}}</span>
+                </div>
+
+                <div class="address" *ngIf="api=='jpapp'">
+                  <span class="text-white text-2x">{{trip.instructionRide}}</span>
+        
+                </div>
+
+                <div class="address" *ngIf="api=='jpapp'">
+                   <!-- <span class="text-white text-3x">Drive</span><br> -->
                   <span class="text-white text-2x">{{trip.instruction}}</span>
                   <!-- <span class="text-white text-2x" *ngIf="route.trips.length==1">{{trip.stops[0].stopName}}</span> -->
+                </div>
+
+                <div class="logo " *ngIf="api=='google'">
+                    
+                  <div class="bus-no">
+                    <span class="text-white text-3x">{{trip.routeLongName}}</span>
+                  </div>
                 </div>
 
                 <div class="address margin-top">
@@ -116,6 +139,7 @@
                   <div class="address">
                     <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instructionHeading}}</span><br>
                     <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instruction}}</span>
+                    <span class="text-white text-2x" *ngIf="api=='google'">{{trip.instruction}}</span>
                     <span class="text-white text-2x" *ngIf="api=='jpapp' && (i>0 && i<route.trips.length-1)">Change from {{trip.instruction}}</span>
                   </div>
 

@@ -24,7 +24,7 @@
       </ion-row> -->
       <ion-row>
         <ion-col text-center>
-          <h1 class="text-white text-2x" color="primary">Bus Routes</h1>
+          <h1 class="text-white text-2x" color="primary">Bus Routes Stops</h1>
         </ion-col>
       </ion-row>
 
@@ -33,7 +33,7 @@
           <ion-item class="custom">
             <ion-label>Route Name/ID</ion-label>
             <ion-select [(ngModel)]="selecteRouteId">
-              <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeLongName}} &raquo; {{route.routeId}}</ion-option>
+              <ion-option *ngFor="let route of routes" [value]="route.routeId">{{route.routeLongName}}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -64,7 +64,7 @@
 
   <div class="row bg-semi-transparent margin-top" *ngIf="routeData?.directionOneTrip!=null">
     <ion-grid class="padding-0 margin-top">
-        <ion-row>
+        <!-- <ion-row>
           
             <ion-col col-12 class="text-white text-2x">
                 Direction #1
@@ -75,14 +75,14 @@
           <ion-col col-12 class="text-white">
             {{routeData.directionOneTrip.routeLongName}} &raquo; {{routeData.directionOneTrip.tripHeadsign}}
           </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row>
         <ion-col col-2 class="bg-orange">
               
         </ion-col>
               
         <ion-col col-10 class="bg-orange">
-          <span class="text-white size-2x" color="primary">Stop Name</span>
+          <span class="text-white size-2x" color="primary">Stop List</span>
         </ion-col>
 
       </ion-row>
@@ -121,7 +121,7 @@
 
   <div class="row bg-semi-transparent margin-top" *ngIf="routeData?.directionTwoTrip!=null">
       <ion-grid class="padding-0 margin-top">
-          <ion-row>
+          <!-- <ion-row>
             
               <ion-col col-12 class="text-white text-2x">
                   Direction #2
@@ -132,18 +132,14 @@
             <ion-col col-12 class="text-white">
               {{routeData.directionTwoTrip.routeId}} / {{routeData.directionTwoTrip.tripHeadsign}}
             </ion-col>
-        </ion-row>
+        </ion-row> -->
         <ion-row>
           <ion-col col-2 class="bg-orange">
                 
           </ion-col>
                 
-          <ion-col col-4 class="bg-orange">
-            <span class="text-white size-2x" color="primary">Stop Code</span>
-          </ion-col>
-  
-          <ion-col col-6 class="bg-orange">
-            <span class="text-white size-2x" color="primary">Stop Name</span>
+          <ion-col col-10 class="bg-orange">
+            <span class="text-white size-2x" color="primary">Stop List</span>
           </ion-col>
   
         </ion-row>

@@ -111,6 +111,7 @@ export class MapPage {
     var startPathFromOriginToFirstWalkPoint=[];
     var endPathFromLastWalkPointToDest=[];
     var startPathFromFirstWalkPointToFirstTripFirstPoint=[];
+    var endPathFromLastTripPointToFirstPointOfLastWalk=[];
 
     let latLng = new google.maps.LatLng(startLocation.lat, startLocation.lng);
 
@@ -153,6 +154,7 @@ export class MapPage {
     var startWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[0]);
     var endWalkWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[walkPolyLines.length-1]);
 
+    //------origin to first point of first walk path
     startPathFromOriginToFirstWalkPoint.push(myLatLngOrig);
     startPathFromOriginToFirstWalkPoint.push(startWalkPoints[0]);
 
@@ -166,8 +168,10 @@ export class MapPage {
     });
 
     sflightPath.setMap(this.map);
+    //--end of origin to first point of first walk path
 
 
+    //--first walk path last point to first point of First trip
     startPathFromFirstWalkPointToFirstTripFirstPoint.push(startWalkPoints[startWalkPoints.length-1]);
     startPathFromFirstWalkPointToFirstTripFirstPoint.push(new google.maps.LatLng(parseFloat(route.trips[1].polyline[0].shapePtLat),parseFloat(route.trips[1].polyline[0].shapePtLon)));
 
@@ -181,8 +185,27 @@ export class MapPage {
     });
 
     startPathFromFirstWalkPointToFirstTripFirstPointPath.setMap(this.map);
+    //--end of first walk path last point to first point of First trip
+
+    //------trip last point to first point of last walk
+    endPathFromLastTripPointToFirstPointOfLastWalk.push(new google.maps.LatLng(parseFloat(route.trips[route.trips.length-2].polyline[route.trips[route.trips.length-2].polyline.length-1].shapePtLat), parseFloat(route.trips[route.trips.length-2].polyline[route.trips[route.trips.length-2].polyline.length-1].shapePtLon)));
+    endPathFromLastTripPointToFirstPointOfLastWalk.push(endWalkWalkPoints[0]);
+
+    //console.log("====_____=======");
+    var epfltfplw = new google.maps.Polyline({
+      path: endPathFromLastTripPointToFirstPointOfLastWalk,
+      geodesic: true,
+      strokeColor: '#0000FF',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    epfltfplw.setMap(this.map);
+    //------------end of trip last point to first point of last walk
 
 
+
+    //--last walk last point to destination
     endPathFromLastWalkPointToDest.push(endWalkWalkPoints[endWalkWalkPoints.length-1]);
     endPathFromLastWalkPointToDest.push(myLatLngDest);
 
@@ -195,7 +218,7 @@ export class MapPage {
     });
 
     eflightPath.setMap(this.map);
-
+    //--end of last walk last point to destination
 
     this.renderRouteWalk(walkPolyLines);
 
