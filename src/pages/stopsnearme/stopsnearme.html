@@ -19,13 +19,14 @@
       <ion-row>
         <ion-col text-center>
           
-          <h1 class="text-white text-4x" color="primary" *ngIf="searchType!='stopsnearme'">Route ETA</h1>
+          <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='route'">Route ETA</h1>
+          <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='stop'">Stops ETA</h1>
           <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='stopsnearme'">Stops Near Me</h1>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col text-center>
-          <h1 class="text-white text-2x" color="primary" *ngIf="searchType!='stopsnearme'">ETA Results for {{searchTerm}}</h1>
+          <h1 class="text-white text-2x" color="primary" *ngIf="searchType!='stopsnearme'">ETA Results for <span [innerHTML]="searchTerm"></span></h1>
           <h1 class="text-white text-2x" color="primary" *ngIf="searchType=='stopsnearme'">Bus Stops</h1>
         </ion-col>
       </ion-row>

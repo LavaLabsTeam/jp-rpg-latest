@@ -138,32 +138,32 @@ export class HomePage {
     
     // i
 
-    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      //console.log('network was disconnected :-(');
-      if(networkToast!=undefined) networkToast.dismiss();
+    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+    //   //console.log('network was disconnected :-(');
+    //   if(networkToast!=undefined) networkToast.dismiss();
 
-      networkToast = this.toastCtrl.create({
-        message: 'Network Connection Lost !',
-        position: 'bottom'
-      });
+    //   networkToast = this.toastCtrl.create({
+    //     message: 'Network Connection Lost !',
+    //     position: 'bottom'
+    //   });
 
-      if(plt.is("ios") || plt.is("ipad")){
-        networkToast = this.toastCtrl.create({
-          message: 'Network Connection Lost !',
-          position: 'bottom',
-          duration: 3000
-        });
-      }
-      else
-      {
-        networkToast = this.toastCtrl.create({
-          message: 'Network Connection Lost !',
-          position: 'bottom'
-        });
-      }
+    //   if(plt.is("ios") || plt.is("ipad")){
+    //     networkToast = this.toastCtrl.create({
+    //       message: 'Network Connection Lost !',
+    //       position: 'bottom',
+    //       duration: 3000
+    //     });
+    //   }
+    //   else
+    //   {
+    //     networkToast = this.toastCtrl.create({
+    //       message: 'Network Connection Lost !',
+    //       position: 'bottom'
+    //     });
+    //   }
       
-      networkToast.present();
-    });
+    //   networkToast.present();
+    // });
 
     let connectSubscription = this.network.onConnect().subscribe(() => {
       networkToast.dismiss();
@@ -551,7 +551,7 @@ export class HomePage {
         }
       }
       etaSearchType="route";
-      this.searchTerm="Route "+this.etaSearchData.routeNm;
+      this.searchTerm="Route "+this.etaSearchData.routeNm+"<br>"+this.etaSearchData.lingNm;
     }
 
     console.log(config);
@@ -767,6 +767,7 @@ export class HomePage {
        //console.log(data.routeId);
        this.etaSearchData=data.item;
        this.routeName=data.item.routeNm+":"+data.item.lingNm;
+       this.stopName="";
        
       }
     });
@@ -783,7 +784,7 @@ export class HomePage {
            //console.log(data.routeId);
            this.stopSearchData=data.item;
            this.stopName=data.item.stopNm;
-           
+           this.routeName="";
           }
         });
     

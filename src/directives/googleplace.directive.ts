@@ -23,7 +23,22 @@ export class GoogleplaceDirective {
     this._el = el.nativeElement;
     this.modelValue = this.model;
     var input = this._el;
-    this.autocomplete = new google.maps.places.Autocomplete(input, {});
+
+    var cityBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(101.2722682858,2.5420301197),
+      new google.maps.LatLng(102.0970828702,3.4243597099));
+      
+    this.autocomplete = new google.maps.places.Autocomplete(input, {
+      bounds:cityBounds,
+      componentRestrictions:{
+        country: 'my'
+      },
+      types: ['geocode']
+    });
+
+    //101.2722682858,2.5420301197,102.0970828702,3.4243597099
+
+
     google.maps.event.addListener(this.autocomplete, 'place_changed', ()=> {
       var place = this.autocomplete.getPlace();
       this.invokeEvent(place);
