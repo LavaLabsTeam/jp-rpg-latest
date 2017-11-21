@@ -13,22 +13,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'fares.html',
 })
 export class FaresPage {
-  //fares: any;
-  fare: any;
+  fares: any;
   concessionFares:Array<any>=[];
   normalFares:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.fare=this.navParams.get("fares");
-    //this.fares=this.navParams.get("fares");
-    // for(let fare of this.fares.fareStructures){
-    //   if(fare.isConcession==true){
-    //     this.concessionFares.push(fare);
-    //   }
-    //   else{
-    //     this.normalFares.push(fare);
-    //   }
-    // }
+    this.fares=this.navParams.get("fares");
+    if (this.fares==undefined) this.fares={faredatas:[],fareStructures:[]};
+     
+    for(let fare of this.fares.fareStructures){
+      if(fare.isConcession==true){
+        this.concessionFares.push(fare);
+      }
+      else{
+        this.normalFares.push(fare);
+      }
+    }
   }
 
   ionViewDidLoad() {

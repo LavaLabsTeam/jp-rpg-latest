@@ -5,115 +5,110 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar color="secondary">
-    <ion-title>General Information &raquo; Fares</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <div class="row bg-semi-transparent">
-    <ion-grid>
+  
+    <ion-navbar color="secondary">
+      <ion-title>General Information &raquo; Fares</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <div class="row bg-semi-transparent">
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center>
+            <h1 class="text-white text-3x" color="primary">Fares</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="text-white size-2x" color="primary">LPKP Fare Structure</span><br>
+            <div *ngFor="let fare of fares.fareDatas">
+              <span class="text-white size-2x" color="primary">{{fare.fareType}} - Till {{fare.date}}</span><br>
+              <span class="text-white size-2x" color="primary">First 2 kilometer - {{fare.firstTwoKm}}</span><br>
+              <span class="text-white size-2x" color="primary">For every additional km - {{fare.everyAdditionalKm}}</span><br><br>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <ion-grid class="padding-0 margin-top">
       <ion-row>
-        <ion-col text-center>
-          <h1 class="text-white text-3x" color="primary">Fares</h1>
+        <ion-col col-12 class="bg-orange">
+          <span class="text-white size-2x" color="primary">RAPID PENANG FARE STRUCTURE</span>
         </ion-col>
       </ion-row>
       <ion-row>
-        <!-- <ion-col>
-          <span class="text-white size-2x" color="primary">LPKP Fare Structure</span><br>
-          <div *ngFor="let fare of fares.fareDatas">
-            <span class="text-white size-2x" color="primary">{{fare.fareType}} - Till {{fare.date}}</span><br>
-            <span class="text-white size-2x" color="primary">First 2 kilometer - {{fare.firstTwoKm}}</span><br>
-            <span class="text-white size-2x" color="primary">For every additional km - {{fare.everyAdditionalKm}}</span><br><br>
-          </div>
-        </ion-col> -->
-        <ion-col>
-          <span class="text-white text-2x" color="primary">{{fare.heading}}</span><br><br>
-            <span class="text-white text-2x-smaller" color="primary">{{fare.textOne}}</span><br><br>
-            <span class="text-white text-2x-smaller" color="primary">{{fare.textTwo}}</span><br><br>
-            <span class="text-white text-2x-smaller" color="primary">{{fare.footerText}}</span><br><br>
+        <ion-col col-4 class="bg-orange">
+          <span class="text-white size-2x" color="primary">FARE STAGES</span>
         </ion-col>
+  
+        <ion-col col-4 class="bg-orange">
+          <span class="text-white size-2x" color="primary">CURRENT FARES</span>
+        </ion-col>
+  
+        <ion-col col-4 class="bg-orange">
+          <span class="text-white size-2x" color="primary">NEW FARES</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12 class="bg-blue">
+          <span class="text-white size-2x" color="primary">NORMAL FARE</span>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row *ngFor="let fareStruct of normalFares; let i=index">
+        <ion-col col-4 class="bg-white">
+          <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>
+        </ion-col>
+  
+        <ion-col col-4 class="bg-white">
+          <span class="text-orange size-2x" color="primary">{{fareStruct.currentFare}}</span>
+        </ion-col>
+  
+        <ion-col col-4 class="bg-white">
+          <span class="text-orange size-2x" color="primary">{{fareStruct.newFare}}</span>
+        </ion-col>
+  
+      </ion-row>
+  
+       <ion-row>
+        <ion-col col-12 class="bg-blue">
+          <span class="text-white size-2x" color="primary">CONCESSION FARE</span>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row *ngFor="let fareStruct of concessionFares; let i=index">
+        <ion-col col-4 class="bg-white">
+          <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>
+        </ion-col>
+  
+        <ion-col col-4 class="bg-white">
+          <span class="text-orange size-2x" color="primary">{{fareStruct.currentFare}}</span>
+        </ion-col>
+  
+        <ion-col col-4 class="bg-white">
+          <span class="text-orange size-2x" color="primary">{{fareStruct.newFare}}</span>
+        </ion-col>
+  
+      </ion-row>
+  
+    </ion-grid>
+  </ion-content>
+  
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="padding-0 margin-top">
+  
+        <ion-col col-12 class="padding-right-1">
+          <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
+            BACK
+          </button>
+        </ion-col>
+  
       </ion-row>
     </ion-grid>
-  </div>
-
-  <!-- <ion-grid class="padding-0 margin-top">
-    <ion-row>
-      <ion-col col-12 class="bg-orange">
-        <span class="text-white size-2x" color="primary">RAPID PENANG FARE STRUCTURE</span>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-4 class="bg-orange">
-        <span class="text-white size-2x" color="primary">FARE STAGES</span>
-      </ion-col>
-
-      <ion-col col-4 class="bg-orange">
-        <span class="text-white size-2x" color="primary">CURRENT FARES</span>
-      </ion-col>
-
-      <ion-col col-4 class="bg-orange">
-        <span class="text-white size-2x" color="primary">NEW FARES</span>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12 class="bg-blue">
-        <span class="text-white size-2x" color="primary">NORMAL FARE</span>
-      </ion-col>
-    </ion-row>
-
-    <ion-row *ngFor="let fareStruct of normalFares; let i=index">
-      <ion-col col-4 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>
-      </ion-col>
-
-      <ion-col col-4 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{fareStruct.currentFare}}</span>
-      </ion-col>
-
-      <ion-col col-4 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{fareStruct.newFare}}</span>
-      </ion-col>
-
-    </ion-row>
-
-     <ion-row>
-      <ion-col col-12 class="bg-blue">
-        <span class="text-white size-2x" color="primary">CONCESSION FARE</span>
-      </ion-col>
-    </ion-row>
-
-    <ion-row *ngFor="let fareStruct of concessionFares; let i=index">
-      <ion-col col-4 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{fareStruct.fareStage}}</span>
-      </ion-col>
-
-      <ion-col col-4 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{fareStruct.currentFare}}</span>
-      </ion-col>
-
-      <ion-col col-4 class="bg-white">
-        <span class="text-orange size-2x" color="primary">{{fareStruct.newFare}}</span>
-      </ion-col>
-
-    </ion-row>
-
-  </ion-grid> -->
-</ion-content>
-
-<ion-footer>
-  <ion-grid>
-    <ion-row class="padding-0 margin-top">
-
-      <ion-col col-12 class="padding-right-1">
-        <button ion-button full large icon-right (click)="goBackClicked()" class="bg-orange text-white">
-          BACK
-        </button>
-      </ion-col>
-
-    </ion-row>
-  </ion-grid>
-</ion-footer>
+  </ion-footer>
+  
