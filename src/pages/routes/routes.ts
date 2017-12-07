@@ -156,16 +156,16 @@ export class RoutesPage {
             for(let f of fares){
               this.routes[i]['fare']=f.fare;
               //this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
-              if(f.fare==0){
-                var far=0;
+              // if(f.fare==0){
+              //   var far=0;
 
-                for(let trip of this.routes[i].trips){
-                  if(trip.type=='TRANSIT'){
-                    far++;
-                  }
-                }
-                this.routes[i]['fare']=far;
-              }
+              //   for(let trip of this.routes[i].trips){
+              //     if(trip.type=='TRANSIT'){
+              //       far++;
+              //     }
+              //   }
+              //   this.routes[i]['fare']=far;
+              // }
               i++;
             }
 

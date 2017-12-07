@@ -29,11 +29,12 @@ export class GoogleplaceDirective {
       new google.maps.LatLng(102.0970828702,3.4243597099));
       
     this.autocomplete = new google.maps.places.Autocomplete(input, {
-      bounds:cityBounds,
+      //bounds:cityBounds,
       componentRestrictions:{
         country: 'my'
       },
-      types: ['geocode']
+      minLength: 3
+      //types: ['geocode']
     });
 
     //101.2722682858,2.5420301197,102.0970828702,3.4243597099
