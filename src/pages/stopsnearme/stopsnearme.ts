@@ -108,6 +108,11 @@ export class StopsnearmePage {
     this.showIndex=this.showIndex==index?-1:index;
   }
 
+  round(value:any){
+    //return Math.round(value);
+    return value;
+  }
+
 
 
 }

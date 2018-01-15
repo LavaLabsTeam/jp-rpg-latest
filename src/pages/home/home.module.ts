@@ -1,3 +1,4 @@
+import { RoundPipe } from './../../pipes/round/round';
 import { StopsautocompletePageModule } from './../stopsautocomplete/stopsautocomplete.module';
 import { PreferencemodalPageModule } from './../preferencemodal/preferencemodal.module';
 import { RoutesautocompletePageModule } from './../routesautocomplete/routesautocomplete.module';
@@ -33,6 +34,9 @@ import { IonicPageModule } from 'ionic-angular';
   ],
   exports: [
     HomePage
+  ],
+  providers:[
+    RoundPipe
   ]
 })
 export class HomePageModule {}

@@ -12,11 +12,13 @@ import { DatePipe } from '@angular/common';
 import { Constants } from '../services/constants';
 import { Network } from '@ionic-native/network';
 import { SortObjectPipe } from '../pipes/sort-object/sort-object';
+import { RoundPipe } from '../pipes/round/round';
 
 @NgModule({
   declarations: [
     MyApp,
-    SortObjectPipe
+    SortObjectPipe,
+    RoundPipe
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,7 @@ import { SortObjectPipe } from '../pipes/sort-object/sort-object';
     Geolocation,
     Network,
     DatePipe,
+    RoundPipe,
     Constants,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
 

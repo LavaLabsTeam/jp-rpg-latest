@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-title>Stops Near Me</ion-title>
+    <ion-title>Bus Stops ETA</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,15 +19,16 @@
       <ion-row>
         <ion-col text-center>
           
-          <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='route'">Route ETA</h1>
-          <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='stop'">Stops ETA</h1>
+          <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='route'">ETA by Bus Route</h1>
+          <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='stop'">ETA by Bus Stop</h1>
           <h1 class="text-white text-4x" color="primary" *ngIf="searchType=='stopsnearme'">Stops Near Me</h1>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col text-center>
-          <h1 class="text-white text-2x" color="primary" *ngIf="searchType!='stopsnearme'">ETA Results for <span [innerHTML]="searchTerm"></span></h1>
-          <h1 class="text-white text-2x" color="primary" *ngIf="searchType=='stopsnearme'">Bus Stops</h1>
+          <h1 class="text-white text-2x" color="primary" *ngIf="searchType=='route'">ETA Results for <span [innerHTML]="searchTerm"></span></h1>
+          <h1 class="text-white text-2x" color="primary" *ngIf="searchType=='stop'">ETA Results for <span [innerHTML]="searchTerm"></span></h1>
+          <h1 class="text-white text-2x" color="primary" *ngIf="searchType=='stopsnearme'">ETA Result for Nearby Stops</h1>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -40,7 +41,7 @@
         <ion-row class="bg-light-orange" (click)="expand(i)">
           
           <ion-col col-10>
-            <span class="text-orange text-2x align-right" color="primary">{{row.lingNm}}</span>
+            <span class="text-orange text-2x align-right" color="primary">{{row.routeNm}} {{row.lingNm}}</span>
           </ion-col>
 
           <ion-col col-2 text-center>
@@ -138,7 +139,7 @@
                 </ion-col>
 
                 <ion-col col-4 class="bg-white" text-center *ngIf="row.etaList!=null">
-                  <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[0]?.eta!=null && i>0">{{row.etaList[0]?.eta}} min</span>
+                  <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[0]?.eta!=null && i>0">{{round(row.etaList[0]?.eta)}} min</span>
                   <span class="text-orange size-2x" color="primary" *ngIf="(row.etaList[0]?.eta==null || row.etaList[0]?.eta==undefined) && i>0">N/A</span>
                   <span class="text-orange size-2x" color="primary" *ngIf="i==0">-</span>
                 </ion-col>
@@ -149,7 +150,7 @@
                 </ion-col>
 
                 <ion-col col-4 class="bg-white" text-center *ngIf="row.etaList!=null">
-                  <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[1]?.eta!=null && i>0">{{row.etaList[1]?.eta}} min</span>
+                  <span class="text-orange size-2x" color="primary" *ngIf="row.etaList[1]?.eta!=null && i>0">{{round(row.etaList[1]?.eta)}} min</span>
                   <span class="text-orange size-2x" color="primary" *ngIf="(row.etaList[1]?.eta==null || row.etaList[1]?.eta==undefined) && i>0">N/A</span>
                   <span class="text-orange size-2x" color="primary" *ngIf="i==0">-</span>
                 </ion-col>

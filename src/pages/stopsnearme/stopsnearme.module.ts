@@ -1,3 +1,4 @@
+import { RoundPipe } from './../../pipes/round/round';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { StopsnearmePage } from './stopsnearme';
@@ -11,6 +12,9 @@ import { StopsnearmePage } from './stopsnearme';
   ],
   exports: [
     StopsnearmePage
+  ],
+  providers:[
+    RoundPipe
   ]
 })
 export class StopsnearmePageModule {}

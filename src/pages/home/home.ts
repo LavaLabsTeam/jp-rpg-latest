@@ -541,7 +541,7 @@ export class HomePage {
       }
 
       etaSearchType="stop";
-      this.searchTerm="Stop "+this.stopName;
+      this.searchTerm=this.stopName;
     }
     else {
       config={
@@ -551,7 +551,7 @@ export class HomePage {
         }
       }
       etaSearchType="route";
-      this.searchTerm="Route "+this.etaSearchData.routeNm+"<br>"+this.etaSearchData.lingNm;
+      this.searchTerm=this.etaSearchData.routeNm+"<br>"+this.etaSearchData.lingNm;
     }
 
     console.log(config);
