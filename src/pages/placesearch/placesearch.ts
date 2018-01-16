@@ -20,13 +20,13 @@ export class PlacesearchPage {
   geocoder:any;
   constructor(public viewCtrl: ViewController,public navParams: NavParams, private http:Http) {
     //alert(this.navParams.data.name);
-    // if(this.navParams.data.name=="start"){
-    //   this.search="Bus Terminal Komtar";
-    // }
+    if(this.navParams.data.name=="start"){
+      this.search="Jetty, Pengalan Weld Georgetown George Town Penang Malaysia";
+    }
     
-    // if(this.navParams.data.name=="end"){
-    //   this.search="Masjid Jamek Al-munauwar";
-    // }
+    if(this.navParams.data.name=="end"){
+      this.search="Komtar George Town Penang Malaysia";
+    }
 
     this.geocoder = new google.maps.Geocoder();
   }

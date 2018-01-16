@@ -146,8 +146,8 @@
         <ion-row>
   
           <ion-col col-12 class="padding-0">
-              <div *ngIf="routeData?.directionOneTrip.stops!=null" class="bg-semi-transparent">
-                  <ion-row class="stops" *ngFor="let stop of routeData?.directionOneTrip.stops">
+              <div *ngIf="routeData?.directionTwoTrip.stops!=null" class="bg-semi-transparent">
+                  <ion-row class="stops" *ngFor="let stop of routeData?.directionTwoTrip.stops">
                       <ion-col col-1>
                       </ion-col>
       
@@ -165,7 +165,7 @@
                 
             </div>
   
-            <ion-row *ngIf="routeData?.directionOneTrip.stops==null">
+            <ion-row *ngIf="routeData?.directionTwoTrip.stops==null">
               <ion-col col-12 class="bg-white">
                 <span class="text-orange size-2x" color="primary">Stop Not Available</span>
               </ion-col>

@@ -285,11 +285,12 @@ export class HomePage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:this.selectedDateJPApi
-        // hasEscalators:"false",
-        // hasStares:"false",
-        // leastWalking:"false",
-        // lowestTransit:"false"
+        date:this.selectedDateJPApi,
+        hasEscalators:"false",
+        hasStares:"false",
+        leastWalking:"false",
+        lowestTransit:"null",
+        filter:'FASTEST_ROUTE'
       }
       // params:{
       //   startLan:"3.2066336",

@@ -66,8 +66,9 @@ export class RoutesPage {
     //console.log(this.startLocation);
     if(this.api=="jpapp"){
       this.calculateRoutesDuration();
-      this.optimizeRoutes();
       this.calculateFares();
+      this.optimizeRoutes();
+      
     }
     else {
       //if google
@@ -131,16 +132,18 @@ export class RoutesPage {
 
   calculateFares(){
     var error=false;
-
+    console.log("fares");
     var params:Array<any>=[];
     for(let r of this.routes){
-      var trip=r.trips[1];
-      //console.log(trip);
-      params.push({
-        routeId:trip.routeId,
-        startStopId: r.startStop.stopId,
-        endStopId: r.endStop.stopId
-      });
+      for(let trip of r.trips){
+        //var trip=r.trips[1];
+        params.push({
+          routeId:trip.routeId,
+          startStopId: r.startStop.stopId,
+          endStopId: r.endStop.stopId,
+          shapeId: trip.shapeId
+        });
+      }
     };
 
 
@@ -153,19 +156,28 @@ export class RoutesPage {
             error=false;
             var i=0;
             var fr=[0.7,1,2.5,3.0];
-            for(let f of fares){
-              this.routes[i]['fare']=f.fare;
-              //this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
-              // if(f.fare==0){
-              //   var far=0;
+            var j=0;
+            for(let r of this.routes){
+              
+              var far=0;
+              for(let trip of r.trips){
+                if(fares[j]!=undefined)
+                far+=fares[j].fare;
+                //this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
+                // if(f.fare==0){
+                //   var far=0;
 
-              //   for(let trip of this.routes[i].trips){
-              //     if(trip.type=='TRANSIT'){
-              //       far++;
-              //     }
-              //   }
-              //   this.routes[i]['fare']=far;
-              // }
+                //   for(let trip of this.routes[i].trips){
+                //     if(trip.type=='TRANSIT'){
+                //       far++;
+                //     }
+                //   }
+                //   this.routes[i]['fare']=far;
+                // }
+                
+                j++;
+              }
+              this.routes[i]['fare']=far;
               i++;
             }
 
@@ -451,7 +463,7 @@ export class RoutesPage {
       var tempTrips=[];
       tempTrips.push({
         type:'WALKING',
-        instruction:this.startAddress,
+        instruction:route.startStop.stopName,
         instructionHeading:"Walk to"
 
       });
