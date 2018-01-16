@@ -9,6 +9,7 @@ import { PreferencemodalPage } from '../preferencemodal/preferencemodal';
 import { DatepickerPage } from '../datepicker/datepicker';
 import { ProgressPage } from '../progress/progress';
 import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 declare var google:any;
 /**
  * Generated class for the RoutesPage page.
@@ -65,9 +66,11 @@ export class RoutesPage {
 
     //console.log(this.startLocation);
     if(this.api=="jpapp"){
-      this.calculateRoutesDuration();
-      this.calculateFares();
-      this.optimizeRoutes();
+      this.calculateFares().subscribe(res=>{
+            this.calculateRoutesDuration();
+            this.optimizeRoutes();
+      });
+      
       
     }
     else {
@@ -137,50 +140,46 @@ export class RoutesPage {
     for(let r of this.routes){
       for(let trip of r.trips){
         //var trip=r.trips[1];
-        params.push({
-          routeId:trip.routeId,
-          startStopId: r.startStop.stopId,
-          endStopId: r.endStop.stopId,
-          shapeId: trip.shapeId
-        });
+        if(trip.type!="WALKING"){
+          params.push({
+            routeName:r.name,
+            startStopId: trip.stops[0].stopId,
+            endStopId: trip.stops[trip.stops.length-1].stopId,
+            shapeId: trip.shapeId
+          });
+        }
       }
     };
 
 
 
-    this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).subscribe(data => {
+    return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
         let fares = data.json();
         //console.log(body);
+        console.log(this.routes);
         if(fares!=null){
           if(fares.length>0){
             error=false;
-            var i=0;
+          
             var fr=[0.7,1,2.5,3.0];
-            var j=0;
-            for(let r of this.routes){
+            var count=0;
+            for(var i=0; i<this.routes.length; i++){
               
               var far=0;
-              for(let trip of r.trips){
-                if(fares[j]!=undefined)
-                far+=fares[j].fare;
-                //this.routes[i]['fare']=fr[Math.floor((Math.random()*3)+0)].toFixed(2);
-                // if(f.fare==0){
-                //   var far=0;
+              
+              
+              for(var j=0; j<this.routes[i].trips.length; j++){
 
-                //   for(let trip of this.routes[i].trips){
-                //     if(trip.type=='TRANSIT'){
-                //       far++;
-                //     }
-                //   }
-                //   this.routes[i]['fare']=far;
-                // }
+                //console.log(this.routes[i].trips[j]);
+                //console.log("   count="+count);
+                far+=fares[count].fare;
+                count++;
                 
-                j++;
               }
+              
               this.routes[i]['fare']=far;
-              i++;
+            
             }
-
           }
           else {
             {
@@ -192,6 +191,8 @@ export class RoutesPage {
         else {
           error=true
         }
+
+        return Observable.of(error).delay(2000);
 
     });
   }
@@ -295,11 +296,12 @@ export class RoutesPage {
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
         time:this.selectedTime+":30",
-        date:this.selectedDateJPApi
-        // hasEscalators:"false",
-        // hasStares:"false",
-        // leastWalking:"false",
-        // lowestTransit:"false"
+        date:this.selectedDateJPApi,
+        hasEscalators:"false",
+        hasStares:"false",
+        leastWalking:"false",
+        lowestTransit:"false",
+        filter:'FASTEST_ROUTE'
       }
 
       // params:{
@@ -353,10 +355,13 @@ export class RoutesPage {
               //this.navCtrl.push(RoutesPage,{data:json,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation});
               this.result=json.body;
               this.routes=this.result.routes;
-              this.calculateRoutesDuration();
-              this.optimizeRoutes();
+              // this.calculateRoutesDuration();
+              // this.optimizeRoutes();
               this.api="jpapp";
-              this.calculateFares();
+              this.calculateFares().subscribe(res=>{
+                this.calculateRoutesDuration();
+                this.optimizeRoutes();
+            });
               error=false;
             }
             else {
