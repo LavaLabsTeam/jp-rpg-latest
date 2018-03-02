@@ -56,8 +56,19 @@ export class GeneralinfoPage {
   }
 
   faresClicked(){
+    // this.progress.present();
+    // this.http.get(this.constants.BASE_URL_FARES).timeout(30000).subscribe(data => {
+    //     let json = data.json();
+    //     this.progress.dismiss();
+    //     //this.navCtrl.push(FaresPage,{fares:json});
+    //     this.navCtrl.push(FaresPage,{fares:json.body});
+    // },
+    // error => {
+    //   this.progress.dismiss();
+    // });
+
     this.progress.present();
-    this.http.get(this.constants.BASE_URL_FARES).timeout(30000).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_STATIC_FARE).timeout(30000).subscribe(data => {
         let json = data.json();
         this.progress.dismiss();
         //this.navCtrl.push(FaresPage,{fares:json});
