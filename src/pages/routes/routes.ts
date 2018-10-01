@@ -10,6 +10,7 @@ import { DatepickerPage } from '../datepicker/datepicker';
 import { ProgressPage } from '../progress/progress';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { UtilProvider } from '../../providers/util/util';
 declare var google:any;
 /**
  * Generated class for the RoutesPage page.
@@ -44,7 +45,7 @@ export class RoutesPage {
   departureDate:Date;
   showIndex:any;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController, private utilService: UtilProvider) {
     this.accessOptions = this.navParams.get("accessOptions");
     this.showOptions = this.navParams.get("showOptions");
     this.api=this.navParams.get("api");
@@ -131,7 +132,6 @@ export class RoutesPage {
 
       i++;
     }
-    debugger
   }
 
   calculateFares(){
@@ -243,36 +243,85 @@ export class RoutesPage {
       return obj;
   }
 
-
   setStartLocation(){
-    let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+    let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
 
     modal.onDidDismiss(data => {
-     console.log(data);
+     //console.log(data);
      if(data!=undefined){
-       this.startAddress=data.place.name;
-       this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-
-       console.log(this.startLocation);
-       this.planJourney();
-       //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      this.startAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.utilService.getGoogleGeocode(data).then((result) => {
+          this.startLocation = result;
+          this.planJourney();
+        })
       }
+      else{
+        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+        this.planJourney();
+      }
+      console.log(this.startLocation);
+      }
+
     });
 
     modal.present();
   }
 
 
+  // setStartLocation(){
+  //   let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+
+  //   modal.onDidDismiss(data => {
+  //    console.log(data);
+  //    if(data!=undefined){
+  //      this.startAddress=data.place.name;
+  //      this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
+
+  //      console.log(this.startLocation);
+  //      this.planJourney();
+  //      //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+  //     }
+  //   });
+
+  //   modal.present();
+  // }
+
+
+  // setEndLocation(){
+  //   let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+
+  //   modal.onDidDismiss(data => {
+  //    console.log(data);
+  //    if(data!=undefined){
+  //      this.endAddress=data.place.name;
+  //      this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
+  //      this.planJourney();
+  //      //console.log(this.startLocation);
+  //     }
+  //   });
+
+  //   modal.present();
+  // }
+
   setEndLocation(){
-    let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+    let modal = this.modalCtrl.create(PlacesearchPage,{name:"end"});
 
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.endAddress=data.place.name;
-       this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-       this.planJourney();
-       //console.log(this.startLocation);
+      this.endAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.utilService.getGoogleGeocode(data).then((result) => {          
+          this.endLocation = result;
+          this.planJourney();
+        })
+      }
+      else{
+        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+        this.planJourney();
+      }
+      console.log(this.endLocation);
       }
     });
 

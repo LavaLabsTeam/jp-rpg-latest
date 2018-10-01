@@ -21,6 +21,7 @@ import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { RoutesautocompletePage } from "../routesautocomplete/routesautocomplete";
+import { UtilProvider } from '../../providers/util/util';
 
 declare var google:any;
 
@@ -74,6 +75,7 @@ export class HomePage {
     , public plt: Platform
     , public events: Events
     , private network: Network
+    , private utilService : UtilProvider
   ) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     //console.log(constants);
@@ -232,26 +234,27 @@ export class HomePage {
 
   }
   
-  async getGoogleGeocode(data){
-    return new Promise((resolve, reject) => {
-      var geocoder = new google.maps.Geocoder();
-      var origin=data.place.place_id;
-      geocoder.geocode({ 'placeId': origin }, function (results, status) {
-        console.log(results);
-        if (status == google.maps.GeocoderStatus.OK) {
-            var result = {
-              lat : results[0].geometry.location.lat(),
-              lng : results[0].geometry.location.lng()
-            }
-            resolve(result);
-        } else{
-            alert('Could not find the place');
-            reject("Async Error");
-        }
-      });
-    });
-  }
+  // async getGoogleGeocode(data){
+  //   return new Promise((resolve, reject) => {
+  //     var geocoder = new google.maps.Geocoder();
+  //     var origin=data.place.place_id;
+  //     geocoder.geocode({ 'placeId': origin }, function (results, status) {
+  //       console.log(results);
+  //       if (status == google.maps.GeocoderStatus.OK) {
+  //           var result = {
+  //             lat : results[0].geometry.location.lat(),
+  //             lng : results[0].geometry.location.lng()
+  //           }
+  //           resolve(result);
+  //       } else{
+  //           alert('Could not find the place');
+  //           reject("Async Error");
+  //       }
+  //     });
+  //   });
+  // }
   
+
   setStartLocation(){
     let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
 
@@ -260,7 +263,7 @@ export class HomePage {
      if(data!=undefined){
       this.startAddress=data.place.stopName;
       if(data.place.place_id){
-        this.getGoogleGeocode(data).then((result) => {
+        this.utilService.getGoogleGeocode(data).then((result) => {
           this.startLocation = result;
         })
       }
@@ -283,7 +286,7 @@ export class HomePage {
      if(data!=undefined){
       this.endAddress=data.place.stopName;
       if(data.place.place_id){
-        this.getGoogleGeocode(data).then((result) => {          
+        this.utilService.getGoogleGeocode(data).then((result) => {          
           this.endLocation = result;
         })
       }
