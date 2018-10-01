@@ -265,10 +265,13 @@ export class HomePage {
       if(data.place.place_id){
         this.utilService.getGoogleGeocode(data).then((result) => {
           this.startLocation = result;
+          // sessionStorage.setItem('is_rpg_start_stop', 'false');
         })
       }
-      else
+      else{
         this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        // sessionStorage.setItem('is_rpg_start_stop', 'true');
+      }
       console.log(this.startLocation);
       }
     });
@@ -288,10 +291,13 @@ export class HomePage {
       if(data.place.place_id){
         this.utilService.getGoogleGeocode(data).then((result) => {          
           this.endLocation = result;
+          // sessionStorage.setItem('is_rpg_end_stop', 'false');
         })
       }
-      else
+      else{
         this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        // sessionStorage.setItem('is_rpg_end_stop', 'true');
+      }
        console.log(this.endLocation);
       }
     });

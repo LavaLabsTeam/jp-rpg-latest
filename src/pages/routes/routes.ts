@@ -25,6 +25,8 @@ declare var google:any;
   templateUrl: 'routes.html',
 })
 export class RoutesPage {
+  showWalkingIcon: boolean;
+  session: Storage;
   name: string;
   startAddress: any;
   startLocation:any;
@@ -53,6 +55,7 @@ export class RoutesPage {
     this.selectedTime=this.navParams.get("selectedTime");
     this.selectedDate=this.navParams.get("selectedDate");
     this.selectedDateJPApi=this.navParams.get("selectedDateJPApi");
+    this.session = sessionStorage;
   }
 
   ionViewDidLoad() {
@@ -68,6 +71,8 @@ export class RoutesPage {
 
     //console.log(this.startLocation);
     if(this.api=="jpapp"){
+      this.showWalkingIcon = false;
+      debugger
       this.calculateFares().subscribe(res=>{
             this.calculateRoutesDuration();
             this.optimizeRoutes();
@@ -77,6 +82,8 @@ export class RoutesPage {
     }
     else {
       //if google
+      debugger
+      this.showWalkingIcon = true;
       this.calculateRoutesTimeGoogle();
       this.googleDirectionResult=this.navParams.get('googleDirectionResult');
 
@@ -341,7 +348,6 @@ export class RoutesPage {
 
 
   planJourney(){
-    debugger
     var config={
       params:{
         startLan:this.startLocation.lat,
@@ -413,6 +419,7 @@ export class RoutesPage {
               // this.calculateRoutesDuration();
               // this.optimizeRoutes();
               this.api="jpapp";
+              this.showWalkingIcon = false;
               this.calculateFares().subscribe(res=>{
                 this.calculateRoutesDuration();
                 this.optimizeRoutes();
@@ -420,6 +427,7 @@ export class RoutesPage {
               error=false;
             }
             else {
+              this.showWalkingIcon = true;
               error=true;
             }
 
