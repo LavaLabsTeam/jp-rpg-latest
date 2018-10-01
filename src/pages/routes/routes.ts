@@ -131,6 +131,7 @@ export class RoutesPage {
 
       i++;
     }
+    debugger
   }
 
   calculateFares(){
@@ -284,6 +285,7 @@ export class RoutesPage {
 
 
   viewRouteDetailsClicked(route){
+    debugger
     this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});
   }
 
