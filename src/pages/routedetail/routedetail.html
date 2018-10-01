@@ -131,13 +131,16 @@
             <ion-col col-12 text-center class="bg-semi-transparent padding-0">
               <ion-row>
                 <ion-col col-1 class="left-logo">
-                  <div class="icon">
+                  <div *ngIf="!showWalkingIcon" class="icon">
+                    <ion-icon *ngIf="i>0 && i!= route.trips.length-1" name="walk" color="light" class="text-3x"></ion-icon>
+                  </div>
+                  <div *ngIf="showWalkingIcon" class="icon">
                     <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
                   </div>
                 </ion-col>
                 <ion-col col-11 class="block walk text-align-left padding-left-16">
                   <div class="address">
-                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instructionHeading}}</span><br>
+                    <span class="text-white text-2x" *ngIf="showWalkingIcon && api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instructionHeading}}</span><br>
                     <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instruction}}</span>
                     <span class="text-white text-2x" *ngIf="api=='google'">{{trip.instruction}}</span>
                     <span class="text-white text-2x" *ngIf="api=='jpapp' && (i>0 && i<route.trips.length-1)">Change from {{trip.instruction}}</span>

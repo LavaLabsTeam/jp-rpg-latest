@@ -20,6 +20,7 @@ declare var google:any;
 })
 export class RoutedetailPage {
 
+  showWalkingIcon: boolean;
   route:any;
   origins:Array<any>=[];
   destinations:Array<any>=[];
@@ -67,9 +68,11 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       this.destinations.push(new google.maps.LatLng(this.endLocation.lat,this.endLocation.lng));
       //this.destinations.push("3.219405,101.593238");
       this.fetchPolylineWalk(0);
+      this.showWalkingIcon = false;
     }
     else {
       this.googleDirectionResult = this.navParams.get("googleDirectionResult");
+      this.showWalkingIcon = true;
     }
 
 
