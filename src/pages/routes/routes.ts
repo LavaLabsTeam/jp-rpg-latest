@@ -11,6 +11,7 @@ import { ProgressPage } from '../progress/progress';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { UtilProvider } from '../../providers/util/util';
+
 declare var google:any;
 /**
  * Generated class for the RoutesPage page.
@@ -153,49 +154,50 @@ export class RoutesPage {
     };
 
 
+    //Comment the fare calculation code//
 
-    return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
-        let fares = data.json();
-        //console.log(body);
-        console.log(this.routes);
-        if(fares!=null){
-          if(fares.length>0){
-            error=false;
+    // return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
+    //     let fares = data.json();
+    //     //console.log(body);
+    //     console.log(this.routes);
+    //     if(fares!=null){
+    //       if(fares.length>0){
+    //         error=false;
           
-            var fr=[0.7,1,2.5,3.0];
-            var count=0;
-            for(var i=0; i<this.routes.length; i++){
+    //         var fr=[0.7,1,2.5,3.0];
+    //         var count=0;
+    //         for(var i=0; i<this.routes.length; i++){
               
-              var far=0;
+    //           var far=0;
               
               
-              for(var j=0; j<this.routes[i].trips.length; j++){
+    //           for(var j=0; j<this.routes[i].trips.length; j++){
 
-                //console.log(this.routes[i].trips[j]);
-                //console.log("   count="+count);
-                far+=fares[count].fare;
-                count++;
+    //             //console.log(this.routes[i].trips[j]);
+    //             //console.log("   count="+count);
+    //             far+=fares[count].fare;
+    //             count++;
                 
-              }
+    //           }
               
-              this.routes[i]['fare']=far;
+    //           this.routes[i]['fare']=far;
             
-            }
-          }
-          else {
-            {
-              error=true;
-            }
-          }
+    //         }
+    //       }
+    //       else {
+    //         {
+    //           error=true;
+    //         }
+    //       }
 
-        }
-        else {
-          error=true
-        }
+    //     }
+    //     else {
+    //       error=true
+    //     }
 
         return Observable.of(error).delay(2000);
 
-    });
+    // });
   }
 
   getAddressOnChange(place){
@@ -257,7 +259,7 @@ export class RoutesPage {
         })
       }
       else{
-        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
         this.planJourney();
       }
       console.log(this.startLocation);
@@ -318,7 +320,7 @@ export class RoutesPage {
         })
       }
       else{
-        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
         this.planJourney();
       }
       console.log(this.endLocation);
@@ -334,12 +336,12 @@ export class RoutesPage {
 
 
   viewRouteDetailsClicked(route){
-    debugger
     this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});
   }
 
 
   planJourney(){
+    debugger
     var config={
       params:{
         startLan:this.startLocation.lat,
@@ -352,7 +354,9 @@ export class RoutesPage {
         hasStares:"false",
         leastWalking:"false",
         lowestTransit:"false",
-        filter:'FASTEST_ROUTE'
+        filter:'FASTEST_ROUTE',
+        startStopId: this.startLocation.stopId,
+        endStopId : this.endLocation.stopId
       }
 
       // params:{
@@ -392,8 +396,8 @@ export class RoutesPage {
     // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
     // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
 
-    this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
-    this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
+    // this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
+    // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
 
     var error=false;
     this.progress.present();
@@ -412,7 +416,7 @@ export class RoutesPage {
               this.calculateFares().subscribe(res=>{
                 this.calculateRoutesDuration();
                 this.optimizeRoutes();
-            });
+              });
               error=false;
             }
             else {

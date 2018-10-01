@@ -99,17 +99,17 @@
           <h2 class="text-white text-2x">{{route.name}}</h2>
         </ion-col>
 
-        <ion-col col-4 *ngIf="api=='jpapp'" text-center>
+        <ion-col col-7 *ngIf="api=='jpapp'" text-right>
          <h3 class="text-white text-2x">{{route.totalDurationText}} </h3>
         </ion-col>
 
-        <ion-col col-7 *ngIf="api!='jpapp'" text-center>
+        <ion-col col-7 *ngIf="api!='jpapp'" text-right>
          <h3 class="text-white text-2x">{{route.totalDurationText}} </h3>
         </ion-col>
 
-        <ion-col col-3 text-right *ngIf="api=='jpapp'">
+        <!-- <ion-col col-3 text-right *ngIf="api=='jpapp'">
            <h3 class="text-white text-2x">RM {{route.fare}}</h3>
-        </ion-col>
+        </ion-col> -->
 
          <ion-col col-1 text-right>
           <ion-icon *ngIf="showIndex!=x" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon>

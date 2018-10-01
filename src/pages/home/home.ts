@@ -268,7 +268,7 @@ export class HomePage {
         })
       }
       else
-        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
       console.log(this.startLocation);
       }
     });
@@ -291,7 +291,7 @@ export class HomePage {
         })
       }
       else
-        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
        console.log(this.endLocation);
       }
     });
@@ -312,7 +312,7 @@ export class HomePage {
       toast.present();
       return false;
     }
-
+    
     var config={
       params:{
         startLan:this.startLocation.lat,
@@ -325,7 +325,9 @@ export class HomePage {
         hasStares:"false",
         leastWalking:"false",
         lowestTransit:"null",
-        filter:'FASTEST_ROUTE'
+        filter:'FASTEST_ROUTE',
+        startStopId: this.startLocation.stopId,
+        endStopId : this.endLocation.stopId
       }
       // params:{
       //   startLan:"3.2066336",
@@ -364,8 +366,8 @@ export class HomePage {
       config.params['filter']="CHEAPEST_ROUTE";
     }
 
-    this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
-    this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
+    // this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
+    // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
 
     var error=false;
     this.progress.present();
@@ -397,8 +399,7 @@ export class HomePage {
         this.progress.dismiss();
 
     },
-    error => {
-      debugger
+    error => {      
       this.progress.dismiss();
       // let toast = this.toastCtrl.create({
       //   message: 'Error Occured!',
