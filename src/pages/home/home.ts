@@ -231,21 +231,48 @@ export class HomePage {
     }
 
   }
-
+  
+  async getGoogleGeocode(data){
+    return new Promise((resolve, reject) => {
+      var geocoder = new google.maps.Geocoder();
+      var origin=data.place.place_id;
+      geocoder.geocode({ 'placeId': origin }, function (results, status) {
+        console.log(results);
+        if (status == google.maps.GeocoderStatus.OK) {
+            var result = {
+              lat : results[0].geometry.location.lat(),
+              lng : results[0].geometry.location.lng()
+            }
+            resolve(result);
+        } else{
+            alert('Could not find the place');
+            reject("Async Error");
+        }
+      });
+    });
+  }
+  
   setStartLocation(){
     let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
 
     modal.onDidDismiss(data => {
      //console.log(data);
      if(data!=undefined){
-       this.startAddress=data.place.name;
-       this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-       //console.log(this.startLocation);
+      this.startAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.getGoogleGeocode(data).then((result) => {
+          this.startLocation = result;
+        })
+      }
+      else
+        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+      console.log(this.startLocation);
       }
     });
 
     modal.present();
   }
+
 
 
   setEndLocation(){
@@ -254,10 +281,15 @@ export class HomePage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.endAddress=data.place.name;
-       this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()}
-
-       console.log(this.startLocation);
+      this.endAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.getGoogleGeocode(data).then((result) => {          
+          this.endLocation = result;
+        })
+      }
+      else
+        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon};
+       console.log(this.endLocation);
       }
     });
 
@@ -363,6 +395,7 @@ export class HomePage {
 
     },
     error => {
+      debugger
       this.progress.dismiss();
       // let toast = this.toastCtrl.create({
       //   message: 'Error Occured!',

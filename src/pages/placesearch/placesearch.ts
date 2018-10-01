@@ -64,14 +64,44 @@ export class PlacesearchPage {
   // }
 
   onSearchKeyPress(){
-    this.http.get(this.constants.BASE_URL_STOPS_AUTOCOMPLETE+"?query="+this.search).subscribe(data => {
+    var self = this;
+    this.http.get(this.constants.BASE_URL_STOPS_AUTOCOMPLETE2+"?query="+this.search).subscribe(data => {
+      if(data.json().length > 0){
         this.items = data.json();
+      } else {
+        var googlePlaceService = new google.maps.places.AutocompleteService();
+        var request = {
+            input: this.search,
+            componentRestrictions: {country: 'my'},
+        };
+        googlePlaceService.getPlacePredictions(request, function(predictions, status){
+          if (status != google.maps.places.PlacesServiceStatus.OK) {
+              console.log(status);
+              return;
+          } else {
+            var items = [];
+            predictions.forEach(element => {
+              var place = {
+                stopName : element.description,
+                place_id: element.place_id
+              }
+              items.push(place);
+            });
+            self.items = items;
+          }
+        });
+      }
         //console.log(body);
     });
   }
 
   goBackClicked(){
     this.viewCtrl.dismiss();
+  }
+
+
+  onItemClick(place){
+    this.viewCtrl.dismiss({place});
   }
 
 

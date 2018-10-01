@@ -25,6 +25,7 @@ export class Constants {
   //public BASE_URL_ROUTE_SEARCH_ETA_DATA:string = "http://demo2974228.mockable.io/etabylocation";
   public BASE_URL_ROUTE_ROUTE_STOPS:string = this.BASE_URL_API+"/open/api/routes-stops";
   public BASE_URL_STOPS_AUTOCOMPLETE:string = this.BASE_URL_API+"/open/api/search-stops";
+  public BASE_URL_STOPS_AUTOCOMPLETE2:string = this.BASE_URL_API+"/open/api/gtfs-search-stops";
   public BASE_URL_STATIC_FARE:string = this.BASE_URL_API+"/open/api/simple-static-fares";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/on72z";
   //public BASE_URL_NEAREST_STOPS:string = "https://api.myjson.com/bins/k2lxf";
