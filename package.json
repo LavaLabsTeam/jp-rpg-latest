@@ -26,6 +26,7 @@
         "@ionic-native/splash-screen": "3.7.0",
         "@ionic-native/status-bar": "3.7.0",
         "@ionic/storage": "2.0.1",
+        "cordova-android": "7.0.0",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-device": "^1.1.4",
@@ -60,6 +61,8 @@
             "cordova-plugin-network-information": {},
             "cordova-plugin-geolocation": {}
         },
-        "platforms": []
+        "platforms": [
+            "android"
+        ]
     }
 }
