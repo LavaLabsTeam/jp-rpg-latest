@@ -258,11 +258,13 @@ export class RoutesPage {
       if(data.place.place_id){
         this.utilService.getGoogleGeocode(data).then((result) => {
           this.startLocation = result;
+          sessionStorage.setItem('is_rpg_start_stop', 'false');
           this.planJourney();
         })
       }
       else{
         this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        sessionStorage.setItem('is_rpg_start_stop', 'true');
         this.planJourney();
       }
       console.log(this.startLocation);
@@ -319,11 +321,13 @@ export class RoutesPage {
       if(data.place.place_id){
         this.utilService.getGoogleGeocode(data).then((result) => {          
           this.endLocation = result;
+          sessionStorage.setItem('is_rpg_end_stop', 'false');
           this.planJourney();
         })
       }
       else{
         this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        sessionStorage.setItem('is_rpg_end_stop', 'true');
         this.planJourney();
       }
       console.log(this.endLocation);
@@ -344,6 +348,8 @@ export class RoutesPage {
 
 
   planJourney(){
+    this.showStartWalkingIcon = sessionStorage.getItem('is_rpg_start_stop');
+    this.showEndWalkingIcon = sessionStorage.getItem('is_rpg_end_stop');
     var config={
       params:{
         startLan:this.startLocation.lat,
@@ -400,11 +406,9 @@ export class RoutesPage {
 
     // this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
     // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
-
+    debugger
     var error=false;
     this.progress.present();
-    this.showStartWalkingIcon = false;
-    this.showEndWalkingIcon = false;
     this.http.get(this.constants.BASE_URL_ROUTE_SEARCH,config).subscribe(data => {
         let json = data.json();
         //console.log(body);
