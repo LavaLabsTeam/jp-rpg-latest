@@ -49513,6 +49513,11 @@ page-routedetail .waypoint .point {
   left: -4px;
 }
 
+page-routedetail .address-padding {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 page-routedetail .left-logo {
   display: -webkit-flex;
   display: -ms-flexbox;
