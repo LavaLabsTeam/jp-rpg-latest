@@ -131,18 +131,25 @@
             <ion-col col-12 text-center class="bg-semi-transparent padding-0">
               <ion-row>
                 <ion-col col-1 class="left-logo">
-                  <div *ngIf="!showWalkingIcon" class="icon">
+                  <div *ngIf="showStartWalkingIcon == 'true' && showEndWalkingIcon == 'false'" class="icon">
+                    <ion-icon *ngIf="i>0" name="walk" color="light" class="text-3x"></ion-icon>
+                  </div>
+                  <div *ngIf="showEndWalkingIcon == 'true' && showStartWalkingIcon == 'false'" class="icon">
+                    <ion-icon *ngIf="i!= route.trips.length-1" name="walk" color="light" class="text-3x"></ion-icon>
+                  </div>
+                  <div *ngIf="showStartWalkingIcon == 'true' && showEndWalkingIcon == 'true'" class="icon">
                     <ion-icon *ngIf="i>0 && i!= route.trips.length-1" name="walk" color="light" class="text-3x"></ion-icon>
                   </div>
-                  <div *ngIf="showWalkingIcon" class="icon">
+                  <div *ngIf="showStartWalkingIcon == 'false' && showEndWalkingIcon == 'false'" class="icon">
                     <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
                   </div>
                 </ion-col>
                 <ion-col col-11 class="block walk text-align-left padding-left-16">
                   <div class="address">
-                    <span class="text-white text-2x" *ngIf="showStartWalkingIcon || showEndWalkingIcon && api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instructionHeading}}</span><br>
-                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instruction}}</span>
-                    <span class="text-white text-2x" *ngIf="api=='google'">{{trip.instruction}}</span>
+                    <span class="text-white text-2x" *ngIf="(showStartWalkingIcon=='true' && showEndWalkingIcon=='false') && i>0">{{trip.instructionHeading}}</span><br>
+                    <span class="text-white text-2x" *ngIf="(showEndWalkingIcon=='true' && showStartWalkingIcon=='false') && i!= route.trips.length-1">{{trip.instructionHeading}}</span><br>
+                    <span class="text-white text-2x" *ngIf="i==0 || i==route.trips.length-1">{{trip.origin}}</span><br>
+                    <span class="text-white text-2x">{{trip.instruction}}</span>
                     <span class="text-white text-2x" *ngIf="api=='jpapp' && (i>0 && i<route.trips.length-1)">Change from {{trip.instruction}}</span>
                   </div>
 
@@ -154,7 +161,6 @@
                     <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
                     <span class="eta text-2x text-white">About {{trip.totalDurationText}}</span>
                   </div>
-
                   <!-- <div class="alert">
                     <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
                   </div> -->

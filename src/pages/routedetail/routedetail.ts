@@ -52,6 +52,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RoutedetailPage');
+    debugger
     if(this.api=="jpapp"){
       this.origins.push(new google.maps.LatLng(this.startLocation.lat,this.startLocation.lng));
       //this.origins.push("3.218561,101.564353");
@@ -160,8 +161,10 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       if(trip.type=='WALKING'){
         this.route.trips[i]['totalDurationText']=this.placesETARows[j];
         this.route.trips[i]['polyline']=this.walkPolyLines[j];
-        if(j==0 || j==this.route.trips.length-1)
+        if(j==0 || j==this.route.trips.length-1){
+          this.route.trips[i]['origin']=this.route.trips[i]['instruction'];
           this.route.trips[i]['instruction']=this.placeNames[j];
+        }
         j++;
       }
 
