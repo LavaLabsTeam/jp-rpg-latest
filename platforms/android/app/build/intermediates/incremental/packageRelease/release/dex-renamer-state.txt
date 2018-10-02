@@ -1,4 +1,0 @@
-#Mon Oct 01 23:29:33 MYT 2018
-base.0=/Users/lavalabs/Desktop/GIT/jp-rpg-latest/platforms/android/app/build/intermediates/transforms/dex/release/0
-renamed.0=classes.dex
-file.0=/Users/lavalabs/Desktop/GIT/jp-rpg-latest/platforms/android/app/build/intermediates/transforms/dex/release/0/classes.dex
