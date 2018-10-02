@@ -99,17 +99,17 @@
           <h2 class="text-white text-2x">{{route.name}}</h2>
         </ion-col>
 
-        <ion-col col-4 *ngIf="api=='jpapp'" text-center>
+        <ion-col col-7 *ngIf="api=='jpapp'" text-right>
          <h3 class="text-white text-2x">{{route.totalDurationText}} </h3>
         </ion-col>
 
-        <ion-col col-7 *ngIf="api!='jpapp'" text-center>
+        <ion-col col-7 *ngIf="api!='jpapp'" text-right>
          <h3 class="text-white text-2x">{{route.totalDurationText}} </h3>
         </ion-col>
 
-        <ion-col col-3 text-right *ngIf="api=='jpapp'">
+        <!-- <ion-col col-3 text-right *ngIf="api=='jpapp'">
            <h3 class="text-white text-2x">RM {{route.fare}}</h3>
-        </ion-col>
+        </ion-col> -->
 
          <ion-col col-1 text-right>
           <ion-icon *ngIf="showIndex!=x" name="ios-arrow-forward" color="light" class="text-2x"></ion-icon>
@@ -136,6 +136,40 @@
             <ion-row>
               <ion-col col-12 text-center class="block walk">
                   <div class="inner-block">
+                    <div *ngIf="showStartWalkingIcon == 'true' && showEndWalkingIcon == 'false'">
+                      <div class="logo align-center">
+                        <div class="icon" *ngIf="api == 'google' || (showStartWalkingIcon == 'true' && i > 0)">
+                          <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
+                        </div>
+                      </div>
+                      <div class="address">
+                        <h3 class="text-white" *ngIf="(api=='jpapp' && (showStartWalkingIcon == 'true' && i > 0))">{{trip.instructionHeading}}</h3>
+                        <h5 class="text-white">{{trip.instruction}}</h5>
+                      </div>
+                    </div>
+                    <div *ngIf="showStartWalkingIcon == 'false' && showEndWalkingIcon == 'true'">
+                      <div class="logo align-center">
+                        <div class="icon" *ngIf="api == 'google' || (showEndWalkingIcon == 'true' && i != route.trips.length-1)">
+                          <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
+                        </div>
+                      </div>
+                      <div class="address">
+                        <h3 class="text-white" *ngIf="(api=='jpapp' && (showEndWalkingIcon == 'true' && i != route.trips.length-1))">{{trip.instructionHeading}}</h3>
+                        <h5 class="text-white">{{trip.instruction}}</h5>
+                      </div>
+                    </div>
+                    <div *ngIf="showStartWalkingIcon == 'true' && showEndWalkingIcon == 'true'">
+                      <div class="logo align-center">
+                        <div class="icon" *ngIf="api == 'google' || (i > 0) && (i != route.trips.length-1)">
+                          <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
+                        </div>
+                      </div>
+                      <div class="address">
+                        <h3 class="text-white" *ngIf="(api=='jpapp' && (i > 0) && (i != route.trips.length-1))">{{trip.instructionHeading}}</h3>
+                        <h5 class="text-white">{{trip.instruction}}</h5>
+                      </div>
+                    </div>
+                    <div *ngIf="showStartWalkingIcon == 'false' && showEndWalkingIcon == 'false'">
                       <div class="logo align-center">
                         <div class="icon">
                           <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
@@ -145,7 +179,7 @@
                         <h3 class="text-white" *ngIf="api=='jpapp'">{{trip.instructionHeading}}</h3>
                         <h5 class="text-white">{{trip.instruction}}</h5>
                       </div>
-
+                    </div>
                   </div>
               </ion-col>
             </ion-row>
@@ -189,11 +223,11 @@
                 <!-- <h3 class="text-white" *ngIf="api=='jpapp'"><ion-icon name="walk" color="light" class="text-3x"></ion-icon>&nbsp;{{route.totalWalkDurationValue}}min approx.</h3> -->
               </div>
               <div class="time" *ngIf="api=='jpapp'">
-                <span class="text-white size-1x">{{tConvert((route.trips[1]).stops[0].arrivalTime)}}-{{tConvert((route.trips[route.trips.length-2]).stops[route.trips[route.trips.length-2].stops.length-1].departureTime)}}</span>
+                <span class="text-white size-1x">{{tConvert((route?.trips[1])?.stops[0]?.arrivalTime)}}-{{tConvert((route?.trips[route.trips.length-2])?.stops[route?.trips[route.trips.length-2]?.stops?.length-1].departureTime)}}</span>
               </div>
               
               <div class="time" *ngIf="api=='google'">
-                <span class="text-white size-1x">{{route.departureTime.value | date:'shortTime'}}-{{route.arrivalTime.value | date:'shortTime'}}</span>
+                <span class="text-white size-1x">{{route?.departureTime?.value | date:'shortTime'}}-{{route?.arrivalTime?.value | date:'shortTime'}}</span>
               </div>
 
             </div>

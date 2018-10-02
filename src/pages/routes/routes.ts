@@ -10,6 +10,8 @@ import { DatepickerPage } from '../datepicker/datepicker';
 import { ProgressPage } from '../progress/progress';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { UtilProvider } from '../../providers/util/util';
+
 declare var google:any;
 /**
  * Generated class for the RoutesPage page.
@@ -23,6 +25,9 @@ declare var google:any;
   templateUrl: 'routes.html',
 })
 export class RoutesPage {
+  showStartWalkingIcon: any;
+  showEndWalkingIcon: any;
+  session: Storage;
   name: string;
   startAddress: any;
   startLocation:any;
@@ -44,13 +49,14 @@ export class RoutesPage {
   departureDate:Date;
   showIndex:any;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public datePipe:DatePipe, public constants:Constants, public http:Http, private toastCtrl: ToastController, private utilService: UtilProvider) {
     this.accessOptions = this.navParams.get("accessOptions");
     this.showOptions = this.navParams.get("showOptions");
     this.api=this.navParams.get("api");
     this.selectedTime=this.navParams.get("selectedTime");
     this.selectedDate=this.navParams.get("selectedDate");
     this.selectedDateJPApi=this.navParams.get("selectedDateJPApi");
+    this.session = sessionStorage;
   }
 
   ionViewDidLoad() {
@@ -63,8 +69,8 @@ export class RoutesPage {
     this.endAddress = this.navParams.get("endAddress");
     this.startLocation = this.navParams.get("startLocation");
     this.endLocation = this.navParams.get("endLocation");
-
-    //console.log(this.startLocation);
+    this.showStartWalkingIcon = sessionStorage.getItem('is_rpg_start_stop');
+    this.showEndWalkingIcon = sessionStorage.getItem('is_rpg_end_stop');
     if(this.api=="jpapp"){
       this.calculateFares().subscribe(res=>{
             this.calculateRoutesDuration();
@@ -77,7 +83,6 @@ export class RoutesPage {
       //if google
       this.calculateRoutesTimeGoogle();
       this.googleDirectionResult=this.navParams.get('googleDirectionResult');
-
     }
 
 
@@ -152,49 +157,50 @@ export class RoutesPage {
     };
 
 
+    //Comment the fare calculation code//
 
-    return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
-        let fares = data.json();
-        //console.log(body);
-        console.log(this.routes);
-        if(fares!=null){
-          if(fares.length>0){
-            error=false;
+    // return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
+    //     let fares = data.json();
+    //     //console.log(body);
+    //     console.log(this.routes);
+    //     if(fares!=null){
+    //       if(fares.length>0){
+    //         error=false;
           
-            var fr=[0.7,1,2.5,3.0];
-            var count=0;
-            for(var i=0; i<this.routes.length; i++){
+    //         var fr=[0.7,1,2.5,3.0];
+    //         var count=0;
+    //         for(var i=0; i<this.routes.length; i++){
               
-              var far=0;
+    //           var far=0;
               
               
-              for(var j=0; j<this.routes[i].trips.length; j++){
+    //           for(var j=0; j<this.routes[i].trips.length; j++){
 
-                //console.log(this.routes[i].trips[j]);
-                //console.log("   count="+count);
-                far+=fares[count].fare;
-                count++;
+    //             //console.log(this.routes[i].trips[j]);
+    //             //console.log("   count="+count);
+    //             far+=fares[count].fare;
+    //             count++;
                 
-              }
+    //           }
               
-              this.routes[i]['fare']=far;
+    //           this.routes[i]['fare']=far;
             
-            }
-          }
-          else {
-            {
-              error=true;
-            }
-          }
+    //         }
+    //       }
+    //       else {
+    //         {
+    //           error=true;
+    //         }
+    //       }
 
-        }
-        else {
-          error=true
-        }
+    //     }
+    //     else {
+    //       error=true
+    //     }
 
         return Observable.of(error).delay(2000);
 
-    });
+    // });
   }
 
   getAddressOnChange(place){
@@ -242,36 +248,89 @@ export class RoutesPage {
       return obj;
   }
 
-
   setStartLocation(){
-    let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+    let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
 
     modal.onDidDismiss(data => {
-     console.log(data);
+     //console.log(data);
      if(data!=undefined){
-       this.startAddress=data.place.name;
-       this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-
-       console.log(this.startLocation);
-       this.planJourney();
-       //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      this.startAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.utilService.getGoogleGeocode(data).then((result) => {
+          this.startLocation = result;
+          sessionStorage.setItem('is_rpg_start_stop', 'false');
+          this.planJourney();
+        })
       }
+      else{
+        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        sessionStorage.setItem('is_rpg_start_stop', 'true');
+        this.planJourney();
+      }
+      console.log(this.startLocation);
+      }
+
     });
 
     modal.present();
   }
 
 
+  // setStartLocation(){
+  //   let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+
+  //   modal.onDidDismiss(data => {
+  //    console.log(data);
+  //    if(data!=undefined){
+  //      this.startAddress=data.place.name;
+  //      this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
+
+  //      console.log(this.startLocation);
+  //      this.planJourney();
+  //      //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+  //     }
+  //   });
+
+  //   modal.present();
+  // }
+
+
+  // setEndLocation(){
+  //   let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+
+  //   modal.onDidDismiss(data => {
+  //    console.log(data);
+  //    if(data!=undefined){
+  //      this.endAddress=data.place.name;
+  //      this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
+  //      this.planJourney();
+  //      //console.log(this.startLocation);
+  //     }
+  //   });
+
+  //   modal.present();
+  // }
+
   setEndLocation(){
-    let modal = this.modalCtrl.create(PlacesearchPage,{name:this.name});
+    let modal = this.modalCtrl.create(PlacesearchPage,{name:"end"});
 
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.endAddress=data.place.name;
-       this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-       this.planJourney();
-       //console.log(this.startLocation);
+      this.endAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.utilService.getGoogleGeocode(data).then((result) => {          
+          this.endLocation = result;
+          sessionStorage.setItem('is_rpg_end_stop', 'false');
+          this.planJourney();
+        })
+      }
+      else{
+        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        sessionStorage.setItem('is_rpg_end_stop', 'true');
+        this.planJourney();
+      }
+      console.log(this.endLocation);
       }
     });
 
@@ -289,6 +348,8 @@ export class RoutesPage {
 
 
   planJourney(){
+    this.showStartWalkingIcon = sessionStorage.getItem('is_rpg_start_stop');
+    this.showEndWalkingIcon = sessionStorage.getItem('is_rpg_end_stop');
     var config={
       params:{
         startLan:this.startLocation.lat,
@@ -301,7 +362,9 @@ export class RoutesPage {
         hasStares:"false",
         leastWalking:"false",
         lowestTransit:"false",
-        filter:'FASTEST_ROUTE'
+        filter:'FASTEST_ROUTE',
+        startStopId: this.startLocation.stopId,
+        endStopId : this.endLocation.stopId
       }
 
       // params:{
@@ -341,9 +404,8 @@ export class RoutesPage {
     // this.startAddress="MRT & KTM Sungai Buloh Drop Off";
     // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
 
-    this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
-    this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
-
+    // this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
+    // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};debugger
     var error=false;
     this.progress.present();
     this.http.get(this.constants.BASE_URL_ROUTE_SEARCH,config).subscribe(data => {
@@ -361,7 +423,7 @@ export class RoutesPage {
               this.calculateFares().subscribe(res=>{
                 this.calculateRoutesDuration();
                 this.optimizeRoutes();
-            });
+              });
               error=false;
             }
             else {
@@ -742,19 +804,21 @@ export class RoutesPage {
 
   tConvert (time) {
     // Check correct time format and split into components
-    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+    if(time){
+      time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
-    if (time.length > 1) { // If time format correct
-      time = time.slice (1);  // Remove full string match value
-      //console.log(time);
-      time[3] = " ";
-      time[4] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
-      //time = time.splice(5,1);
-      //time.pop();
-      
+      if (time.length > 1) { // If time format correct
+        time = time.slice (1);  // Remove full string match value
+        //console.log(time);
+        time[3] = " ";
+        time[4] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+        //time = time.splice(5,1);
+        //time.pop();
+        
+      }
+      return time.join (''); // return adjusted time or original string
     }
-    return time.join (''); // return adjusted time or original string
   }
 
 

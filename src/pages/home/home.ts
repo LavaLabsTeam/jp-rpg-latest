@@ -21,6 +21,7 @@ import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { RoutesautocompletePage } from "../routesautocomplete/routesautocomplete";
+import { UtilProvider } from '../../providers/util/util';
 
 declare var google:any;
 
@@ -74,6 +75,7 @@ export class HomePage {
     , public plt: Platform
     , public events: Events
     , private network: Network
+    , private utilService : UtilProvider
   ) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     //console.log(constants);
@@ -231,6 +233,27 @@ export class HomePage {
     }
 
   }
+  
+  // async getGoogleGeocode(data){
+  //   return new Promise((resolve, reject) => {
+  //     var geocoder = new google.maps.Geocoder();
+  //     var origin=data.place.place_id;
+  //     geocoder.geocode({ 'placeId': origin }, function (results, status) {
+  //       console.log(results);
+  //       if (status == google.maps.GeocoderStatus.OK) {
+  //           var result = {
+  //             lat : results[0].geometry.location.lat(),
+  //             lng : results[0].geometry.location.lng()
+  //           }
+  //           resolve(result);
+  //       } else{
+  //           alert('Could not find the place');
+  //           reject("Async Error");
+  //       }
+  //     });
+  //   });
+  // }
+  
 
   setStartLocation(){
     let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
@@ -238,14 +261,24 @@ export class HomePage {
     modal.onDidDismiss(data => {
      //console.log(data);
      if(data!=undefined){
-       this.startAddress=data.place.name;
-       this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-       //console.log(this.startLocation);
+      this.startAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.utilService.getGoogleGeocode(data).then((result) => {
+          this.startLocation = result;
+          sessionStorage.setItem('is_rpg_start_stop', 'false');
+        })
+      }
+      else{
+        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        sessionStorage.setItem('is_rpg_start_stop', 'true');
+      }
+      console.log(this.startLocation);
       }
     });
 
     modal.present();
   }
+
 
 
   setEndLocation(){
@@ -254,10 +287,18 @@ export class HomePage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.endAddress=data.place.name;
-       this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()}
-
-       console.log(this.startLocation);
+      this.endAddress=data.place.stopName;
+      if(data.place.place_id){
+        this.utilService.getGoogleGeocode(data).then((result) => {          
+          this.endLocation = result;
+          sessionStorage.setItem('is_rpg_end_stop', 'false');
+        })
+      }
+      else{
+        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+        sessionStorage.setItem('is_rpg_end_stop', 'true');
+      }
+       console.log(this.endLocation);
       }
     });
 
@@ -277,7 +318,7 @@ export class HomePage {
       toast.present();
       return false;
     }
-
+    
     var config={
       params:{
         startLan:this.startLocation.lat,
@@ -290,7 +331,9 @@ export class HomePage {
         hasStares:"false",
         leastWalking:"false",
         lowestTransit:"null",
-        filter:'FASTEST_ROUTE'
+        filter:'FASTEST_ROUTE',
+        startStopId: this.startLocation.stopId,
+        endStopId : this.endLocation.stopId
       }
       // params:{
       //   startLan:"3.2066336",
@@ -329,8 +372,8 @@ export class HomePage {
       config.params['filter']="CHEAPEST_ROUTE";
     }
 
-    this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
-    this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
+    // this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
+    // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
 
     var error=false;
     this.progress.present();
@@ -362,7 +405,7 @@ export class HomePage {
         this.progress.dismiss();
 
     },
-    error => {
+    error => {      
       this.progress.dismiss();
       // let toast = this.toastCtrl.create({
       //   message: 'Error Occured!',
