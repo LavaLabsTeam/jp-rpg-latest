@@ -71,9 +71,7 @@ export class RoutesPage {
     this.endLocation = this.navParams.get("endLocation");
     this.showStartWalkingIcon = sessionStorage.getItem('is_rpg_start_stop');
     this.showEndWalkingIcon = sessionStorage.getItem('is_rpg_end_stop');
-    //console.log(this.startLocation);
     if(this.api=="jpapp"){
-      debugger
       this.calculateFares().subscribe(res=>{
             this.calculateRoutesDuration();
             this.optimizeRoutes();
@@ -83,10 +81,8 @@ export class RoutesPage {
     }
     else {
       //if google
-      debugger
       this.calculateRoutesTimeGoogle();
       this.googleDirectionResult=this.navParams.get('googleDirectionResult');
-
     }
 
 
