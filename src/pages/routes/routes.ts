@@ -405,8 +405,7 @@ export class RoutesPage {
     // this.endAddress="Kuarters Integrasi Hospital Sungai Buloh";
 
     // this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
-    // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
-    debugger
+    // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};debugger
     var error=false;
     this.progress.present();
     this.http.get(this.constants.BASE_URL_ROUTE_SEARCH,config).subscribe(data => {
@@ -805,19 +804,21 @@ export class RoutesPage {
 
   tConvert (time) {
     // Check correct time format and split into components
-    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+    if(time){
+      time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
-    if (time.length > 1) { // If time format correct
-      time = time.slice (1);  // Remove full string match value
-      //console.log(time);
-      time[3] = " ";
-      time[4] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
-      //time = time.splice(5,1);
-      //time.pop();
-      
+      if (time.length > 1) { // If time format correct
+        time = time.slice (1);  // Remove full string match value
+        //console.log(time);
+        time[3] = " ";
+        time[4] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+        //time = time.splice(5,1);
+        //time.pop();
+        
+      }
+      return time.join (''); // return adjusted time or original string
     }
-    return time.join (''); // return adjusted time or original string
   }
 
 
