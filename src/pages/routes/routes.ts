@@ -25,7 +25,8 @@ declare var google:any;
   templateUrl: 'routes.html',
 })
 export class RoutesPage {
-  showWalkingIcon: boolean;
+  showStartWalkingIcon: any;
+  showEndWalkingIcon: any;
   session: Storage;
   name: string;
   startAddress: any;
@@ -68,10 +69,10 @@ export class RoutesPage {
     this.endAddress = this.navParams.get("endAddress");
     this.startLocation = this.navParams.get("startLocation");
     this.endLocation = this.navParams.get("endLocation");
-
+    this.showStartWalkingIcon = sessionStorage.getItem('is_rpg_start_stop');
+    this.showEndWalkingIcon = sessionStorage.getItem('is_rpg_end_stop');
     //console.log(this.startLocation);
     if(this.api=="jpapp"){
-      this.showWalkingIcon = false;
       debugger
       this.calculateFares().subscribe(res=>{
             this.calculateRoutesDuration();
@@ -83,7 +84,6 @@ export class RoutesPage {
     else {
       //if google
       debugger
-      this.showWalkingIcon = true;
       this.calculateRoutesTimeGoogle();
       this.googleDirectionResult=this.navParams.get('googleDirectionResult');
 
@@ -407,6 +407,8 @@ export class RoutesPage {
 
     var error=false;
     this.progress.present();
+    this.showStartWalkingIcon = false;
+    this.showEndWalkingIcon = false;
     this.http.get(this.constants.BASE_URL_ROUTE_SEARCH,config).subscribe(data => {
         let json = data.json();
         //console.log(body);
@@ -419,7 +421,6 @@ export class RoutesPage {
               // this.calculateRoutesDuration();
               // this.optimizeRoutes();
               this.api="jpapp";
-              this.showWalkingIcon = false;
               this.calculateFares().subscribe(res=>{
                 this.calculateRoutesDuration();
                 this.optimizeRoutes();
@@ -427,7 +428,6 @@ export class RoutesPage {
               error=false;
             }
             else {
-              this.showWalkingIcon = true;
               error=true;
             }
 
