@@ -13,10 +13,13 @@ declare var google:any;
   templateUrl: 'map.html',
 })
 export class MapPage {
+  travelType: any;
   @ViewChild('mymap') mapElement:ElementRef;
   map: any;
   mapData:any;
   googleDirectionResult:any;
+  colorCounter : number = 0;
+  transitColors : any = ['#FF0000', '#FF00E0'];
 
   //google:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -146,6 +149,7 @@ export class MapPage {
         for(let poly of trip.polyline){
           locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
         }
+        this.travelType = trip.type;
       }
       this.renderRouteBus(locations);
     }
@@ -226,10 +230,19 @@ export class MapPage {
   }
 
   renderRouteBus(flightPlanCoordinates:any){
+    if(this.travelType == 'TRANSIT' && flightPlanCoordinates.length > 0){
+      if(this.colorCounter == 0){
+        this.colorCounter = 1;
+        var selectedColor = this.transitColors[this.colorCounter];
+      } else {
+        this.colorCounter = 0;
+        var selectedColor = this.transitColors[this.colorCounter];
+      }
+    }
     var flightPath = new google.maps.Polyline({
        path: flightPlanCoordinates,
        geodesic: true,
-       strokeColor: '#FF0000',
+       strokeColor: selectedColor,
        strokeOpacity: 1.0,
        strokeWeight: 2
      });

@@ -52,7 +52,6 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RoutedetailPage');
-    debugger
     if(this.api=="jpapp"){
       this.origins.push(new google.maps.LatLng(this.startLocation.lat,this.startLocation.lng));
       //this.origins.push("3.218561,101.564353");
