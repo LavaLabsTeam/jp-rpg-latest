@@ -17,7 +17,7 @@ dist/
 node_modules/
 platforms/
 plugins/**
-#www/**
+www/**
 tmp/
 temp/
 $RECYCLE.BIN/
