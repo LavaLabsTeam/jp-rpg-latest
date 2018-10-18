@@ -192,9 +192,9 @@ export class HomePage {
        //console.log('sssssssss');
        // resp.coords.latitude
        // resp.coords.longitude
-       this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+      //  this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
        this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-       this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
+      //  this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
        this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
        //console.log(resp);
       }).catch((error) => {
