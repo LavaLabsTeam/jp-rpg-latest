@@ -547,13 +547,23 @@ export class RoutesPage {
           //   })
           // }
 
-          tempTrips.push({
-            instruction:lastTrip.routeLongName+" to "+trip.routeLongName,
-            //instruction:trip.stops[0].stopName,
-            instructionHeading:"Change from",
-            type:'WALKING',
-            stops:[]
-          });
+          if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && !route.trips[t-1].ferry){
+            tempTrips.push({
+              instruction:lastTrip.routeLongName+" to "+trip.routeLongName,
+              //instruction:trip.stops[0].stopName,
+              instructionHeading:"Change from",
+              type:'WALKING',
+              stops:[]
+            });
+          } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && route.trips[t-1].ferry){
+            tempTrips.push({
+              instruction:trip.routeLongName,
+              //instruction:trip.stops[0].stopName,
+              instructionHeading:"Take Ferry to",
+              type:'FERRY',
+              stops:[]
+            });
+          } 
 
         }
 
@@ -585,6 +595,7 @@ export class RoutesPage {
 
       r++;
     }
+    debugger
 
     this.routes=tempRoutes;
   }

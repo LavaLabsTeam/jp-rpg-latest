@@ -65,31 +65,41 @@ export class PlacesearchPage {
 
   onSearchKeyPress(){
     var self = this;
-    this.http.get(this.constants.BASE_URL_STOPS_AUTOCOMPLETE2+"?query="+this.search).subscribe(data => {
+    this.http.get(this.constants.BASE_URL_STOPS_AUTOCOMPLETE3+"?query="+this.search).subscribe(data => {
       if(data.json().length > 0){
         this.items = data.json();
       } else {
-        var googlePlaceService = new google.maps.places.AutocompleteService();
-        var request = {
-            input: this.search,
-            componentRestrictions: {country: 'my'},
-        };
-        googlePlaceService.getPlacePredictions(request, function(predictions, status){
-          if (status != google.maps.places.PlacesServiceStatus.OK) {
-              console.log(status);
-              return;
-          } else {
-            var items = [];
-            predictions.forEach(element => {
-              var place = {
-                stopName : element.description,
-                place_id: element.place_id
-              }
-              items.push(place);
-            });
-            self.items = items;
-          }
-        });
+        var items = [];
+        this.items = [];
+        var place = {
+          poiName : 'No results were found',
+          place_id: 'No results were found',
+          disabled : true
+        }
+        items.push(place);
+        this.items = items;
+
+        // var googlePlaceService = new google.maps.places.AutocompleteService();
+        // var request = {
+        //     input: this.search,
+        //     componentRestrictions: {country: 'my'},
+        // };
+        // googlePlaceService.getPlacePredictions(request, function(predictions, status){
+        //   if (status != google.maps.places.PlacesServiceStatus.OK) {
+        //       console.log(status);
+        //       return;
+        //   } else {
+        //     var items = [];
+        //     predictions.forEach(element => {
+        //       var place = {
+        //         stopName : element.description,
+        //         place_id: element.place_id
+        //       }
+        //       items.push(place);
+        //     });
+        //     self.items = items;
+        //   }
+        // });
       }
         //console.log(body);
     });
@@ -101,7 +111,8 @@ export class PlacesearchPage {
 
 
   onItemClick(place){
-    this.viewCtrl.dismiss({place});
+    if(!place.disabled)
+      this.viewCtrl.dismiss({place});
   }
 
 

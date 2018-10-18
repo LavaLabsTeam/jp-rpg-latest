@@ -261,17 +261,17 @@ export class HomePage {
     modal.onDidDismiss(data => {
      //console.log(data);
      if(data!=undefined){
-      this.startAddress=data.place.stopName;
-      if(data.place.place_id){
-        this.utilService.getGoogleGeocode(data).then((result) => {
-          this.startLocation = result;
-          sessionStorage.setItem('is_rpg_start_stop', 'false');
-        })
-      }
-      else{
-        this.startLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+      this.startAddress=data.place.poiName;
+      // if(data.place.place_id){
+      //   this.utilService.getGoogleGeocode(data).then((result) => {
+      //     this.startLocation = result;
+      //     sessionStorage.setItem('is_rpg_start_stop', 'false');
+      //   })
+      // }
+      // else{
+        this.startLocation={lat:data.place.poiLat,lng:data.place.poiLon,stopId:data.place.id};
         sessionStorage.setItem('is_rpg_start_stop', 'true');
-      }
+      // }
       console.log(this.startLocation);
       }
     });
@@ -287,17 +287,17 @@ export class HomePage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-      this.endAddress=data.place.stopName;
-      if(data.place.place_id){
-        this.utilService.getGoogleGeocode(data).then((result) => {          
-          this.endLocation = result;
-          sessionStorage.setItem('is_rpg_end_stop', 'false');
-        })
-      }
-      else{
-        this.endLocation={lat:data.place.stopLat,lng:data.place.stopLon,stopId:data.place.stopId};
+      this.endAddress=data.place.poiName;
+      // if(data.place.place_id){
+      //   this.utilService.getGoogleGeocode(data).then((result) => {          
+      //     this.endLocation = result;
+      //     sessionStorage.setItem('is_rpg_end_stop', 'false');
+      //   })
+      // }
+      // else{
+        this.endLocation={lat:data.place.poiLat,lng:data.place.poiLon,stopId:data.place.id};
         sessionStorage.setItem('is_rpg_end_stop', 'true');
-      }
+      // }
        console.log(this.endLocation);
       }
     });
