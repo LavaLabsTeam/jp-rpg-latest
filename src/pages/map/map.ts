@@ -150,9 +150,16 @@ export class MapPage {
           locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
         }
         this.travelType = trip.type;
+        this.renderRouteBus(locations);
+      } else {
+        if(trip.polyline){
+          for(let poly of trip.polyline){
+            locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
+          }
+          this.travelType = trip.type;
+          this.renderRouteWalk(locations);
+        }
       }
-      debugger
-      this.renderRouteBus(locations);
     }
     //console.log(walkPolyLines);
 
@@ -227,21 +234,23 @@ export class MapPage {
 
     // this.renderRouteWalk(walkPolyLines);
 
-    var walkingLocations:Array<string>=[];
-    if(walkPolyLines.length > 0){
-      for(let poly of walkPolyLines){
-        walkingLocations.push(new google.maps.LatLng(parseFloat(poly.lat),parseFloat(poly.lng)));
-      }
-    }
-    var flightPath = new google.maps.Polyline({
-       path: walkingLocations,
-       geodesic: true,
-       strokeColor: '#0000FF',
-       strokeOpacity: 1.0,
-       strokeWeight: 2
-     });
 
-     flightPath.setMap(this.map);
+    //Working Code
+    // var walkingLocations:Array<string>=[];
+    // if(walkPolyLines.length > 0){
+    //   for(let poly of walkPolyLines){
+    //     walkingLocations.push(new google.maps.LatLng(parseFloat(poly.lat),parseFloat(poly.lng)));
+    //   }
+    // }
+    // var eflightPath = new google.maps.Polyline({
+    //    path: walkingLocations,
+    //    geodesic: true,
+    //    strokeColor: '#0000FF',
+    //    strokeOpacity: 1.0,
+    //    strokeWeight: 2
+    //  });
+
+    //  eflightPath.setMap(this.map);
     
   }
 
@@ -265,21 +274,27 @@ export class MapPage {
 
      flightPath.setMap(this.map);
 
+  }
 
+  renderRouteWalk(polylines:any){
+    var flightPath = new google.maps.Polyline({
+      path: polylines,
+      geodesic: true,
+      strokeColor: '#0000FF',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
 
+    flightPath.setMap(this.map);
   }
 
 
-  renderRouteWalk(polylines:any){
+  renderRouteWalk2(polylines:any){
     var i=0;
     for(let polyline of polylines){
       //console.log("sagar "+polyline);
       var paths=google.maps.geometry.encoding.decodePath(polyline);
-      
-      
 
-
-      
       var flightPath = new google.maps.Polyline({
          path:paths ,
          geodesic: true,

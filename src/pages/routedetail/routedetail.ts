@@ -84,42 +84,62 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
   fetchPolylineWalk(index: number){
     if(index == 0){
-      this.walkPolyLines.push({
-        lat: parseFloat(this.startLocation.lat),
-        lng: parseFloat(this.startLocation.lng),
-        travelMode: 'WALKING'
-      });
-      this.walkPolyLines.push({
-        lat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
-        lng: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
-        travelMode: 'WALKING'
-      });
+      this.walkPolyLines.push(
+        [
+          {
+            shapePtLat: parseFloat(this.startLocation.lat),
+            shapePtLon: parseFloat(this.startLocation.lng),
+          },
+          {
+            shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
+            shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+          }
+        ],
+      );
+      // this.walkPolyLines.push({
+      //   lat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
+      //   lng: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+      //   travelMode: 'WALKING'
+      // });
     } else if(index == this.route.trips.length - 1){
-      this.walkPolyLines.push({
-        lat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
-        lng: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
-        travelMode: 'WALKING'
-      });
-      this.walkPolyLines.push({
-        lat: parseFloat(this.endLocation.lat),
-        lng: parseFloat(this.endLocation.lng),
-        travelMode: 'WALKING'
-      });
+      this.walkPolyLines.push(
+        [
+          {
+            shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
+            shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
+          },
+          {
+            shapePtLat: parseFloat(this.endLocation.lat),
+            shapePtLon: parseFloat(this.endLocation.lng),
+          }
+        ]
+      );
+      // this.walkPolyLines.push({
+      //   lat: parseFloat(this.endLocation.lat),
+      //   lng: parseFloat(this.endLocation.lng),
+      //   travelMode: 'WALKING'
+      // });
     } else {
       if(this.route.trips[index].type == "FERRY"){
-        this.walkPolyLines.push({
-          lat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
-          lng: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
-          travelMode: 'WALKING'
-        });
-        this.walkPolyLines.push({
-          lat: parseFloat(this.route.trips[index+1].stops[this.route.trips[index+1].stops.length-1].stopLat),
-          lng: parseFloat(this.route.trips[index+1].stops[this.route.trips[index+1].stops.length-1].stopLon),
-          travelMode: 'WALKING'
-        });
+        this.walkPolyLines.push(
+          [
+            {
+              shapePtLat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
+              shapePtLon: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
+            },
+            {
+              shapePtLat: parseFloat(this.route.trips[index+1].stops[0].stopLat),
+              shapePtLon: parseFloat(this.route.trips[index+1].stops[0].stopLon),
+            }
+          ],
+        );
+        // this.walkPolyLines.push({
+        //   lat: parseFloat(this.route.trips[index+1].stops[0].stopLat),
+        //   lng: parseFloat(this.route.trips[index+1].stops[0].stopLon),
+        //   travelMode: 'WALKING'
+        // });
       }
     }
-    debugger
 
     if(index<this.route.trips.length-1){
       this.fetchPolylineWalk(index+1);
