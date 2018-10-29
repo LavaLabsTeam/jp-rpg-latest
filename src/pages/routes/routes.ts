@@ -76,14 +76,12 @@ export class RoutesPage {
             this.calculateRoutesDuration();
             this.optimizeRoutes();
       });
-      
-      
     }
-    else {
-      //if google
-      this.calculateRoutesTimeGoogle();
-      this.googleDirectionResult=this.navParams.get('googleDirectionResult');
-    }
+    // else {
+    //   //if google
+    //   this.calculateRoutesTimeGoogle();
+    //   this.googleDirectionResult=this.navParams.get('googleDirectionResult');
+    // }
 
 
     this.progress = this.modalCtrl.create(ProgressPage);
@@ -440,7 +438,7 @@ export class RoutesPage {
         }
 
         if(error){
-          this.callGoogle();
+          // this.callGoogle();
         }
         this.progress.dismiss();
 
@@ -454,7 +452,7 @@ export class RoutesPage {
       // });
 
       //toast.present();
-      this.callGoogle();
+      // this.callGoogle();
     });
   }
 
@@ -526,12 +524,14 @@ export class RoutesPage {
 
     var r=0;
     for (let route of this.routes) {
+      debugger
       var t=0;
       var tempTrips=[];
       tempTrips.push({
         type:'WALKING',
         instruction:route.startStop.stopName,
-        instructionHeading:"Walk to"
+        instructionHeading:"Walk to",
+        isRPGStop : true
 
       });
       var lastTrip=null;
@@ -549,11 +549,25 @@ export class RoutesPage {
 
           if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && !route.trips[t-1].ferry){
             tempTrips.push({
-              instruction:lastTrip.routeLongName+" to "+trip.routeLongName,
+              instruction:lastTrip.routeLongName+ ' ' + lastTrip.tripHeadsign + " to " + trip.routeLongName + ' ' + trip.tripHeadsign,
               //instruction:trip.stops[0].stopName,
               instructionHeading:"Change from",
               type:'WALKING',
-              stops:[]
+              stops:[],
+              isRPGStop : false,
+              prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
+              next_stop : trip.stops[0].stopName,
+            });
+          } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId === route.trips[t].stops[0].stopId && !route.trips[t-1].ferry){
+            tempTrips.push({
+              instruction:lastTrip.routeLongName+ ' ' + lastTrip.tripHeadsign + " to " + trip.routeLongName + ' ' + trip.tripHeadsign,
+              //instruction:trip.stops[0].stopName,
+              instructionHeading:"Change from",
+              type:'WALKING',
+              stops:[],
+              isRPGStop : true,
+              prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
+              next_stop : trip.stops[0].stopName,
             });
           } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && route.trips[t-1].ferry){
             tempTrips.push({
@@ -561,7 +575,10 @@ export class RoutesPage {
               //instruction:trip.stops[0].stopName,
               instructionHeading:"Take Ferry to",
               type:'FERRY',
-              stops:[]
+              stops:[],
+              isRPGStop : false,
+              prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
+              next_stop : trip.stops[0].stopName,
             });
           } 
 
@@ -585,7 +602,8 @@ export class RoutesPage {
       tempTrips.push({
         type:'WALKING',
         instruction:this.endAddress,
-        instructionHeading:"Walk to"
+        instructionHeading:"Walk to",
+        isRPGStop : true
 
       });
 
@@ -595,7 +613,7 @@ export class RoutesPage {
 
       r++;
     }
-    debugger
+    
 
     this.routes=tempRoutes;
   }
