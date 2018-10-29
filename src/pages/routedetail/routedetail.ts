@@ -222,7 +222,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
     var i=0,j=0;
 
     for(let trip of this.route.trips){
-      if(trip.type=='WALKING'){
+      if(trip.type=='WALKING' || trip.type == 'FERRY'){
         this.route.trips[i]['totalDurationText']=this.placesETARows[j];
         this.route.trips[i]['polyline']=this.walkPolyLines[j];
         if(j==0 || j==this.route.trips.length-1){

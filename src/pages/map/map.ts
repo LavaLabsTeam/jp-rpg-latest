@@ -152,14 +152,15 @@ export class MapPage {
         this.travelType = trip.type;
         this.renderRouteBus(locations);
       } else {
-        if(trip.polyline){
           for(let poly of trip.polyline){
             locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
           }
           this.travelType = trip.type;
-          this.renderRouteWalk(locations);
+          if(this.travelType == 'WALKING')
+            this.renderRouteWalk(locations, 'WALKING');
+          else
+            this.renderRouteWalk(locations, 'FERRY');
         }
-      }
     }
     //console.log(walkPolyLines);
 
@@ -276,11 +277,15 @@ export class MapPage {
 
   }
 
-  renderRouteWalk(polylines:any){
+  renderRouteWalk(polylines:any, type:string){
+    if(type=="WALKING")
+      var lineColor = '#0000FF';
+    else if(type =='FERRY')
+      var lineColor = '#000DDD';
     var flightPath = new google.maps.Polyline({
       path: polylines,
       geodesic: true,
-      strokeColor: '#0000FF',
+      strokeColor: lineColor,
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
