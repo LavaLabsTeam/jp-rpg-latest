@@ -184,6 +184,11 @@
                     <span class="text-white text-2x">{{trip.instruction}}</span>
                   </div>
 
+                  <div style="padding-top: 10px;" *ngIf="!trip.isRPGStop">
+                    <span class="text-white text-2x">Take Ferry from {{trip.prev_stop}}</span><br>
+                    <span class="text-white text-2x">And then walk to {{trip.next_stop}}</span>
+                  </div>
+
                   <div class="address margin-top">
                     <span class="text-white text-2x">{{trip.departureInfo}}</span>
                   </div>

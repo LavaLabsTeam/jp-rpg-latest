@@ -570,9 +570,9 @@ export class RoutesPage {
             });
           } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && route.trips[t-1].ferry){
             tempTrips.push({
-              instruction:trip.stops[0].stopName,
+              instruction:lastTrip.routeLongName+ ' ' + lastTrip.tripHeadsign + " to " + trip.routeLongName + ' ' + trip.tripHeadsign,
               //instruction:trip.stops[0].stopName,
-              instructionHeading:"Take Ferry to",
+              instructionHeading:"Change from",
               type:'FERRY',
               stops:[],
               isRPGStop : false,
