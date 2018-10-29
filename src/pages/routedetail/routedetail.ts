@@ -110,7 +110,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
         ]
       );
     } else {
-      if(index < this.route.trips.length0-1){
+      if(index < this.route.trips.length-1){
         if(this.route.trips[index].type == "FERRY"){
           this.walkPolyLines.push(
             [
