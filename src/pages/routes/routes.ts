@@ -524,7 +524,6 @@ export class RoutesPage {
 
     var r=0;
     for (let route of this.routes) {
-      debugger
       var t=0;
       var tempTrips=[];
       tempTrips.push({
