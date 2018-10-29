@@ -156,6 +156,7 @@ export class MapPage {
             locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
           }
           this.travelType = trip.type;
+          debugger
           if(this.travelType == 'WALKING')
             this.renderRouteWalk(locations, 'WALKING');
           else
@@ -281,7 +282,7 @@ export class MapPage {
     if(type=="WALKING")
       var lineColor = '#0000FF';
     else if(type =='FERRY')
-      var lineColor = '#000DDD';
+      var lineColor = '#00DDD1';
     var flightPath = new google.maps.Polyline({
       path: polylines,
       geodesic: true,
