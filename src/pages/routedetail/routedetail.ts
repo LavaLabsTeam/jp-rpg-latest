@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Constants } from '../../services/constants';
 import { Http } from '@angular/http';
 import { MapPage } from '../map/map';
+import * as _ from 'lodash';
 declare var google:any;
 //import 'rxjs/add/operator/map';
 
@@ -31,7 +32,7 @@ export class RoutedetailPage {
   endAddress: any;
   endLocation:any;
   placesETARows:Array<string>=[];
-  walkPolyLines:Array<string>=[];
+  walkPolyLines:Array<any>=[];
   busPolyLines:Array<string>=[];
   placeNames:Array<string>=[];
   api:any;
@@ -52,7 +53,6 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RoutedetailPage', this.route);
-    debugger
     if(this.api=="jpapp"){
       this.origins.push(new google.maps.LatLng(this.startLocation.lat,this.startLocation.lng));
       //this.origins.push("3.218561,101.564353");
@@ -82,10 +82,57 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
   }
 
-  fetchPolylineWalk(index:number){
+  fetchPolylineWalk(index: number){
+    if(index == 0){
+      this.walkPolyLines.push({
+        lat: parseFloat(this.startLocation.lat),
+        lng: parseFloat(this.startLocation.lng),
+        travelMode: 'WALKING'
+      });
+      this.walkPolyLines.push({
+        lat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
+        lng: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+        travelMode: 'WALKING'
+      });
+    } else if(index == this.route.trips.length - 1){
+      this.walkPolyLines.push({
+        lat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
+        lng: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
+        travelMode: 'WALKING'
+      });
+      this.walkPolyLines.push({
+        lat: parseFloat(this.endLocation.lat),
+        lng: parseFloat(this.endLocation.lng),
+        travelMode: 'WALKING'
+      });
+    } else {
+      if(this.route.trips[index].type == "FERRY"){
+        this.walkPolyLines.push({
+          lat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
+          lng: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
+          travelMode: 'WALKING'
+        });
+        this.walkPolyLines.push({
+          lat: parseFloat(this.route.trips[index+1].stops[this.route.trips[index+1].stops.length-1].stopLat),
+          lng: parseFloat(this.route.trips[index+1].stops[this.route.trips[index+1].stops.length-1].stopLon),
+          travelMode: 'WALKING'
+        });
+      }
+    }
+    debugger
+
+    if(index<this.route.trips.length-1){
+      this.fetchPolylineWalk(index+1);
+    }
+    else {
+      this.walkPolylinesFetchFinished();
+    }
+  }
+
+  fetchPolylineWalk2(index:number){
     // let url=this.constants.getDirectionURL(this.origins[index],this.destinations[index]);
     //
-    // this.http.get(url).subscribe(data => {
+    // this.http.get(url).subscribe(data => {viewMapClicked
     //     let body = data.json();
     //     //console.log(body);
     //     this.walkPolyLines.push(body.routes[0].overview_polyline.points);
@@ -119,17 +166,13 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
   }
 
   onFetchPolyline(rs, status, index) {
-    // console.log("======= "+index+"====");
-    // console.log(this.origins.length);
-    // console.log(status);
-    // console.log(this.origins);
     if (status == 'OK') {
       this.walkPolyLines.push(rs.routes[0].overview_polyline);
       this.placesETARows.push(rs.routes[0].legs[0].duration.text);
       this.placeNames.push(rs.routes[0].legs[0].start_address);
 
       if(index<this.origins.length-1){
-        this.fetchPolylineWalk(index+1);
+        this.fetchPolylineWalk2(index+1);
       }
       else {
         this.walkPolylinesFetchFinished();
@@ -145,12 +188,13 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
   }
 
   viewMapClicked(){
-    if(this.api=="google"){
-        this.navCtrl.push(MapPage,{mapdata:{from:"routes",api:this.api,data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation, googleDirectionResult:this.googleDirectionResult}}});
-    }
-    else {
+    debugger
+    // if(this.api=="google"){
+    //     this.navCtrl.push(MapPage,{mapdata:{from:"routes",api:this.api,data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation, googleDirectionResult:this.googleDirectionResult}}});
+    // }
+    // else {
       this.navCtrl.push(MapPage,{mapdata:{from:"routes",api:this.api,data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation}}});
-    }
+    // }
 
   }
 

@@ -151,81 +151,97 @@ export class MapPage {
         }
         this.travelType = trip.type;
       }
+      debugger
       this.renderRouteBus(locations);
     }
     //console.log(walkPolyLines);
 
-    var startWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[0]);
-    var endWalkWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[walkPolyLines.length-1]);
+    // var startWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[0]);
+    // var endWalkWalkPoints=google.maps.geometry.encoding.decodePath(walkPolyLines[walkPolyLines.length-1]);
 
     //------origin to first point of first walk path
-    startPathFromOriginToFirstWalkPoint.push(myLatLngOrig);
-    startPathFromOriginToFirstWalkPoint.push(startWalkPoints[0]);
+    // startPathFromOriginToFirstWalkPoint.push(myLatLngOrig);
+    // startPathFromOriginToFirstWalkPoint.push(startWalkPoints[0]);
 
-    //now make all joining paths complete
-    var sflightPath = new google.maps.Polyline({
-      path: startPathFromOriginToFirstWalkPoint,
-      geodesic: true,
-      strokeColor: '#0000FF',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
+    // //now make all joining paths complete
+    // var sflightPath = new google.maps.Polyline({
+    //   path: startPathFromOriginToFirstWalkPoint,
+    //   geodesic: true,
+    //   strokeColor: '#0000FF',
+    //   strokeOpacity: 1.0,
+    //   strokeWeight: 2
+    // });
 
-    sflightPath.setMap(this.map);
-    //--end of origin to first point of first walk path
+    // sflightPath.setMap(this.map);
+    // //--end of origin to first point of first walk path
 
 
-    //--first walk path last point to first point of First trip
-    startPathFromFirstWalkPointToFirstTripFirstPoint.push(startWalkPoints[startWalkPoints.length-1]);
-    startPathFromFirstWalkPointToFirstTripFirstPoint.push(new google.maps.LatLng(parseFloat(route.trips[1].polyline[0].shapePtLat),parseFloat(route.trips[1].polyline[0].shapePtLon)));
+    // //--first walk path last point to first point of First trip
+    // startPathFromFirstWalkPointToFirstTripFirstPoint.push(startWalkPoints[startWalkPoints.length-1]);
+    // startPathFromFirstWalkPointToFirstTripFirstPoint.push(new google.maps.LatLng(parseFloat(route.trips[1].polyline[0].shapePtLat),parseFloat(route.trips[1].polyline[0].shapePtLon)));
 
   
-    var startPathFromFirstWalkPointToFirstTripFirstPointPath = new google.maps.Polyline({
-      path: startPathFromFirstWalkPointToFirstTripFirstPoint,
-      geodesic: true,
-      strokeColor: '#0000FF',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
+    // var startPathFromFirstWalkPointToFirstTripFirstPointPath = new google.maps.Polyline({
+    //   path: startPathFromFirstWalkPointToFirstTripFirstPoint,
+    //   geodesic: true,
+    //   strokeColor: '#0000FF',
+    //   strokeOpacity: 1.0,
+    //   strokeWeight: 2
+    // });
 
-    startPathFromFirstWalkPointToFirstTripFirstPointPath.setMap(this.map);
+    // startPathFromFirstWalkPointToFirstTripFirstPointPath.setMap(this.map);
     //--end of first walk path last point to first point of First trip
 
     //------trip last point to first point of last walk
-    endPathFromLastTripPointToFirstPointOfLastWalk.push(new google.maps.LatLng(parseFloat(route.trips[route.trips.length-2].polyline[route.trips[route.trips.length-2].polyline.length-1].shapePtLat), parseFloat(route.trips[route.trips.length-2].polyline[route.trips[route.trips.length-2].polyline.length-1].shapePtLon)));
-    endPathFromLastTripPointToFirstPointOfLastWalk.push(endWalkWalkPoints[0]);
+    // endPathFromLastTripPointToFirstPointOfLastWalk.push(new google.maps.LatLng(parseFloat(route.trips[route.trips.length-2].polyline[route.trips[route.trips.length-2].polyline.length-1].shapePtLat), parseFloat(route.trips[route.trips.length-2].polyline[route.trips[route.trips.length-2].polyline.length-1].shapePtLon)));
+    // endPathFromLastTripPointToFirstPointOfLastWalk.push(endWalkWalkPoints[0]);
 
     //console.log("====_____=======");
-    var epfltfplw = new google.maps.Polyline({
-      path: endPathFromLastTripPointToFirstPointOfLastWalk,
-      geodesic: true,
-      strokeColor: '#0000FF',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
+    // var epfltfplw = new google.maps.Polyline({
+    //   path: endPathFromLastTripPointToFirstPointOfLastWalk,
+    //   geodesic: true,
+    //   strokeColor: '#0000FF',
+    //   strokeOpacity: 1.0,
+    //   strokeWeight: 2
+    // });
 
-    epfltfplw.setMap(this.map);
+    // epfltfplw.setMap(this.map);
     //------------end of trip last point to first point of last walk
 
 
 
     //--last walk last point to destination
-    endPathFromLastWalkPointToDest.push(endWalkWalkPoints[endWalkWalkPoints.length-1]);
-    endPathFromLastWalkPointToDest.push(myLatLngDest);
+    // endPathFromLastWalkPointToDest.push(endWalkWalkPoints[endWalkWalkPoints.length-1]);
+    // endPathFromLastWalkPointToDest.push(myLatLngDest);
 
-    var eflightPath = new google.maps.Polyline({
-      path: endPathFromLastWalkPointToDest,
-      geodesic: true,
-      strokeColor: '#0000FF',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
+    // var eflightPath = new google.maps.Polyline({
+    //   path: endPathFromLastWalkPointToDest,
+    //   geodesic: true,
+    //   strokeColor: '#0000FF',
+    //   strokeOpacity: 1.0,
+    //   strokeWeight: 2
+    // });
 
-    eflightPath.setMap(this.map);
+    // eflightPath.setMap(this.map);
     //--end of last walk last point to destination
 
-    this.renderRouteWalk(walkPolyLines);
+    // this.renderRouteWalk(walkPolyLines);
 
+    var walkingLocations:Array<string>=[];
+    if(walkPolyLines.length > 0){
+      for(let poly of walkPolyLines){
+        walkingLocations.push(new google.maps.LatLng(parseFloat(poly.lat),parseFloat(poly.lng)));
+      }
+    }
+    var flightPath = new google.maps.Polyline({
+       path: walkingLocations,
+       geodesic: true,
+       strokeColor: '#0000FF',
+       strokeOpacity: 1.0,
+       strokeWeight: 2
+     });
+
+     flightPath.setMap(this.map);
     
   }
 
