@@ -152,15 +152,16 @@ export class MapPage {
         this.travelType = trip.type;
         this.renderRouteBus(locations);
       } else {
-          for(let poly of trip.polyline){
-            locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
+          if(trip.polyline){
+            for(let poly of trip.polyline){
+              locations.push(new google.maps.LatLng(parseFloat(poly.shapePtLat),parseFloat(poly.shapePtLon)));
+            }
+            this.travelType = trip.type;
+            if(this.travelType == 'WALKING')
+              this.renderRouteWalk(locations, 'WALKING');
+            else
+              this.renderRouteWalk(locations, 'FERRY');
           }
-          this.travelType = trip.type;
-          debugger
-          if(this.travelType == 'WALKING')
-            this.renderRouteWalk(locations, 'WALKING');
-          else
-            this.renderRouteWalk(locations, 'FERRY');
         }
     }
     //console.log(walkPolyLines);
