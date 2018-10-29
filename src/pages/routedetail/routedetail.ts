@@ -96,11 +96,6 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
           }
         ],
       );
-      // this.walkPolyLines.push({
-      //   lat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
-      //   lng: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
-      //   travelMode: 'WALKING'
-      // });
     } else if(index == this.route.trips.length - 1){
       this.walkPolyLines.push(
         [
@@ -114,30 +109,36 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
           }
         ]
       );
-      // this.walkPolyLines.push({
-      //   lat: parseFloat(this.endLocation.lat),
-      //   lng: parseFloat(this.endLocation.lng),
-      //   travelMode: 'WALKING'
-      // });
     } else {
-      if(this.route.trips[index].type == "FERRY"){
-        this.walkPolyLines.push(
-          [
-            {
-              shapePtLat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
-              shapePtLon: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
-            },
-            {
-              shapePtLat: parseFloat(this.route.trips[index+1].stops[0].stopLat),
-              shapePtLon: parseFloat(this.route.trips[index+1].stops[0].stopLon),
-            }
-          ],
-        );
-        // this.walkPolyLines.push({
-        //   lat: parseFloat(this.route.trips[index+1].stops[0].stopLat),
-        //   lng: parseFloat(this.route.trips[index+1].stops[0].stopLon),
-        //   travelMode: 'WALKING'
-        // });
+      if(index < this.route.trips.length0-1){
+        if(this.route.trips[index].type == "FERRY"){
+          this.walkPolyLines.push(
+            [
+              {
+                shapePtLat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
+                shapePtLon: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
+              },
+              {
+                shapePtLat: parseFloat(this.route.trips[index+1].stops[0].stopLat),
+                shapePtLon: parseFloat(this.route.trips[index+1].stops[0].stopLon),
+              }
+            ],
+          );
+        }
+        else if(this.route.trips[index].type == "WALKING"){
+          this.walkPolyLines.push(
+            [
+              {
+                shapePtLat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
+                shapePtLon: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
+              },
+              {
+                shapePtLat: parseFloat(this.route.trips[index+1].stops[0].stopLat),
+                shapePtLon: parseFloat(this.route.trips[index+1].stops[0].stopLon),
+              }
+            ],
+          );
+        }
       }
     }
 
@@ -208,7 +209,6 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
   }
 
   viewMapClicked(){
-    debugger
     // if(this.api=="google"){
     //     this.navCtrl.push(MapPage,{mapdata:{from:"routes",api:this.api,data:{route:this.route, walkPolyLines:this.walkPolyLines, startLocation:this.startLocation,endLocation:this.endLocation, googleDirectionResult:this.googleDirectionResult}}});
     // }
