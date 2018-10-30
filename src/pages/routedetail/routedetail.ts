@@ -129,12 +129,13 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
           this.walkPolyLines.push(
             [
               {
-                shapePtLat: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLat),
-                shapePtLon: parseFloat(this.route.trips[index-1].stops[this.route.trips[index-1].stops.length-1].stopLon),
+                shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
+                shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
               },
               {
-                shapePtLat: parseFloat(this.route.trips[index+1].stops[0].stopLat),
-                shapePtLon: parseFloat(this.route.trips[index+1].stops[0].stopLon),
+                
+                shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
+                shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
               }
             ],
           );
