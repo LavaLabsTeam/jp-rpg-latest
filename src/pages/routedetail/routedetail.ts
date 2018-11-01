@@ -126,19 +126,35 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
           );
         }
         else if(this.route.trips[index].type == "WALKING"){
-          this.walkPolyLines.push(
-            [
-              {
-                shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
-                shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
-              },
-              {
-                
-                shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
-                shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+          var polyline = this.route.trips[index-1].walkPolyline;
+          console.log(polyline);
+          if(polyline){
+            var polylines = polyline.split(":");
+            this.walkPolyLines.push([]);
+            for(var i=0; i<polylines.length; i++) {
+              var paths = google.maps.geometry.encoding.decodePath(polylines[i]);
+              console.log(paths);
+              for(var l=0; l<paths.length; l++){
+                this.walkPolyLines[this.walkPolyLines.length-1].push({
+                  shapePtLat: paths[l].lat(),
+                  shapePtLon: paths[l].lng(),
+                });
               }
-            ],
-          );
+            }
+          }
+          // this.walkPolyLines.push(
+            //   [
+          //     {
+          //       shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
+          //       shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
+          //     },
+          //     {
+                
+          //       shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
+          //       shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+          //     }
+          //   ],
+          // );
         }
       }
     }
