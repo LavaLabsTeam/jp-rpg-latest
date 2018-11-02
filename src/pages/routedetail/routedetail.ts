@@ -133,12 +133,36 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
             this.walkPolyLines.push([]);
             for(var i=0; i<polylines.length; i++) {
               var paths = google.maps.geometry.encoding.decodePath(polylines[i]);
+              if(i==0){
+                this.walkPolyLines[this.walkPolyLines.length-1].push(
+                  {
+                    shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
+                    shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
+                  },
+                  {
+                    shapePtLat: paths[0].lat(),
+                    shapePtLon: paths[0].lng(),
+                  }
+                );
+              }
               console.log(paths);
               for(var l=0; l<paths.length; l++){
                 this.walkPolyLines[this.walkPolyLines.length-1].push({
                   shapePtLat: paths[l].lat(),
                   shapePtLon: paths[l].lng(),
                 });
+              }
+              if(i == polylines.length-2){
+                this.walkPolyLines.push([
+                  {
+                    shapePtLat: paths[paths.length-1].lat(),
+                    shapePtLon: paths[paths.length-1].lng(),
+                  },
+                  {
+                    shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
+                    shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+                  }
+                ]);
               }
             }
           }
