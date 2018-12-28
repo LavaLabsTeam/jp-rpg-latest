@@ -1,5 +1,3 @@
-import { StopsautocompletePageModule } from './stopsautocomplete.module';
-import { StopsnearmePage } from './../stopsnearme/stopsnearme';
 import { Http } from '@angular/http';
 import { Constants } from './../../services/constants';
 import { Component } from '@angular/core';

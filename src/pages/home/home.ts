@@ -1,5 +1,4 @@
 import { StopsautocompletePage } from './../stopsautocomplete/stopsautocomplete';
-import { RoutesautocompletePageModule } from './../routesautocomplete/routesautocomplete.module';
 import {Component, ViewChild} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
@@ -7,7 +6,6 @@ import { ModalController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { PlacesearchPage } from '../placesearch/placesearch';
 import { RoutesPage } from '../routes/routes';
-import { EtaresultPage } from '../etaresult/etaresult';
 import { StopsnearmePage } from '../stopsnearme/stopsnearme';
 import { GeneralinfoPage } from '../generalinfo/generalinfo';
 import { PreferencemodalPage } from '../preferencemodal/preferencemodal';
@@ -17,7 +15,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Constants } from '../../services/constants';
 import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { RoutesautocompletePage } from "../routesautocomplete/routesautocomplete";
@@ -167,10 +164,10 @@ export class HomePage {
     //   networkToast.present();
     // });
 
-    let connectSubscription = this.network.onConnect().subscribe(() => {
-      networkToast.dismiss();
-      this.resolveLocation();
-    });
+    // let connectSubscription = this.network.onConnect().subscribe(() => {
+    //   networkToast.dismiss();
+    //   this.resolveLocation();
+    // });
 
 
     this.showOptions=="tfr";
@@ -421,7 +418,6 @@ export class HomePage {
 
   callGoogle(){
     //var url=this.constants.getDirectionURLPublic(this.startLocation.lat+","+this.startLocation.lng,this.endLocation.lat+","+this.endLocation.lng);
-    var error=false;
 
     var request = {
       origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
@@ -455,10 +451,6 @@ export class HomePage {
 
     //console.log(request);
 
-
-
-
-    var p=this.progress;
     var tctrl=this.toastCtrl;
     //p.present();
     var directionsService = new google.maps.DirectionsService();

@@ -690,8 +690,6 @@ export class RoutesPage {
 
   callGoogle(){
     //var url=this.constants.getDirectionURLPublic(this.startLocation.lat+","+this.startLocation.lng,this.endLocation.lat+","+this.endLocation.lng);
-    var error=false;
-
 
     var request = {
       origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
@@ -703,8 +701,6 @@ export class RoutesPage {
       }
     };
 
-
-
     // if(this.showOptions=="rwfc"){
     //   request.transitOptions['routingPreference']='FEWER_TRANSFERS';
     // }
@@ -714,10 +710,6 @@ export class RoutesPage {
 
     request.transitOptions['departureTime']=this.departureDate;
 
-
-
-
-    var p=this.progress;
     var tctrl=this.toastCtrl;
     //p.present();
     var directionsService = new google.maps.DirectionsService();
@@ -748,7 +740,6 @@ export class RoutesPage {
 
   mapResult(result:any){
     //console.log(result);
-    var data={};
     var routes=[];
 
     var i=0;

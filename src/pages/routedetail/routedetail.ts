@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Constants } from '../../services/constants';
 import { Http } from '@angular/http';
 import { MapPage } from '../map/map';
-import * as _ from 'lodash';
 declare var google:any;
 //import 'rxjs/add/operator/map';
 

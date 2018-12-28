@@ -24,9 +24,9 @@ export class GoogleplaceDirective {
     this.modelValue = this.model;
     var input = this._el;
 
-    var cityBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(101.2722682858,2.5420301197),
-      new google.maps.LatLng(102.0970828702,3.4243597099));
+    // var cityBounds = new google.maps.LatLngBounds(
+    //   new google.maps.LatLng(101.2722682858,2.5420301197),
+    //   new google.maps.LatLng(102.0970828702,3.4243597099));
       
     this.autocomplete = new google.maps.places.Autocomplete(input, {
       //bounds:cityBounds,

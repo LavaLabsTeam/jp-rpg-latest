@@ -64,7 +64,6 @@ export class PlacesearchPage {
   // }
 
   onSearchKeyPress(){
-    var self = this;
     this.http.get(this.constants.BASE_URL_STOPS_AUTOCOMPLETE3+"?query="+this.search).subscribe(data => {
       if(data.json().length > 0){
         this.items = data.json();

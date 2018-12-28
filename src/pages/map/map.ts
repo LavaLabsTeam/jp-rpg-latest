@@ -106,15 +106,11 @@ export class MapPage {
 
   generateRoutes(){
     console.log(this.mapData);
-    var walkPolyLines=this.mapData.data.walkPolyLines;
     var route=this.mapData.data.route;
     var startLocation=this.mapData.data.startLocation;
     var endLocation=this.mapData.data.endLocation;
 
     var startPathFromOriginToFirstWalkPoint=[];
-    var endPathFromLastWalkPointToDest=[];
-    var startPathFromFirstWalkPointToFirstTripFirstPoint=[];
-    var endPathFromLastTripPointToFirstPointOfLastWalk=[];
 
     let latLng = new google.maps.LatLng(startLocation.lat, startLocation.lng);
 
@@ -130,18 +126,6 @@ export class MapPage {
 
     var myLatLngOrig=new google.maps.LatLng(startLocation.lat,startLocation.lng);
     var myLatLngDest=new google.maps.LatLng(endLocation.lat,endLocation.lng);
-
-    var originMarker = new google.maps.Marker({
-        position: myLatLngOrig,
-        map: this.map,
-        title: 'You are here'
-    });
-    var destMarker = new google.maps.Marker({
-        position: myLatLngDest,
-        map: this.map,
-        title: 'Your destination'
-    });
-
 
     for(let trip of route.trips){
       var locations:Array<string>=[];

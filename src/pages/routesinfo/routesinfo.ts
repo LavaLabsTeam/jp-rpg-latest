@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, NavOptions, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { DatePipe } from '@angular/common';
