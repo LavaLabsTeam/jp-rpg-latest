@@ -133,8 +133,6 @@ export class HomePage {
       });
     });
 
-    var networkToast;
-    
     // i
 
     // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {

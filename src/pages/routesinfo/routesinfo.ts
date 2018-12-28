@@ -5,7 +5,6 @@ import { Events } from 'ionic-angular';
 import { DatePipe } from '@angular/common';
 import { ProgressPage } from '../progress/progress';
 import { Http } from '@angular/http';
-import {Observable} from 'rxjs/Rx';
 import { Constants } from '../../services/constants';
 
 /**

@@ -108,9 +108,6 @@ export class MapPage {
     console.log(this.mapData);
     var route=this.mapData.data.route;
     var startLocation=this.mapData.data.startLocation;
-    var endLocation=this.mapData.data.endLocation;
-
-    var startPathFromOriginToFirstWalkPoint=[];
 
     let latLng = new google.maps.LatLng(startLocation.lat, startLocation.lng);
 
@@ -123,9 +120,6 @@ export class MapPage {
 
     //console.log(this.mapElement.nativeElement);
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-    var myLatLngOrig=new google.maps.LatLng(startLocation.lat,startLocation.lng);
-    var myLatLngDest=new google.maps.LatLng(endLocation.lat,endLocation.lng);
 
     for(let trip of route.trips){
       var locations:Array<string>=[];
