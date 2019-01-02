@@ -13,6 +13,7 @@ import { Constants } from '../services/constants';
 import { Network } from '@ionic-native/network';
 import { SortObjectPipe } from '../pipes/sort-object/sort-object';
 import { RoundPipe } from '../pipes/round/round';
+import { UtilProvider } from '../providers/util/util';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { RoundPipe } from '../pipes/round/round';
     DatePipe,
     RoundPipe,
     Constants,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UtilProvider
 
   ]
 })

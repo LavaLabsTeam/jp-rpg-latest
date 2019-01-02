@@ -4,7 +4,6 @@ import { RoutesinfoPage } from '../routesinfo/routesinfo';
 import { SchedulesPage } from '../schedules/schedules';
 import { FaresPage } from '../fares/fares';
 import { Http } from '@angular/http';
-import {Observable} from 'rxjs/Rx';
 import { Constants } from '../../services/constants';
 import { ProgressPage } from '../progress/progress';
 

@@ -129,18 +129,64 @@
           <!-- walk block starts inside interchange -->
           <ion-row>
             <ion-col col-12 text-center class="bg-semi-transparent padding-0">
-              <ion-row>
+              <ion-row class="address-padding">
                 <ion-col col-1 class="left-logo">
-                  <div class="icon">
+                  <div *ngIf="!trip.isRPGStop" class="icon">
                     <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
                   </div>
                 </ion-col>
                 <ion-col col-11 class="block walk text-align-left padding-left-16">
                   <div class="address">
-                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instructionHeading}}</span><br>
-                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i==0 || i==route.trips.length-1)">{{trip.instruction}}</span>
-                    <span class="text-white text-2x" *ngIf="api=='google'">{{trip.instruction}}</span>
-                    <span class="text-white text-2x" *ngIf="api=='jpapp' && (i>0 && i<route.trips.length-1)">Change from {{trip.instruction}}</span>
+                    <span class="text-white text-2x" *ngIf="i > 0 && i != route.trips.length-1">{{trip.instructionHeading}}<br></span>
+                    <span class="text-white text-2x">{{trip.instruction}}</span>
+                  </div>
+                  
+                  <div style="padding-top: 10px;" *ngIf="trip.isRPGStop && i > 0 && i != route.trips.length-1">
+                    <span class="text-white text-2x">At {{trip.prev_stop}}</span>
+                  </div>
+
+                  <div style="padding-top: 10px;" *ngIf="!trip.isRPGStop">
+                    <span class="text-white text-2x">Walk from {{trip.prev_stop}}</span><br>
+                    <span class="text-white text-2x">To {{trip.next_stop}}</span>
+                  </div>
+
+                  <div class="address margin-top" *ngIf="i > 0 && i != route.trips.length-1">
+                    <span class="text-white text-2x">{{trip.departureInfo}}</span>
+                  </div>
+
+
+                  <div class="logo" *ngIf="i > 0 && i != route.trips.length-1">
+                    <!-- <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon> -->
+                    <span class="eta text-2x text-white">About {{trip.totalDurationText}}</span>
+                  </div>
+                  <!-- <div class="alert">
+                    <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
+                  </div> -->
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <!-- walk block ends inside interchange -->
+        </div>
+        <div *ngIf="trip.type=='FERRY'">
+          <!-- walk block starts inside interchange -->
+          <ion-row>
+            <ion-col col-12 text-center class="bg-semi-transparent padding-0">
+              <ion-row class="address-padding">
+                <ion-col col-1 class="left-logo">
+                  <div class="icon">
+                    <img src="assets/images/ferry.png" class="ferry-icon">
+                  </div>
+                </ion-col>
+                <ion-col col-11 class="block walk text-align-left padding-left-16">
+                  <div class="address">
+                    <span class="text-white text-2x">{{trip.instructionHeading}}<br></span>
+                    <span class="text-white text-2x">{{trip.instruction}}</span>
+                  </div>
+
+                  <div style="padding-top: 10px;" *ngIf="!trip.isRPGStop">
+                    <span class="text-white text-2x">Take Ferry from {{trip.prev_stop}}</span><br>
+                    <span class="text-white text-2x">And then walk to {{trip.next_stop}}</span>
                   </div>
 
                   <div class="address margin-top">
@@ -148,10 +194,9 @@
                   </div>
 
                   <div class="logo">
-                    <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon>
-                    <span class="eta text-2x text-white">About {{trip.totalDurationText}}</span>
+                    <!-- <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon> -->
+                    <!-- <span class="eta text-2x text-white">About {{trip.totalDurationText}}</span> -->
                   </div>
-
                   <!-- <div class="alert">
                     <span class="text-1x text-white">Route will not be available during this time due to traffic</span>
                   </div> -->

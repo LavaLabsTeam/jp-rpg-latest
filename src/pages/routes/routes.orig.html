@@ -136,26 +136,6 @@
             <ion-row>
               <ion-col col-12 text-center class="block walk">
                   <div class="inner-block">
-                    <div>
-                      <div class="logo align-center">
-                        <div class="icon" *ngIf="!trip.isRPGStop">
-                          <ion-icon name="walk" color="light" class="text-3x"></ion-icon>
-                        </div>
-                      </div>
-                      <div class="address">
-                        <h3 class="text-white" *ngIf="!trip.isRPGStop">{{trip.instructionHeading}}</h3>
-                        <h5 class="text-white">{{trip.instruction}}</h5>
-                      </div>
-                    </div>
-                  </div>
-              </ion-col>
-            </ion-row>
-          </div>
-
-          <!-- <div *ngIf="trip.type=='WALKING'">
-            <ion-row>
-              <ion-col col-12 text-center class="block walk">
-                  <div class="inner-block">
                     <div *ngIf="showStartWalkingIcon == 'true' && showEndWalkingIcon == 'false'">
                       <div class="logo align-center">
                         <div class="icon" *ngIf="api == 'google' || (showStartWalkingIcon == 'true' && i > 0)">
@@ -203,7 +183,7 @@
                   </div>
               </ion-col>
             </ion-row>
-          </div> -->
+          </div>
 
           <div *ngIf="trip.type=='FERRY'">
             <ion-row>
