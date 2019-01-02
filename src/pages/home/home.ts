@@ -395,7 +395,7 @@ export class HomePage {
         }
 
         if(error){
-          this.callGoogle();
+          // this.callGoogle();
         }
         this.progress.dismiss();
 
@@ -410,7 +410,7 @@ export class HomePage {
       //
       // toast.present();
 
-      this.callGoogle();
+      // this.callGoogle();
     });
   }
 
