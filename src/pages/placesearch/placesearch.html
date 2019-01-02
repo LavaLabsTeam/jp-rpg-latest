@@ -5,8 +5,9 @@
         <!-- <ion-label color="primary" stacked>You are now at </ion-label> -->
         <ion-icon color="light" name="pin" item-right></ion-icon>
         <ion-icon color="light" name="arrow-back" item-left (click)="goBackClicked()"></ion-icon>
-        <input focuser ion-input type="text"  [(ngModel)]="search" class="text-2x full-width no-border padding-10" placeholder="Type Location" #LocationCtrl="ngModel"
-    Googleplace (setAddress)="getAddressOnChange($event,LocationCtrl)">
+        <!-- <input focuser ion-input type="text"  [(ngModel)]="search" class="text-2x full-width no-border padding-10" placeholder="Type Location" #LocationCtrl="ngModel"
+    Googleplace (setAddress)="getAddressOnChange($event,LocationCtrl)"> -->
+        <input focuser ion-input type="text" [(ngModel)]="search" (input)="onSearchKeyPress()" class="text-2x full-width no-border padding-10" placeholder="Search">
 
       </ion-item>
     </ion-col>
@@ -15,5 +16,7 @@
 </ion-header>
 
 <ion-content padding class="bg-semi-transparent">
-
+  <ion-list>
+    <ion-item *ngFor="let item of items" disabled="item.disabled" (click)="onItemClick(item)">{{item.poiName}}</ion-item>
+  </ion-list>
 </ion-content>

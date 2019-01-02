@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { DatePipe } from '@angular/common';
 import { ProgressPage } from '../progress/progress';
 import { Http } from '@angular/http';
-import {Observable} from 'rxjs/Rx';
 import { Constants } from '../../services/constants';
 
 /**

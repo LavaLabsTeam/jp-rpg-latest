@@ -1,5 +1,4 @@
 import { StopsautocompletePage } from './../stopsautocomplete/stopsautocomplete';
-import { RoutesautocompletePageModule } from './../routesautocomplete/routesautocomplete.module';
 import {Component, ViewChild} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
@@ -7,7 +6,6 @@ import { ModalController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { PlacesearchPage } from '../placesearch/placesearch';
 import { RoutesPage } from '../routes/routes';
-import { EtaresultPage } from '../etaresult/etaresult';
 import { StopsnearmePage } from '../stopsnearme/stopsnearme';
 import { GeneralinfoPage } from '../generalinfo/generalinfo';
 import { PreferencemodalPage } from '../preferencemodal/preferencemodal';
@@ -17,10 +15,10 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Constants } from '../../services/constants';
 import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import { AlertController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { RoutesautocompletePage } from "../routesautocomplete/routesautocomplete";
+import { UtilProvider } from '../../providers/util/util';
 
 declare var google:any;
 
@@ -74,6 +72,7 @@ export class HomePage {
     , public plt: Platform
     , public events: Events
     , private network: Network
+    , private utilService : UtilProvider
   ) {
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     //console.log(constants);
@@ -134,8 +133,6 @@ export class HomePage {
       });
     });
 
-    var networkToast;
-    
     // i
 
     // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
@@ -165,10 +162,10 @@ export class HomePage {
     //   networkToast.present();
     // });
 
-    let connectSubscription = this.network.onConnect().subscribe(() => {
-      networkToast.dismiss();
-      this.resolveLocation();
-    });
+    // let connectSubscription = this.network.onConnect().subscribe(() => {
+    //   networkToast.dismiss();
+    //   this.resolveLocation();
+    // });
 
 
     this.showOptions=="tfr";
@@ -190,9 +187,9 @@ export class HomePage {
        //console.log('sssssssss');
        // resp.coords.latitude
        // resp.coords.longitude
-       this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+      //  this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
        this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-       this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
+      //  this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
        this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
        //console.log(resp);
       }).catch((error) => {
@@ -231,6 +228,27 @@ export class HomePage {
     }
 
   }
+  
+  // async getGoogleGeocode(data){
+  //   return new Promise((resolve, reject) => {
+  //     var geocoder = new google.maps.Geocoder();
+  //     var origin=data.place.place_id;
+  //     geocoder.geocode({ 'placeId': origin }, function (results, status) {
+  //       console.log(results);
+  //       if (status == google.maps.GeocoderStatus.OK) {
+  //           var result = {
+  //             lat : results[0].geometry.location.lat(),
+  //             lng : results[0].geometry.location.lng()
+  //           }
+  //           resolve(result);
+  //       } else{
+  //           alert('Could not find the place');
+  //           reject("Async Error");
+  //       }
+  //     });
+  //   });
+  // }
+  
 
   setStartLocation(){
     let modal = this.modalCtrl.create(PlacesearchPage,{name:"start"});
@@ -238,14 +256,24 @@ export class HomePage {
     modal.onDidDismiss(data => {
      //console.log(data);
      if(data!=undefined){
-       this.startAddress=data.place.name;
-       this.startLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()};
-       //console.log(this.startLocation);
+      this.startAddress=data.place.poiName;
+      // if(data.place.place_id){
+      //   this.utilService.getGoogleGeocode(data).then((result) => {
+      //     this.startLocation = result;
+      //     sessionStorage.setItem('is_rpg_start_stop', 'false');
+      //   })
+      // }
+      // else{
+        this.startLocation={lat:data.place.poiLat,lng:data.place.poiLon,stopId:data.place.id};
+        sessionStorage.setItem('is_rpg_start_stop', 'true');
+      // }
+      console.log(this.startLocation);
       }
     });
 
     modal.present();
   }
+
 
 
   setEndLocation(){
@@ -254,10 +282,18 @@ export class HomePage {
     modal.onDidDismiss(data => {
      console.log(data);
      if(data!=undefined){
-       this.endAddress=data.place.name;
-       this.endLocation={lat:data.place.geometry.location.lat(),lng:data.place.geometry.location.lng()}
-
-       console.log(this.startLocation);
+      this.endAddress=data.place.poiName;
+      // if(data.place.place_id){
+      //   this.utilService.getGoogleGeocode(data).then((result) => {          
+      //     this.endLocation = result;
+      //     sessionStorage.setItem('is_rpg_end_stop', 'false');
+      //   })
+      // }
+      // else{
+        this.endLocation={lat:data.place.poiLat,lng:data.place.poiLon,stopId:data.place.id};
+        sessionStorage.setItem('is_rpg_end_stop', 'true');
+      // }
+       console.log(this.endLocation);
       }
     });
 
@@ -277,7 +313,7 @@ export class HomePage {
       toast.present();
       return false;
     }
-
+    
     var config={
       params:{
         startLan:this.startLocation.lat,
@@ -290,7 +326,9 @@ export class HomePage {
         hasStares:"false",
         leastWalking:"false",
         lowestTransit:"null",
-        filter:'FASTEST_ROUTE'
+        filter:'FASTEST_ROUTE',
+        startStopId: this.startLocation.stopId,
+        endStopId : this.endLocation.stopId
       }
       // params:{
       //   startLan:"3.2066336",
@@ -329,8 +367,8 @@ export class HomePage {
       config.params['filter']="CHEAPEST_ROUTE";
     }
 
-    this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
-    this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
+    // this.startLocation={lat:config.params.startLan,lng:config.params.startLon};
+    // this.endLocation={lat:config.params.endLan,lng:config.params.endLon};
 
     var error=false;
     this.progress.present();
@@ -362,7 +400,7 @@ export class HomePage {
         this.progress.dismiss();
 
     },
-    error => {
+    error => {      
       this.progress.dismiss();
       // let toast = this.toastCtrl.create({
       //   message: 'Error Occured!',
@@ -378,7 +416,6 @@ export class HomePage {
 
   callGoogle(){
     //var url=this.constants.getDirectionURLPublic(this.startLocation.lat+","+this.startLocation.lng,this.endLocation.lat+","+this.endLocation.lng);
-    var error=false;
 
     var request = {
       origin: new google.maps.LatLng(this.startLocation.lat, this.startLocation.lng),
@@ -412,10 +449,6 @@ export class HomePage {
 
     //console.log(request);
 
-
-
-
-    var p=this.progress;
     var tctrl=this.toastCtrl;
     //p.present();
     var directionsService = new google.maps.DirectionsService();
