@@ -15,6 +15,9 @@ log.txt
 coverage/
 dist/
 node_modules/
+platforms/
+plugins/**
+www/**
 tmp/
 temp/
 $RECYCLE.BIN/
