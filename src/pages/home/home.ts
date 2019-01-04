@@ -334,7 +334,6 @@ export class HomePage {
     } else {
       selectedTime = this.selectedTime;
     }
-    debugger
     var config={
       params:{
         startLan:this.startLocation.lat,
