@@ -395,6 +395,13 @@ export class HomePage {
         }
 
         if(error){
+          let toast = this.toastCtrl.create({
+            message: 'No routes found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+  
+          toast.present();
           // this.callGoogle();
         }
         this.progress.dismiss();

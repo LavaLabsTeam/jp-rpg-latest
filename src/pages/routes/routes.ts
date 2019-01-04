@@ -545,7 +545,6 @@ export class RoutesPage {
           //     stops:[]
           //   })
           // }
-
           if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && !route.trips[t-1].ferry){
             tempTrips.push({
               instruction:lastTrip.routeLongName+ ' ' + lastTrip.tripHeadsign + " to " + trip.routeLongName + ' ' + trip.tripHeadsign,
@@ -556,6 +555,8 @@ export class RoutesPage {
               isRPGStop : false,
               prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
               next_stop : trip.stops[0].stopName,
+              totalWalkDurationText : lastTrip.duration,
+              totalWalkDistanceText : lastTrip.distance
             });
           } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId === route.trips[t].stops[0].stopId && !route.trips[t-1].ferry){
             tempTrips.push({
@@ -567,6 +568,8 @@ export class RoutesPage {
               isRPGStop : true,
               prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
               next_stop : trip.stops[0].stopName,
+              totalWalkDurationText : lastTrip.duration,
+              totalWalkDistanceText : lastTrip.distance
             });
           } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && route.trips[t-1].ferry){
             tempTrips.push({
@@ -578,9 +581,10 @@ export class RoutesPage {
               isRPGStop : false,
               prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
               next_stop : trip.stops[0].stopName,
+              totalWalkDurationText : lastTrip.duration,
+              totalWalkDistanceText : lastTrip.distance
             });
           } 
-
         }
 
         if(trip.stops.length==1){

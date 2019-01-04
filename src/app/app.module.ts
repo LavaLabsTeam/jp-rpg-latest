@@ -19,7 +19,7 @@ import { UtilProvider } from '../providers/util/util';
   declarations: [
     MyApp,
     SortObjectPipe,
-    RoundPipe
+    RoundPipe,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +31,6 @@ import { UtilProvider } from '../providers/util/util';
   entryComponents: [
     MyApp
   ],
-
   providers: [
     StatusBar,
     SplashScreen,
@@ -42,7 +41,6 @@ import { UtilProvider } from '../providers/util/util';
     Constants,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilProvider
-
   ]
 })
 export class AppModule {}
