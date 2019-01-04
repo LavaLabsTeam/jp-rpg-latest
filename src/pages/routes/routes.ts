@@ -97,44 +97,44 @@ export class RoutesPage {
   * @params none
   * @return none
   */
-  calculateRoutesTimeGoogle(){
-    var i=0;
-    for(let route of this.routes){
-      var s=0;
-      for(let trip of route.trips){
-        s+=trip.totalDurationValue;
-      }
+  // calculateRoutesTimeGoogle(){
+  //   var i=0;
+  //   for(let route of this.routes){
+  //     var s=0;
+  //     for(let trip of route.trips){
+  //       s+=trip.totalDurationValue;
+  //     }
 
-      this.routes[i]['name']="Route "+(i+1);
-      this.routes[i]['totalDurationValue']=s;
-      var duration=this.secondsToTime(s);
-      this.routes[i]['totalDuration']=duration;
-      // if(duration.h>0)
-      //   this.routes[i]['totalDurationText']=duration.h+"hr "+duration.m+"min";
-      // else
-      //   this.routes[i]['totalDurationText']=duration.m+"min";
+  //     this.routes[i]['name']="Route "+(i+1);
+  //     this.routes[i]['totalDurationValue']=s;
+  //     var duration=this.secondsToTime(s);
+  //     this.routes[i]['totalDuration']=duration;
+  //     // if(duration.h>0)
+  //     //   this.routes[i]['totalDurationText']=duration.h+"hr "+duration.m+"min";
+  //     // else
+  //     //   this.routes[i]['totalDurationText']=duration.m+"min";
 
-      //this.routes[i]['totalDurationText']=route.duration.text;
+  //     //this.routes[i]['totalDurationText']=route.duration.text;
 
-      var routeLabel="";
+  //     var routeLabel="";
       
-      if(i==0){
-          routeLabel='Recommended Route';
-      }
-      if(this.routes[i].trips.length<2){
-          routeLabel='Direct Route';
-      }
+  //     if(i==0){
+  //         routeLabel='Recommended Route';
+  //     }
+  //     if(this.routes[i].trips.length<2){
+  //         routeLabel='Direct Route';
+  //     }
 
-      if(this.routes[i].trips.length<2 && i==0){
-          routeLabel='Fastest Direct Route';
-      }
+  //     if(this.routes[i].trips.length<2 && i==0){
+  //         routeLabel='Fastest Direct Route';
+  //     }
 
-      //this.routes[i].routeLabel=routeLabel;
-      this.routes[i]['routeLabel']=routeLabel;
+  //     //this.routes[i].routeLabel=routeLabel;
+  //     this.routes[i]['routeLabel']=routeLabel;
 
-      i++;
-    }
-  }
+  //     i++;
+  //   }
+  // }
 
   calculateFares(){
     var error=false;
@@ -222,13 +222,11 @@ export class RoutesPage {
     return seconds;
   }
 
-  secondsToTime(secs)
+  secondsToTime(secs, ind, arrayLength)
   {
       var hours = Math.floor(secs / (60 * 60));
-
       var divisor_for_minutes = secs % (60 * 60);
       var minutes = Math.floor(divisor_for_minutes / 60);
-
       var divisor_for_seconds = divisor_for_minutes % 60;
       var seconds = Math.ceil(divisor_for_seconds);
 
@@ -239,9 +237,11 @@ export class RoutesPage {
       };
 
       //just for approx as we are skipping second so rounding it to minutes
-      if(obj.s>=0){
-        obj.m+=1;
-        obj.s=0;
+      if(ind == 0 && arrayLength == 1){
+        if(obj.s>=0){
+          obj.m+=1;
+          obj.s=0;
+        }
       }
       return obj;
   }
@@ -628,9 +628,7 @@ export class RoutesPage {
         var duration=this.timeDiff(trip.stops[0].departureTime,trip.stops[route.trips[j].stops.length-1].arrivalTime);
         
 
-
-
-        this.routes[i].trips[j].totalDuration=this.secondsToTime(duration);
+        this.routes[i].trips[j].totalDuration=this.secondsToTime(duration, j, this.routes[i].trips.length);
         this.routes[i].trips[j].totalDurationValue=duration;
         if(this.routes[i].trips[j].totalDuration.h>0)
           this.routes[i].trips[j].totalDurationText=this.routes[i].trips[j].totalDuration.h+"hr"+" "+this.routes[i].trips[j].totalDuration.m+"min";
@@ -644,7 +642,7 @@ export class RoutesPage {
 
 
       this.routes[i].totalDurationValue=sum;
-      this.routes[i].totalDuration=this.secondsToTime(sum);
+      this.routes[i].totalDuration=this.secondsToTime(sum, 0, this.routes[i].trips.length);
 
       //var distance1=this.getDistanceFromLatLon(this.startLocation.lat,this.startLocation.lng,this.routes[i].trips[0])
       this.routes[i].totalWalkDurationValue=10;
@@ -809,7 +807,7 @@ export class RoutesPage {
 
     this.result={routes:routes};
     this.routes=this.result.routes;
-    this.calculateRoutesTimeGoogle();
+    // this.calculateRoutesTimeGoogle();
     this.googleDirectionResult=result;
     //this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result});
 
