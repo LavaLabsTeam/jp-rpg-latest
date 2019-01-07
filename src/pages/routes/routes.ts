@@ -438,6 +438,13 @@ export class RoutesPage {
         }
 
         if(error){
+          let toast = this.toastCtrl.create({
+            message: 'No routes found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
           // this.callGoogle();
         }
         this.progress.dismiss();
@@ -445,13 +452,13 @@ export class RoutesPage {
     },
     error => {
       this.progress.dismiss();
-      // let toast = this.toastCtrl.create({
-      //   message: 'Error Occured!',
-      //   duration: 3000,
-      //   position: 'bottom'
-      // });
+      let toast = this.toastCtrl.create({
+        message: 'Error Occured!',
+        duration: 3000,
+        position: 'bottom'
+      });
 
-      //toast.present();
+      toast.present();
       // this.callGoogle();
     });
   }
