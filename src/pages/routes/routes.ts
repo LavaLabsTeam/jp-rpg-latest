@@ -446,6 +446,7 @@ export class RoutesPage {
 
           toast.present();
           // this.callGoogle();
+          this.routes = [];
         }
         this.progress.dismiss();
 
