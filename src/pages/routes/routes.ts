@@ -157,48 +157,48 @@ export class RoutesPage {
 
     //Comment the fare calculation code//
 
-    // return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
-    //     let fares = data.json();
-    //     //console.log(body);
-    //     console.log(this.routes);
-    //     if(fares!=null){
-    //       if(fares.length>0){
-    //         error=false;
+    return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
+        let fares = data.json();
+        //console.log(body);
+        console.log(this.routes);
+        if(fares!=null){
+          if(fares.length>0){
+            error=false;
           
-    //         var fr=[0.7,1,2.5,3.0];
-    //         var count=0;
-    //         for(var i=0; i<this.routes.length; i++){
+            var fr=[0.7,1,2.5,3.0];
+            var count=0;
+            for(var i=0; i<this.routes.length; i++){
               
-    //           var far=0;
+              var far=0;
               
               
-    //           for(var j=0; j<this.routes[i].trips.length; j++){
+              for(var j=0; j<this.routes[i].trips.length; j++){
 
-    //             //console.log(this.routes[i].trips[j]);
-    //             //console.log("   count="+count);
-    //             far+=fares[count].fare;
-    //             count++;
+                //console.log(this.routes[i].trips[j]);
+                //console.log("   count="+count);
+                far+=fares[count].fare;
+                count++;
                 
-    //           }
+              }
               
-    //           this.routes[i]['fare']=far;
+              this.routes[i]['fare']=far;
             
-    //         }
-    //       }
-    //       else {
-    //         {
-    //           error=true;
-    //         }
-    //       }
+            }
+          }
+          else {
+            {
+              error=true;
+            }
+          }
 
-    //     }
-    //     else {
-    //       error=true
-    //     }
+        }
+        else {
+          error=true
+        }
 
         return Observable.of(error).delay(2000);
 
-    // });
+    });
   }
 
   getAddressOnChange(place){
