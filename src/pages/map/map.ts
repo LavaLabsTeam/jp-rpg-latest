@@ -119,6 +119,7 @@ export class MapPage {
     
     //console.log(this.mapElement.nativeElement);
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    let i=0;
     for(let trip of route.trips){
       var locations:Array<string>=[];
       if(trip.type=="TRANSIT") {
@@ -139,6 +140,20 @@ export class MapPage {
               this.renderRouteWalk(locations, 'FERRY');
           }
         }
+
+        
+
+        if(i>0 && i<route.trips.length) {
+          var mark = new google.maps.Marker({
+            position: new google.maps.LatLng(parseFloat(trip.polyline[0].shapePtLat),parseFloat(trip.polyline[0].shapePtLon)),
+            map: this.map,
+            icon: '/assets/images/green_marker.png',
+            title: 'Your searched origin location'
+          });
+          mark.setMap(this.map);
+        }
+
+        i++;
     }
     //console.log(walkPolyLines);
 

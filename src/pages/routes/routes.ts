@@ -372,8 +372,12 @@ export class RoutesPage {
 
         if(results!=null){
           error = false
-          for(let i = 0; i < results.length; i++) {
-            route.trips[i+1].polyline = results[i].polylines
+          let x=0
+          for(let i = 0; i < route.trips.length; i++) {
+            if(route.trips[i].type!="WALKING" && route.trips[i].type!="FERRY") {
+              route.trips[i].polyline = results[x].polylines
+              x++;
+            }
           }
           this.progress.dismiss()
           this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});

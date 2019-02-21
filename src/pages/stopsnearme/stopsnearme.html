@@ -34,7 +34,7 @@
     </ion-grid>
   </div>
 
-  <ion-grid class="padding-0 margin-top" *ngIf="searchType!='route'">
+  <ion-grid class="padding-0 margin-top" *ngIf="searchType=='stop'">
       <ion-row>
         <ion-col col-4 class="bg-orange">
           <span class="text-white size-2x" color="primary">Route Name</span>
@@ -52,7 +52,7 @@
       <ion-row *ngFor="let row of records; let i=index" class="margin-bottom-1">
 
       <ion-col col-4 class="bg-white">
-        <span class="text-orange size-2x" *ngIf="row.routeNm!=null" color="primary">{{row.routeNm}}</span>
+        <span class="text-orange size-2x" *ngIf="row.routeNm!=null" color="primary">{{row.routeNm}} {{row.lingNm}}</span>
         <span class="text-orange size-2x" *ngIf="row.routeNm==null" color="primary">N/A</span>
       </ion-col>
 
@@ -81,12 +81,84 @@
     </ion-row>
   </ion-grid>
 
+  <ion-grid class="padding-0 margin-top" *ngIf="searchType=='stopsnearme'">
+    <ion-row *ngFor="let row of records; let i=index" class="margin-bottom-1">
+
+      <ion-col col-12 class="padding-0">
+        <ion-row class="bg-light-orange" (click)="expand(i)">
+          
+          <ion-col col-10>
+            <span class="text-orange text-2x align-right" color="primary">{{row.stopNm}}</span>
+          </ion-col>
+
+          <ion-col col-2 text-center>
+              <ion-icon color="light" name="md-arrow-down"></ion-icon>
+          </ion-col>
+        </ion-row>
+
+        <div #expand *ngIf="showIndex==i">
+          <div>
+            <ion-row>
+              <ion-col col-4 class="bg-orange">
+                <span class="text-white size-2x" color="primary">Route Name</span>
+              </ion-col>
+
+              <ion-col col-4 class="bg-orange" text-center>
+                <span class="text-white size-2x" color="primary">ETA of Next Bus</span>
+              </ion-col>
+
+              <ion-col col-4 class="bg-orange" text-center>
+                <span class="text-white size-2x" color="primary">ETA of Subsequent Bus</span>
+              </ion-col>
+
+            </ion-row>
+
+
+            <ion-row *ngFor="let stp of row.data; let j=index">
+                <ion-col col-4 class="bg-white">
+                    <span class="text-orange size-1x" *ngIf="stp.stopNm!=null" color="primary">{{stp.routeNm}} {{stp.lingNm}}</span>
+                    <span class="text-orange size-2x" *ngIf="stp.stopNm==null" color="primary">N/A</span>
+                  </ion-col>
+  
+                  <ion-col col-4 class="bg-white" text-center *ngIf="stp.etaList!=null">
+                    <span class="text-orange size-2x" color="primary" *ngIf="stp.etaList[0]?.eta!=null">{{stp.etaList[0]?.eta}} min</span>
+                    <span class="text-orange size-2x" color="primary" *ngIf="(stp.etaList[0]?.eta==null || stp.etaList[0]?.eta==undefined)">N/A</span>
+  
+                  </ion-col>
+  
+                  <ion-col col-4 class="bg-white" text-center *ngIf="stp.etaList==null">
+                      <span class="text-orange size-2x" color="primary">N/A</span>
+                      
+                  </ion-col>
+  
+                  <ion-col col-4 class="bg-white" text-center *ngIf="stp.etaList!=null">
+                    <span class="text-orange size-2x" color="primary" *ngIf="stp.etaList[1]?.eta!=null">{{stp.etaList[1]?.eta}} min</span>
+                    <span class="text-orange size-2x" color="primary" *ngIf="(stp.etaList[1]?.eta==null || stp.etaList[1]?.eta==undefined)">N/A</span>
+                    
+                  </ion-col>
+  
+                  <ion-col col-4 class="bg-white" text-center *ngIf="stp.etaList==null">
+                      <span class="text-orange size-2x" color="primary">N/A</span>
+                      
+                  </ion-col>
+           </ion-row>
+         </div>
+
+         <!-- <ion-row *ngIf="row.etaList==null">
+           <ion-col col-12 class="bg-white">
+             <span class="text-orange text-2x padding-5" color="primary">ETA Not Available</span>
+           </ion-col>
+        </ion-row> -->
+       </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
   <ion-grid class="padding-0 margin-top" *ngIf="searchType=='route'">
       <ion-row  class="margin-bottom-1">
 
         <ion-col col-12 class="padding-0">
-          
-
           <div>
             <div>
               <ion-row>
