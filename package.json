@@ -26,9 +26,10 @@
         "@ionic-native/splash-screen": "3.7.0",
         "@ionic-native/status-bar": "3.7.0",
         "@ionic/storage": "2.0.1",
-        "cordova-android": "7.0.0",
+        "cordova-android": "6.2.3",
+        "cordova-android-support-gradle-release": "2.0.1",
         "cordova-ios": "4.5.5",
-        "cordova-plugin-compat": "^1.2.0",
+        "cordova-plugin-compat": "1.2.0",
         "cordova-plugin-console": "^1.1.0",
         "cordova-plugin-device": "^1.1.7",
         "cordova-plugin-geolocation": "^2.4.3",
@@ -60,10 +61,15 @@
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-network-information": {},
-            "cordova-plugin-geolocation": {}
+            "cordova-plugin-geolocation": {},
+            "cordova-android-support-gradle-release": {
+                "ANDROID_SUPPORT_VERSION": "27.+"
+            },
+            "cordova-plugin-compat": {}
         },
         "platforms": [
-            "ios"
+            "ios",
+            "android"
         ]
     }
 }
