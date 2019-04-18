@@ -302,8 +302,7 @@ export class HomePage {
 
 
   planJourneyClicked(){
-
-    if(this.startAddress=="" || this.endAddress==""){
+    if((!this.startAddress || this.startAddress=="") || (!this.endAddress || this.endAddress=="")){
       let toast = this.toastCtrl.create({
         message: 'Please select start and destination locations !',
         duration: 3000,
@@ -313,17 +312,39 @@ export class HomePage {
       toast.present();
       return false;
     }
-    
+    var selectedTime;
+    if(this.chkleaveNow.checked){
+      var curDate=new Date();
+      var h,m;
+      if(curDate.getHours()<10){
+        h="0"+curDate.getHours();
+      }
+      else {
+        h=""+curDate.getHours();
+      }
+
+      if(curDate.getMinutes()<10){
+        m="0"+curDate.getMinutes();
+      }
+      else {
+        m=curDate.getMinutes();
+      }
+
+      selectedTime=h+":"+m;
+    } else {
+      selectedTime = this.selectedTime;
+    }
     var config={
       params:{
         startLan:this.startLocation.lat,
         startLon:this.startLocation.lng,
         endLan:this.endLocation.lat,
         endLon:this.endLocation.lng,
-        time:this.selectedTime+":30",
+        time:selectedTime+":30",
         date:this.selectedDateJPApi,
         hasEscalators:"false",
         hasStares:"false",
+        polyline:"false",
         leastWalking:"false",
         lowestTransit:"null",
         filter:'FASTEST_ROUTE',
@@ -395,7 +416,14 @@ export class HomePage {
         }
 
         if(error){
-          this.callGoogle();
+          let toast = this.toastCtrl.create({
+            message: 'No routes found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+  
+          toast.present();
+          // this.callGoogle();
         }
         this.progress.dismiss();
 
@@ -410,7 +438,7 @@ export class HomePage {
       //
       // toast.present();
 
-      this.callGoogle();
+      // this.callGoogle();
     });
   }
 

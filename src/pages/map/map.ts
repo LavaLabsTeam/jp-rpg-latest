@@ -108,19 +108,18 @@ export class MapPage {
     console.log(this.mapData);
     var route=this.mapData.data.route;
     var startLocation=this.mapData.data.startLocation;
+    var endLocation = this.mapData.data.endLocation;
 
     let latLng = new google.maps.LatLng(startLocation.lat, startLocation.lng);
-
-
     let mapOptions = {
       center: latLng,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-
+    
     //console.log(this.mapElement.nativeElement);
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
+    let i=0;
     for(let trip of route.trips){
       var locations:Array<string>=[];
       if(trip.type=="TRANSIT") {
@@ -141,6 +140,20 @@ export class MapPage {
               this.renderRouteWalk(locations, 'FERRY');
           }
         }
+
+        
+
+        if(i>0 && i<route.trips.length) {
+          var mark = new google.maps.Marker({
+            position: new google.maps.LatLng(parseFloat(trip.polyline[0].shapePtLat),parseFloat(trip.polyline[0].shapePtLon)),
+            map: this.map,
+            icon: '/assets/images/green_marker.png',
+            title: 'Your searched origin location'
+          });
+          mark.setMap(this.map);
+        }
+
+        i++;
     }
     //console.log(walkPolyLines);
 
@@ -232,6 +245,32 @@ export class MapPage {
     //  });
 
     //  eflightPath.setMap(this.map);
+
+    var startMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(parseFloat(startLocation.lat),parseFloat(startLocation.lng)),
+      map: this.map,
+      title: 'Your searched origin location'
+    });
+    startMarker.setMap(this.map);
+    var endMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(parseFloat(endLocation.lat),parseFloat(endLocation.lng)),
+      map: this.map,
+      title: 'Your searched destination location'
+    });
+    endMarker.setMap(this.map);
+    var infowindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(startMarker, 'click', (function(marker) {
+      return function() {
+        infowindow.setContent(startMarker.title);
+        infowindow.open(this.map, marker);
+      }
+    }) (startMarker));
+    google.maps.event.addListener(endMarker, 'click', (function(marker) {
+      return function() {
+        infowindow.setContent(endMarker.title);
+        infowindow.open(this.map, marker);
+      }
+    }) (endMarker));
     
   }
 

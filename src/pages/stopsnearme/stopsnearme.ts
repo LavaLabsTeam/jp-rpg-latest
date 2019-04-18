@@ -40,6 +40,31 @@ export class StopsnearmePage {
     this.records = navParams.get("data");
     this.searchType = navParams.get("searchtype");
     this.searchTerm = navParams.get("searchTerm");
+
+    var groupBy = function(xs, key) {
+      return xs.reduce(function(rv, x) {
+        var ar = rv[x[key]] = rv[x[key]] || []
+        ar.push(x);
+        return rv;
+      }, {});
+    };
+
+    console.log(this.records)
+    console.log("========")
+
+    if(this.searchType == "stopsnearme") {
+      let r = groupBy(this.records, "stopId")
+      
+      this.records = Object.keys(r).map((res:any) => {
+        //console.log(res)
+        return {data: r[res], stopNm: r[res][0].stopNm}
+      })
+
+      console.log(this.records)
+
+      
+    }
+    
   }
 
   ionViewDidLoad() {

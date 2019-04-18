@@ -107,7 +107,7 @@
          <h3 class="text-white text-2x">{{route.totalDurationText}} </h3>
         </ion-col>
 
-        <!-- <ion-col col-3 text-right *ngIf="api=='jpapp'">
+        <!-- <ion-col col-3 text-right *ngIf="api=='jpapp' && route.fare > 0">
            <h3 class="text-white text-2x">RM {{route.fare}}</h3>
         </ion-col> -->
 
@@ -283,16 +283,15 @@
         </ion-row> 
       </div>
 
-      <!-- <ion-row *ngIf="api=='jpapp' && route.trips.length>0">
+      <ion-row *ngIf="api=='jpapp' && route.trips.length>0 && route.fare > 0">
         <ion-col col-12 text-center class="price margin-top">
           <div class="inner-block">
             <div class="duration">
-              <h2 class="text-white">RM {{route.fare}}</h2>
+              <h2 class="text-white">RM {{route.fare | number : '1.2-2'}}</h2>
+              <span class="text-white">Adult Individual Fare</span>
             </div>
           </div>
         </ion-col>
-      </ion-row> -->
-
-
+      </ion-row>
     </ion-grid>
 </ion-content>

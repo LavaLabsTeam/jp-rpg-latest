@@ -157,7 +157,7 @@
 
                   <div class="logo" *ngIf="i > 0 && i != route.trips.length-1">
                     <!-- <ion-icon name="ios-arrow-down" color="light" class="text-3x"></ion-icon> -->
-                    <span class="eta text-2x text-white">About {{trip.totalDurationText}}</span>
+                    <span class="eta text-2x text-white">About {{trip.totalWalkDurationText | walkingDuration}} mins, {{trip.totalWalkDistanceText}}m</span>
                   </div>
                   <!-- <div class="alert">
                     <span class="text-1x text-white">Route will not be available during this time due to traffic</span>

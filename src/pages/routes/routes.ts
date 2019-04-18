@@ -97,44 +97,44 @@ export class RoutesPage {
   * @params none
   * @return none
   */
-  calculateRoutesTimeGoogle(){
-    var i=0;
-    for(let route of this.routes){
-      var s=0;
-      for(let trip of route.trips){
-        s+=trip.totalDurationValue;
-      }
+  // calculateRoutesTimeGoogle(){
+  //   var i=0;
+  //   for(let route of this.routes){
+  //     var s=0;
+  //     for(let trip of route.trips){
+  //       s+=trip.totalDurationValue;
+  //     }
 
-      this.routes[i]['name']="Route "+(i+1);
-      this.routes[i]['totalDurationValue']=s;
-      var duration=this.secondsToTime(s);
-      this.routes[i]['totalDuration']=duration;
-      // if(duration.h>0)
-      //   this.routes[i]['totalDurationText']=duration.h+"hr "+duration.m+"min";
-      // else
-      //   this.routes[i]['totalDurationText']=duration.m+"min";
+  //     this.routes[i]['name']="Route "+(i+1);
+  //     this.routes[i]['totalDurationValue']=s;
+  //     var duration=this.secondsToTime(s);
+  //     this.routes[i]['totalDuration']=duration;
+  //     // if(duration.h>0)
+  //     //   this.routes[i]['totalDurationText']=duration.h+"hr "+duration.m+"min";
+  //     // else
+  //     //   this.routes[i]['totalDurationText']=duration.m+"min";
 
-      //this.routes[i]['totalDurationText']=route.duration.text;
+  //     //this.routes[i]['totalDurationText']=route.duration.text;
 
-      var routeLabel="";
+  //     var routeLabel="";
       
-      if(i==0){
-          routeLabel='Recommended Route';
-      }
-      if(this.routes[i].trips.length<2){
-          routeLabel='Direct Route';
-      }
+  //     if(i==0){
+  //         routeLabel='Recommended Route';
+  //     }
+  //     if(this.routes[i].trips.length<2){
+  //         routeLabel='Direct Route';
+  //     }
 
-      if(this.routes[i].trips.length<2 && i==0){
-          routeLabel='Fastest Direct Route';
-      }
+  //     if(this.routes[i].trips.length<2 && i==0){
+  //         routeLabel='Fastest Direct Route';
+  //     }
 
-      //this.routes[i].routeLabel=routeLabel;
-      this.routes[i]['routeLabel']=routeLabel;
+  //     //this.routes[i].routeLabel=routeLabel;
+  //     this.routes[i]['routeLabel']=routeLabel;
 
-      i++;
-    }
-  }
+  //     i++;
+  //   }
+  // }
 
   calculateFares(){
     var error=false;
@@ -157,49 +157,50 @@ export class RoutesPage {
 
     //Comment the fare calculation code//
 
-    // return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
-    //     let fares = data.json();
-    //     //console.log(body);
-    //     console.log(this.routes);
-    //     if(fares!=null){
-    //       if(fares.length>0){
-    //         error=false;
+    return this.http.post(this.constants.BASE_URL_FARES_ROUTES,params).do(data => {
+        let fares = data.json();
+        //console.log(body);
+        console.log(this.routes);
+        if(fares!=null){
+          if(fares.length>0){
+            error=false;
           
-    //         var fr=[0.7,1,2.5,3.0];
-    //         var count=0;
-    //         for(var i=0; i<this.routes.length; i++){
+            var fr=[0.7,1,2.5,3.0];
+            var count=0;
+            for(var i=0; i<this.routes.length; i++){
               
-    //           var far=0;
+              var far=0;
               
               
-    //           for(var j=0; j<this.routes[i].trips.length; j++){
+              for(var j=0; j<this.routes[i].trips.length; j++){
 
-    //             //console.log(this.routes[i].trips[j]);
-    //             //console.log("   count="+count);
-    //             far+=fares[count].fare;
-    //             count++;
+                //console.log(this.routes[i].trips[j]);
+                //console.log("   count="+count);
+                far+=fares[count].fare;
+                count++;
                 
-    //           }
+              }
               
-    //           this.routes[i]['fare']=far;
+              this.routes[i]['fare']=far;
             
-    //         }
-    //       }
-    //       else {
-    //         {
-    //           error=true;
-    //         }
-    //       }
+            }
+          }
+          else {
+            {
+              error=true;
+            }
+          }
 
-    //     }
-    //     else {
-    //       error=true
-    //     }
+        }
+        else {
+          error=true
+        }
 
         return Observable.of(error).delay(2000);
 
-    // });
+    });
   }
+
 
   getAddressOnChange(place){
     //console.log(place);
@@ -222,13 +223,11 @@ export class RoutesPage {
     return seconds;
   }
 
-  secondsToTime(secs)
+  secondsToTime(secs, ind, arrayLength)
   {
       var hours = Math.floor(secs / (60 * 60));
-
       var divisor_for_minutes = secs % (60 * 60);
       var minutes = Math.floor(divisor_for_minutes / 60);
-
       var divisor_for_seconds = divisor_for_minutes % 60;
       var seconds = Math.ceil(divisor_for_seconds);
 
@@ -239,9 +238,11 @@ export class RoutesPage {
       };
 
       //just for approx as we are skipping second so rounding it to minutes
-      if(obj.s>=0){
-        obj.m+=1;
-        obj.s=0;
+      if(ind == 0 && arrayLength == 1){
+        if(obj.s>=0){
+          obj.m+=1;
+          obj.s=0;
+        }
       }
       return obj;
   }
@@ -341,7 +342,65 @@ export class RoutesPage {
 
 
   viewRouteDetailsClicked(route){
-    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});
+    console.log(route)
+    var error=false;
+    console.log("route polyline starts");
+    var params:Array<any>=[];
+    this.progress.present();
+    for(let trip of route.trips){
+      //var trip=r.trips[1];
+      if(trip.type!="WALKING" && trip.stops != undefined){
+        params.push({
+          shapeId : trip.shapeId,
+          startStopId:trip.stops[0].stopId,
+          endStopId:trip.stops[trip.stops.length-1].stopId,
+          tripId:trip.tripId,
+          startStopSeq:trip.stops[0].stopSequence,
+          endStopSeq:trip.stops[trip.stops.length-1].stopSequence
+        });
+      }
+    }
+
+
+    //Comment the fare calculation code//
+
+    this.http.post(this.constants.BASE_URL_FARES_POLYLINE,params).subscribe(data => {
+        let results = data.json();
+        
+        //console.log(results);
+        //console.log("saagd===========saga");
+
+        if(results!=null){
+          error = false
+          let x=0
+          for(let i = 0; i < route.trips.length; i++) {
+            if(route.trips[i].type!="WALKING" && route.trips[i].type!="FERRY") {
+              route.trips[i].polyline = results[x].polylines
+              x++;
+            }
+          }
+          this.progress.dismiss()
+          this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});
+        }
+        else {
+          error=true
+          this.progress.dismiss()
+        }
+
+        if(error) {
+          this.progress.dismiss()
+          let toast = this.toastCtrl.create({
+            message: 'No polylines found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
+        }
+
+    });
+
+    
   }
 
 
@@ -358,6 +417,7 @@ export class RoutesPage {
         date:this.selectedDateJPApi,
         hasEscalators:"false",
         hasStares:"false",
+        polyline:"false",
         leastWalking:"false",
         lowestTransit:"false",
         filter:'FASTEST_ROUTE',
@@ -438,20 +498,28 @@ export class RoutesPage {
         }
 
         if(error){
+          let toast = this.toastCtrl.create({
+            message: 'No routes found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
           // this.callGoogle();
+          this.routes = [];
         }
         this.progress.dismiss();
 
     },
     error => {
       this.progress.dismiss();
-      // let toast = this.toastCtrl.create({
-      //   message: 'Error Occured!',
-      //   duration: 3000,
-      //   position: 'bottom'
-      // });
+      let toast = this.toastCtrl.create({
+        message: 'Error Occured!',
+        duration: 3000,
+        position: 'bottom'
+      });
 
-      //toast.present();
+      toast.present();
       // this.callGoogle();
     });
   }
@@ -545,7 +613,6 @@ export class RoutesPage {
           //     stops:[]
           //   })
           // }
-
           if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && !route.trips[t-1].ferry){
             tempTrips.push({
               instruction:lastTrip.routeLongName+ ' ' + lastTrip.tripHeadsign + " to " + trip.routeLongName + ' ' + trip.tripHeadsign,
@@ -556,6 +623,8 @@ export class RoutesPage {
               isRPGStop : false,
               prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
               next_stop : trip.stops[0].stopName,
+              totalWalkDurationText : lastTrip.duration,
+              totalWalkDistanceText : lastTrip.distance
             });
           } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId === route.trips[t].stops[0].stopId && !route.trips[t-1].ferry){
             tempTrips.push({
@@ -567,6 +636,8 @@ export class RoutesPage {
               isRPGStop : true,
               prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
               next_stop : trip.stops[0].stopName,
+              totalWalkDurationText : lastTrip.duration,
+              totalWalkDistanceText : lastTrip.distance
             });
           } else if(route.trips[t-1].stops[route.trips[t-1].stops.length-1].stopId !== route.trips[t].stops[0].stopId && route.trips[t-1].ferry){
             tempTrips.push({
@@ -578,9 +649,10 @@ export class RoutesPage {
               isRPGStop : false,
               prev_stop : lastTrip.stops[lastTrip.stops.length-1].stopName,
               next_stop : trip.stops[0].stopName,
+              totalWalkDurationText : lastTrip.duration,
+              totalWalkDistanceText : lastTrip.distance
             });
           } 
-
         }
 
         if(trip.stops.length==1){
@@ -628,9 +700,7 @@ export class RoutesPage {
         var duration=this.timeDiff(trip.stops[0].departureTime,trip.stops[route.trips[j].stops.length-1].arrivalTime);
         
 
-
-
-        this.routes[i].trips[j].totalDuration=this.secondsToTime(duration);
+        this.routes[i].trips[j].totalDuration=this.secondsToTime(duration, j, this.routes[i].trips.length);
         this.routes[i].trips[j].totalDurationValue=duration;
         if(this.routes[i].trips[j].totalDuration.h>0)
           this.routes[i].trips[j].totalDurationText=this.routes[i].trips[j].totalDuration.h+"hr"+" "+this.routes[i].trips[j].totalDuration.m+"min";
@@ -644,7 +714,7 @@ export class RoutesPage {
 
 
       this.routes[i].totalDurationValue=sum;
-      this.routes[i].totalDuration=this.secondsToTime(sum);
+      this.routes[i].totalDuration=this.secondsToTime(sum, 0, this.routes[i].trips.length);
 
       //var distance1=this.getDistanceFromLatLon(this.startLocation.lat,this.startLocation.lng,this.routes[i].trips[0])
       this.routes[i].totalWalkDurationValue=10;
@@ -809,7 +879,7 @@ export class RoutesPage {
 
     this.result={routes:routes};
     this.routes=this.result.routes;
-    this.calculateRoutesTimeGoogle();
+    // this.calculateRoutesTimeGoogle();
     this.googleDirectionResult=result;
     //this.navCtrl.push(RoutesPage,{data:data,startAddress:this.startAddress,endAddress:this.endAddress, startLocation:this.startLocation, endLocation:this.endLocation,api:"google",googleDirectionResult:result});
 
