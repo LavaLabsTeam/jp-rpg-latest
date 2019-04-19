@@ -344,6 +344,7 @@ export class HomePage {
         date:this.selectedDateJPApi,
         hasEscalators:"false",
         hasStares:"false",
+        polyline:"false",
         leastWalking:"false",
         lowestTransit:"null",
         filter:'FASTEST_ROUTE',

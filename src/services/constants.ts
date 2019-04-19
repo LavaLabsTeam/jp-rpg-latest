@@ -19,6 +19,7 @@ export class Constants {
   public BASE_URL_SCHEDULES:string = this.BASE_URL_API+"/open/api/schedules";
   public BASE_URL_FARES:string = this.BASE_URL_API+"/open/api/fares-data";
   public BASE_URL_FARES_ROUTES:string = this.BASE_URL_API+"/open/api/fares-for-routes";
+  public BASE_URL_FARES_POLYLINE:string = this.BASE_URL_API+"/open/api/get-polyline2";
   public BASE_URL_NEAREST_STOPS:string = this.BASE_URL_API+"/open/api/nearest-stops";
   public BASE_URL_ROUTE_SEARCH_ETA:string = this.BASE_URL_API+"/open/api/search-routes";
   public BASE_URL_ROUTE_SEARCH_ETA_DATA:string = this.BASE_URL_API+"/open/api/searcheta";

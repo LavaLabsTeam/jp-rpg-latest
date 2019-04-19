@@ -201,6 +201,7 @@ export class RoutesPage {
     });
   }
 
+
   getAddressOnChange(place){
     //console.log(place);
     //this.viewCtrl.dismiss({place:place});
@@ -341,7 +342,65 @@ export class RoutesPage {
 
 
   viewRouteDetailsClicked(route){
-    this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});
+    console.log(route)
+    var error=false;
+    console.log("route polyline starts");
+    var params:Array<any>=[];
+    this.progress.present();
+    for(let trip of route.trips){
+      //var trip=r.trips[1];
+      if(trip.type!="WALKING" && trip.stops != undefined){
+        params.push({
+          shapeId : trip.shapeId,
+          startStopId:trip.stops[0].stopId,
+          endStopId:trip.stops[trip.stops.length-1].stopId,
+          tripId:trip.tripId,
+          startStopSeq:trip.stops[0].stopSequence,
+          endStopSeq:trip.stops[trip.stops.length-1].stopSequence
+        });
+      }
+    }
+
+
+    //Comment the fare calculation code//
+
+    this.http.post(this.constants.BASE_URL_FARES_POLYLINE,params).subscribe(data => {
+        let results = data.json();
+        
+        //console.log(results);
+        //console.log("saagd===========saga");
+
+        if(results!=null){
+          error = false
+          let x=0
+          for(let i = 0; i < route.trips.length; i++) {
+            if(route.trips[i].type!="WALKING" && route.trips[i].type!="FERRY") {
+              route.trips[i].polyline = results[x].polylines
+              x++;
+            }
+          }
+          this.progress.dismiss()
+          this.navCtrl.push(RoutedetailPage,{data:route, startLocation:this.startLocation, endLocation:this.endLocation,startAddress:this.startAddress,endAddress:this.endAddress,api:this.api,googleDirectionResult:this.googleDirectionResult, selectedTime:this.selectedTime});
+        }
+        else {
+          error=true
+          this.progress.dismiss()
+        }
+
+        if(error) {
+          this.progress.dismiss()
+          let toast = this.toastCtrl.create({
+            message: 'No polylines found!',
+            duration: 3000,
+            position: 'bottom'
+          });
+
+          toast.present();
+        }
+
+    });
+
+    
   }
 
 
@@ -358,6 +417,7 @@ export class RoutesPage {
         date:this.selectedDateJPApi,
         hasEscalators:"false",
         hasStares:"false",
+        polyline:"false",
         leastWalking:"false",
         lowestTransit:"false",
         filter:'FASTEST_ROUTE',
