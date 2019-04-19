@@ -148,7 +148,9 @@ export class RoutesPage {
             routeName:r.name,
             startStopId: trip.stops[0].stopId,
             endStopId: trip.stops[trip.stops.length-1].stopId,
-            shapeId: trip.shapeId
+            shapeId: trip.shapeId,
+            startStopSeq : trip.stops[0].stopSequence,
+            endStopSeq : trip.stops[trip.stops.length-1].stopSequence
           });
         }
       }
