@@ -167,7 +167,7 @@ export class RoutesPage {
           if(fares.length>0){
             error=false;
           
-            var fr=[0.7,1,2.5,3.0];
+            // var fr=[0.7,1,2.5,3.0];
             var count=0;
             for(var i=0; i<this.routes.length; i++){
               
