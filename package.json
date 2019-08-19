@@ -68,7 +68,6 @@
             "cordova-plugin-compat": {}
         },
         "platforms": [
-            "ios",
             "android"
         ]
     }

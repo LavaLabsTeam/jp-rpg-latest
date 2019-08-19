@@ -582,81 +582,94 @@ export class HomePage {
 
   viewETAClicked(){
     //this.navCtrl.push(EtaresultPage,{data:"sagar"})
-    this.progress.present();
+   
     var config={};
     //console.log(Number(this.stopName));
     var etaSearchType;
-    if(this.stopName!=undefined && this.stopName!="") {
-      if(isNaN(this.stopName)){
-        config={
-          params:{
-            stopName:this.stopName
-          }
-        }
-      }
-      else{
-        config={
-          params:{
-            stopId:this.stopName
-          }
-        }
-      }
-
-      etaSearchType="stop";
-      this.searchTerm=this.stopName;
-    }
-    else {
-      config={
-        params:{
-          routeId:this.etaSearchData.routeId,
-          lineId:this.etaSearchData.lingId
-        }
-      }
-      etaSearchType="route";
-      this.searchTerm=this.etaSearchData.routeNm+"<br>"+this.etaSearchData.lingNm;
-    }
-
-    console.log(config);
-
-    var error=false;
-    this.http.get(this.constants.BASE_URL_ROUTE_SEARCH_ETA_DATA,config).timeout(30000).subscribe(data => {
-        let json = data.json();
-        this.progress.dismiss();
-        //console.log(body);
-        if(json.body!=null){
-          if(json.body.length>0){
-            error=false;
-            this.navCtrl.push(StopsnearmePage,{data:json.body,searchtype:etaSearchType,searchTerm:this.searchTerm});
-          }
-          else {
-            {
-              error=true;
+    if((this.stopName != "" && this.stopName != undefined) || (this.routeName != "" && this.routeName != undefined)) {
+      if(this.stopName!=undefined && this.stopName!="") {
+        if(isNaN(this.stopName)){
+          config={
+            params:{
+              stopName:this.stopName
             }
           }
-
         }
-        else {
-          error=true
+        else{
+          config={
+            params:{
+              stopId:this.stopName
+            }
+          }
         }
 
-        if(error){
+        etaSearchType="stop";
+        this.searchTerm=this.stopName;
+      }
+      else {
+        config={
+          params:{
+            routeId:this.etaSearchData.routeId,
+            lineId:this.etaSearchData.lingId
+          }
+        }
+        etaSearchType="route";
+        this.searchTerm=this.etaSearchData.routeNm+"<br>"+this.etaSearchData.lingNm;
+      }
+
+      console.log(config);
+
+      var error=false;
+      this.progress.present();
+      this.http.get(this.constants.BASE_URL_ROUTE_SEARCH_ETA_DATA,config).timeout(30000).subscribe(data => {
+          let json = data.json();
           this.progress.dismiss();
-          let toast = this.toastCtrl.create({
-            message: 'No Stops Found!',
-            duration: 3000,
-            position: 'bottom'
-          });
+          //console.log(body);
+          if(json.body!=null){
+            if(json.body.length>0){
+              error=false;
+              this.navCtrl.push(StopsnearmePage,{data:json.body,searchtype:etaSearchType,searchTerm:this.searchTerm});
+            }
+            else {
+              {
+                error=true;
+              }
+            }
 
-          toast.present();
-        }
+          }
+          else {
+            error=true
+          }
 
-    });
+          if(error){
+            this.progress.dismiss();
+            let toast = this.toastCtrl.create({
+              message: 'No Stops Found!',
+              duration: 3000,
+              position: 'bottom'
+            });
+
+            toast.present();
+          }
+
+      });
+    } else {
+      let toast = this.toastCtrl.create({
+        message: 'Please select route or stop!',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+      return false;
+    }
+
+    
 
 
   }
 
   viewStopsNearMeClicked(){
-    this.progress.present();
     if(this.currentLocation==null){
       let toast = this.toastCtrl.create({
         message: 'Current location not resolved !',
@@ -680,7 +693,7 @@ export class HomePage {
         lon:this.currentLocation.lng
       }
     }
-
+    this.progress.present();
     var error=false;
     this.http.get(this.constants.BASE_URL_ROUTE_SEARCH_ETA_DATA,config).subscribe(data => {
         let json = data.json();
