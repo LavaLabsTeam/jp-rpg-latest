@@ -1,8 +1,12 @@
 import { Http } from '@angular/http';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { Constants } from '../../services/constants';
+import { Subject } from "rxjs/Subject";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
+import { Subscription } from 'rxjs/Subscription';
 declare var google:any;
 /**
  * Generated class for the PlacesearchPage page.
@@ -20,6 +24,10 @@ export class PlacesearchPage {
   name:string;
   geocoder:any;
   items: any;
+  searchTextChanged :any = new Subject<string>();
+  private searchUpdated: Subject<any> = new Subject();
+  @Output() searchChangeEmitter: any = new EventEmitter();  // This is an output component that tells the rest of the world that the user has entered a valid text
+
   constructor(public viewCtrl: ViewController,public navParams: NavParams, private http:Http, public constants:Constants) {
     //alert(this.navParams.data.name);
     // if(this.navParams.data.name=="start"){
@@ -31,10 +39,21 @@ export class PlacesearchPage {
     // }
 
     // this.geocoder = new google.maps.Geocoder();
+    this.searchChangeEmitter = this.searchUpdated.asObservable()
+    .debounceTime(500)
+    .distinctUntilChanged()
+    .subscribe((res) => {
+      this.onSearchKeyPress();
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PlacesearchPage');
+  }
+
+  public onSearchType(value: string) {
+      console.log(value);
+      this.searchUpdated.next(value); // Emit the event to all listeners that signed up - we will sign up in our contractor
   }
 
 
