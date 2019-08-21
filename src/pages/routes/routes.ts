@@ -351,7 +351,7 @@ export class RoutesPage {
     this.progress.present();
     for(let trip of route.trips){
       //var trip=r.trips[1];
-      if(trip.type!="WALKING" && trip.stops != undefined){
+      if(trip.type!="WALKING" && (trip.stops != undefined && trip.stops.length)){
         params.push({
           shapeId : trip.shapeId,
           startStopId:trip.stops[0].stopId,
