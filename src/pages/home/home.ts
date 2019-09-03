@@ -349,7 +349,10 @@ export class HomePage {
         lowestTransit:"null",
         filter:'FASTEST_ROUTE',
         startStopId: this.startLocation.stopId,
-        endStopId : this.endLocation.stopId
+        endStopId : this.endLocation.stopId,
+        diagDev: "mobile",
+        diagSrc: "mob_home",
+        experimental: "1"
       }
       // params:{
       //   startLan:"3.2066336",

@@ -351,7 +351,7 @@ export class RoutesPage {
     this.progress.present();
     for(let trip of route.trips){
       //var trip=r.trips[1];
-      if(trip.type!="WALKING" && (trip.stops != undefined && trip.stops.length)){
+      if(trip.type!="WALKING" && (trip.stops != undefined && trip.stops.length) && trip.type!="FERRY"){
         params.push({
           shapeId : trip.shapeId,
           startStopId:trip.stops[0].stopId,
@@ -424,7 +424,10 @@ export class RoutesPage {
         lowestTransit:"false",
         filter:'FASTEST_ROUTE',
         startStopId: this.startLocation.stopId,
-        endStopId : this.endLocation.stopId
+        endStopId : this.endLocation.stopId,
+        diagDev: "mobile",
+        diagSrc: "mob_routes",
+        experimental: "1"
       }
 
       // params:{
@@ -605,6 +608,46 @@ export class RoutesPage {
       });
       var lastTrip=null;
       for(let trip of route.trips){
+        
+        // 20190825 Ham - Ferry-link compatibility
+        //    Ferry card insertion for special cases "cond1" to "cond4" at result page
+        if (trip.ferryCompat != "false") { // ref: actual
+          if (trip.ferryCompat == 'mob_straight') {
+              tempTrips.push({
+              ferryCompat:trip.ferryCompat,
+              instruction:'Ride Ferry',
+              instructionHeading:'',
+              type:'FERRY',
+              stops:trip.stops,
+              isRPGStop : false,
+              prev_stop : trip.stops[0].stopName,
+              next_stop : trip.stops[1].stopName,
+              totalWalkDurationText : trip.duration,
+              totalWalkDistanceText : trip.distance,
+              walkPolyline : trip.walkPolyline
+            });
+            lastTrip=trip;
+            t++;
+            continue;
+          } else {
+              tempTrips.push({
+              ferryCompat:trip.ferryCompat,
+              instruction:'Ride Ferry',
+              instructionHeading:'',
+              type:'FERRY',
+              stops:trip.stops,
+              isRPGStop : false,
+              prev_stop : trip.stops[0].stopName,
+              next_stop : trip.stops[1].stopName,
+              totalWalkDurationText : trip.duration,
+              totalWalkDistanceText : trip.distance,
+              walkPolyline : trip.walkPolyline
+            });
+            lastTrip=trip;
+            t++;
+            continue;
+          }
+        }
 
         if(lastTrip!=null && t<=route.trips.length-1){
           // if(lastTrip.stops[lastTrip.stops.length-1].stopName!=trip.stops[0].stopName){

@@ -83,6 +83,15 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
 
   fetchPolylineWalk(index: number){
     if(index == 0){
+      // first walk, start to first trip
+      // mod only for mob_straight, cond1, cond2
+      if(this.route.trips[index+1].ferryCompat == "mob_straight" || this.route.trips[index+1].ferryCompat == "cond1" || this.route.trips[index+1].ferryCompat == "cond2"){
+        var toShPtLat = parseFloat(this.startLocation.lat); // ch
+        var toShPtLon = parseFloat(this.startLocation.lng); // ch
+      } else { // original
+        var toShPtLat = parseFloat(this.route.trips[index+1].polyline[0].shapePtLat);
+        var toShPtLon = parseFloat(this.route.trips[index+1].polyline[0].shapePtLon);
+      }
       this.walkPolyLines.push(
         [
           {
@@ -90,17 +99,27 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
             shapePtLon: parseFloat(this.startLocation.lng),
           },
           {
-            shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
-            shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+            shapePtLat: toShPtLat,
+            shapePtLon: toShPtLon,
           }
         ],
       );
     } else if(index == this.route.trips.length - 1){
+      // last walk, last trip to end
+      // mod only for mob_straight, cond3, cond4
+      if(this.route.trips[index-1].ferryCompat == "mob_straight" || this.route.trips[index-1].ferryCompat == "cond3" || this.route.trips[index-1].ferryCompat == "cond4"
+      ){
+        var frShPtLat = parseFloat(this.endLocation.lat); // ch
+        var frShPtLon = parseFloat(this.endLocation.lng); // ch
+      } else { // original
+        var frShPtLat = parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat);
+        var frShPtLon = parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon);
+      }
       this.walkPolyLines.push(
         [
           {
-            shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
-            shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
+            shapePtLat: frShPtLat,
+            shapePtLon: frShPtLon,
           },
           {
             shapePtLat: parseFloat(this.endLocation.lat),
@@ -110,7 +129,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       );
     } else {
       if(index < this.route.trips.length-1){
-        if(this.route.trips[index].type == "FERRY"){
+        if(this.route.trips[index].type == "FERRY" && !this.route.trips[index].ferryCompat){
           this.walkPolyLines.push(
             [
               {
@@ -124,8 +143,11 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
             ],
           );
         }
-        else if(this.route.trips[index].type == "WALKING"){
-          var polyline = this.route.trips[index-1].walkPolyline;
+        else if(this.route.trips[index].type == "WALKING" || (this.route.trips[index].type == "FERRY" && this.route.trips[index].ferryCompat)){
+          if (this.route.trips[index].ferryCompat)
+            var polyline = this.route.trips[index].walkPolyline;
+          else
+            var polyline = this.route.trips[index-1].walkPolyline;
           console.log(polyline);
           if(polyline){
             var polylines = polyline.split(":");
@@ -133,16 +155,37 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
             for(var i=0; i<polylines.length; i++) {
               var paths = google.maps.geometry.encoding.decodePath(polylines[i]);
               if(i==0){
-                this.walkPolyLines[this.walkPolyLines.length-1].push(
-                  {
-                    shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
-                    shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
-                  },
-                  {
-                    shapePtLat: paths[0].lat(),
-                    shapePtLon: paths[0].lng(),
+                if(this.route.trips[index].ferryCompat){
+                  if(this.route.trips[index].ferryCompat == "mob_straight" || this.route.trips[index].ferryCompat == "cond1" || this.route.trips[index].ferryCompat == "cond2"){
+                    var frShPtLat = parseFloat(this.walkPolyLines[this.walkPolyLines.length-2][ this.walkPolyLines[this.walkPolyLines.length-2].length-1 ].shapePtLat);
+                    var frShPtLon = parseFloat(this.walkPolyLines[this.walkPolyLines.length-2][ this.walkPolyLines[this.walkPolyLines.length-2].length-1 ].shapePtLon);
+                  } else { // original
+                    var frShPtLat = parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat);
+                    var frShPtLon = parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon);
                   }
-                );
+                  this.walkPolyLines[this.walkPolyLines.length-1].push(
+                    {
+                      shapePtLat: frShPtLat,
+                      shapePtLon: frShPtLon,
+                    },
+                    {
+                      shapePtLat: paths[0].lat(),
+                      shapePtLon: paths[0].lng(),
+                    }
+                  );
+                }
+                else { // ori
+                  this.walkPolyLines[this.walkPolyLines.length-1].push(
+                    {
+                      shapePtLat: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLat),
+                      shapePtLon: parseFloat(this.route.trips[index-1].polyline[this.route.trips[index-1].polyline.length-1].shapePtLon),
+                    },
+                    {
+                      shapePtLat: paths[0].lat(),
+                      shapePtLon: paths[0].lng(),
+                    }
+                  );
+                }
               }
               console.log(paths);
               for(var l=0; l<paths.length; l++){
@@ -152,16 +195,37 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
                 });
               }
               if(i == polylines.length-2){
-                this.walkPolyLines.push([
-                  {
-                    shapePtLat: paths[paths.length-1].lat(),
-                    shapePtLon: paths[paths.length-1].lng(),
-                  },
-                  {
-                    shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
-                    shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+                if(this.route.trips[index].ferryCompat){
+                  if(this.route.trips[index].ferryCompat == "mob_straight" || this.route.trips[index].ferryCompat == "cond3" || this.route.trips[index].ferryCompat == "cond4"){
+                    var toShPtLat = parseFloat(this.endLocation.lat);
+                    var toShPtLon = parseFloat(this.endLocation.lng);
+                  } else { // original
+                    var toShPtLat = parseFloat(this.route.trips[index+1].polyline[0].shapePtLat);
+                    var toShPtLon = parseFloat(this.route.trips[index+1].polyline[0].shapePtLon);
                   }
-                ]);
+                  this.walkPolyLines.push([
+                    {
+                      shapePtLat: paths[paths.length-1].lat(),
+                      shapePtLon: paths[paths.length-1].lng(),
+                    },
+                    {
+                      shapePtLat: toShPtLat,
+                      shapePtLon: toShPtLon,
+                    }
+                  ]);
+                }
+                else { // ori
+                  this.walkPolyLines.push([
+                    {
+                      shapePtLat: paths[paths.length-1].lat(),
+                      shapePtLon: paths[paths.length-1].lng(),
+                    },
+                    {
+                      shapePtLat: parseFloat(this.route.trips[index+1].polyline[0].shapePtLat),
+                      shapePtLon: parseFloat(this.route.trips[index+1].polyline[0].shapePtLon),
+                    }
+                  ]);
+                }
               }
             }
           }
@@ -278,6 +342,10 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public c
       else{
         if(trip.type=='TRANSIT'){
           this.route.trips[i]['departureInfo']="Departure time- "+this.tConvert(this.route.trips[i].stops[0]['departureTime']);
+        }
+        else if (trip.ferryCompat && trip.ferryCompat != 'false'){
+          //this.route.trips[i]['departureInfo']="Leave at "+this.tConvert(this.route.trips[i].stops[0].departureTime);
+          this.route.trips[i]['departureInfo']="Leave at "+this.tConvert(this.route.trips[i].stops[0].departureTime);
         }
         else{
           this.route.trips[i]['departureInfo']="Leave at "+this.tConvert(this.route.trips[i-1].stops[this.route.trips[i-1].stops.length-1]['departureTime']);
