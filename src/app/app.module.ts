@@ -14,7 +14,7 @@ import { Network } from '@ionic-native/network';
 import { SortObjectPipe } from '../pipes/sort-object/sort-object';
 import { RoundPipe } from '../pipes/round/round';
 import { UtilProvider } from '../providers/util/util';
-
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 @NgModule({
   declarations: [
     MyApp,
@@ -35,6 +35,7 @@ import { UtilProvider } from '../providers/util/util';
     StatusBar,
     SplashScreen,
     Geolocation,
+    AndroidPermissions,
     Network,
     DatePipe,
     RoundPipe,

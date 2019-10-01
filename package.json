@@ -20,6 +20,7 @@
         "@angular/http": "4.1.2",
         "@angular/platform-browser": "4.1.2",
         "@angular/platform-browser-dynamic": "4.1.2",
+        "@ionic-native/android-permissions": "^4.20.0",
         "@ionic-native/core": "^3.7.0",
         "@ionic-native/geolocation": "^3.11.0",
         "@ionic-native/network": "^4.0.1",
@@ -29,6 +30,7 @@
         "cordova-android": "6.2.3",
         "cordova-android-support-gradle-release": "2.0.1",
         "cordova-ios": "4.5.5",
+        "cordova-plugin-android-permissions": "^1.0.0",
         "cordova-plugin-compat": "1.2.0",
         "cordova-plugin-console": "^1.1.0",
         "cordova-plugin-device": "^1.1.7",
@@ -65,7 +67,8 @@
             "cordova-android-support-gradle-release": {
                 "ANDROID_SUPPORT_VERSION": "27.+"
             },
-            "cordova-plugin-compat": {}
+            "cordova-plugin-compat": {},
+            "cordova-plugin-android-permissions": {}
         },
         "platforms": [
             "android"

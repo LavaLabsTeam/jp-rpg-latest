@@ -19,6 +19,8 @@ import { Events } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { RoutesautocompletePage } from "../routesautocomplete/routesautocomplete";
 import { UtilProvider } from '../../providers/util/util';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
 
 declare var google:any;
 
@@ -73,7 +75,12 @@ export class HomePage {
     , public events: Events
     , private network: Network
     , private utilService : UtilProvider
+    , private androidPermissions : AndroidPermissions
   ) {
+    let premissions: string[] = [
+      androidPermissions.PERMISSION.ACCESS_FINE_LOCATION, 
+      androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION
+    ];
     this.whatTime = Observable.interval(1000).map(x => new Date()).share();
     //console.log(constants);
     this.departureDate=new Date();
@@ -114,25 +121,17 @@ export class HomePage {
     });
 
     //perform network resolve
-
-    this.resolveLocation();
-
     this.plt.ready().then((readySource) => {
-      this.watch = this.geolocation.watchPosition();
-      this.watch.subscribe((data) => {
-       // data can be a set of coordinates, or an error (if an error occurred).
-       // data.coords.latitude
-       // data.coords.longitude
-       
-       if(data.coords!=undefined){
-         this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
-       }
+      if(this.plt.is('android')) {
+        this.androidPermissions.requestPermissions(premissions);
+      }
+      setTimeout(() => {
+        this.resolveLocation();
+      }, 3000)
+      
 
-       console.log(data);
-       //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
-      });
-    });
-
+    })
+    
     // i
 
     // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
@@ -180,24 +179,35 @@ export class HomePage {
 
 
   resolveLocation(){
-    this.plt.ready().then((readySource) => {
-      console.log('Platform ready from', readySource);
-      // Platform now ready, execute any required native code
-      this.geolocation.getCurrentPosition().then((resp) => {
-       //console.log('sssssssss');
-       // resp.coords.latitude
-       // resp.coords.longitude
-      //  this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-       this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
-      //  this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
-       this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
-       //console.log(resp);
-      }).catch((error) => {
-        console.log('Error getting location', error);
-      });
-    });
+  
+   // Platform now ready, execute any required native code
+   this.geolocation.getCurrentPosition().then((resp) => {
+    //console.log('sssssssss');
+    // resp.coords.latitude
+    // resp.coords.longitude
+   //  this.startLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+    this.currentLocation={lat:resp.coords.latitude,lng:resp.coords.longitude};
+   //  this.getGeoCodeReverse(resp.coords.latitude,resp.coords.longitude);
+    //this.getWeatherInfo(this.currentLocation.lat,this.currentLocation.lng);
+    console.log(resp);
+   }).catch((error) => {
+     console.log('Error getting location', error);
+   });
 
+   this.watch = this.geolocation.watchPosition();
+   this.watch.subscribe((data) => {
+    // data can be a set of coordinates, or an error (if an error occurred).
+    // data.coords.latitude
+    // data.coords.longitude
     
+    if(data.coords!=undefined){
+      this.currentLocation={lat:data.coords.latitude,lng:data.coords.longitude};
+    }
+
+    console.log(data);
+    //this.getGeoCodeReverse(data.coords.latitude,data.coords.longitude);
+   });
+
 
   }
 
